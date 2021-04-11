@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+
+body {
+    margin: 0;
+}
+section.main {
+    width: 100%;
+    height: 100vh;
+    background: url(../images/insat.jpg);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dela Gothic One', cursive;
+    text-shadow: 0 5px 10px black;
+    letter-spacing: 1px;
+    color: #eee;
+}
+
+div.slide {
+    animation-name: slidein;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    text-align: center;
+    opacity: 0;
+    position: relative;
+    top: 10%;
+}
+
+section.links {
+    display: flex;
+    justify-content: space-around;
+    padding: 80px 15%;
+    font-family: 'new tegomin', serif;
+    font-size: 16pt;
+    flex-wrap: wrap;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+section.links a {
+    display: inline-block;
+    color: #333;
+    text-decoration: none;
+    width: 200px;
+    /* height: 150px; */
+    text-align: center;
+    /* line-height: 150px; */
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 50px;
+    box-sizing: border-box;
+    margin: 20px 0;
+    /* background: radial-gradient(circle, rgba(237,218,218,1) 0%, rgba(252,252,252,1) 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0% 0%; */
+    transition: all 0.5s;
+    font-weight: bold;
+}
+
+section.links a:hover{
+    /* background-size: 100% 100%; */
+    background-color: #333;
+    color: white;
+    border-color: white;
+}
+
+header {
+    font-family: 'new tegomin', serif;
+    color: #333;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin-left: -40vw;
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    animation-name: fadein;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+header>nav{
+    display: flex;
+    align-items: center;
+}
+header>nav>li {
+    box-sizing: border-box;
+    list-style: none;
+    /* padding: 10px; */
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    transition: border 0.5s ease;
+}
+header>nav>li:hover{
+    border-right: 2px solid #eee;
+    border-left: 2px solid #eee;
+    /* border-radius: 5px; */
+}
+header>nav a{
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    margin: 10px;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    80%{
+        opacity: 0.7;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    to {
+        opacity: 1;
+    }
+}
