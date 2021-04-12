@@ -4,6 +4,7 @@
 body {
     margin: 0;
 }
+
 section.main {
     width: 100%;
     height: 100vh;
@@ -41,7 +42,7 @@ section.links {
 }
 
 .break {
-  flex-basis: 100%;
+    flex-basis: 100%;
   height: 0;
 }
 
@@ -72,6 +73,16 @@ section.links a:hover{
     color: white;
     border-color: white;
 }
+.logo {
+    font-family: 'New Tegomin';
+    font-weight: bold;
+}
+.logoCP {
+    /* color: rgb(145, 68, 46)!important; */
+    /* wela hatha */
+    color: #b77126 !important;
+    font-weight: bolder !important;
+}
 
 header {
     font-family: 'new tegomin', serif;
@@ -101,6 +112,7 @@ header>nav>li {
     /* padding: 10px; */
     border-right: 2px solid transparent;
     border-left: 2px solid transparent;
+    margin-left: -2px;
     transition: border 0.5s ease;
 }
 header>nav>li:hover{
