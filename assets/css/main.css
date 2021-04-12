@@ -4,7 +4,7 @@
 body {
     margin: 0;
 }
-a:hover{
+a,a:focus,a:hover{
 	text-decoration:none;
 	color:black;
 }
@@ -112,6 +112,7 @@ header>nav{
 header>nav>li {
     box-sizing: border-box;
     list-style: none;
+    font-size:120%;
     /* padding: 10px; */
     border-right: 2px solid transparent;
     border-left: 2px solid transparent;
@@ -128,6 +129,14 @@ header>nav a{
     text-decoration: none;
     display: block;
     margin: 10px;
+}
+.card-images-top {
+	border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.card:hover {
+	box-shadow: 0 0px 5px 1px rgba(0,0,0,.125);
+	transform:scale(1.005); 
 }
 
 @keyframes slidein {
