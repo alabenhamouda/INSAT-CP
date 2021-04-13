@@ -45,8 +45,9 @@ let init = () => {
 
     sep = (25.0) / (n_blocks + 1);
     block_width = 75.0 / n_blocks;
-    arrows[0] = document.getElementById("a1");
-    arrows[1] = document.getElementById("a2");
+    for (let i = 0; i < 4; i++) {
+        arrows[i] = document.getElementById("a" + (i + 1));
+    }
 
     for (let i = 0; i < 12; i++) {
         arr[i] = i;
@@ -57,6 +58,9 @@ let init = () => {
     }
     setArrow(0, 0);
     setArrow(n_blocks - 1, 1);
+    setArrow(0, 2);
+    setArrow(0, 3);
+
 };
 let randomize = () => {
     let a, b;
@@ -97,12 +101,18 @@ let check = () => {
 };
 
 let partition = async function(l, r) {
+    arrows[2].classList.remove("nope");
+    arrows[3].classList.remove("nope");
+    setArrow(l, 2);
+    setArrow(l, 3);
     if (stop) return;
     let i = l - 1;
     let val = arr[r];
     lawen(r, "orange");
     for (let j = l; j < r; j++) {
         if (stop) return;
+        setArrow(j, 2);
+        await sleep(700);
         if (arr[j] <= val) {
             lawen(i + 1, a7mer);
             lawen(j, a7mer);
@@ -115,10 +125,13 @@ let partition = async function(l, r) {
             lawen(i + 1, black);
             lawen(j, black);
             i++;
+            setArrow(i+1, 3);
         }
     }
     swap(i + 1, r, arr);
     swapId(i + 1, r);
+    arrows[2].classList.add("nope");
+    arrows[3].classList.add("nope");
     return i + 1;
 
 

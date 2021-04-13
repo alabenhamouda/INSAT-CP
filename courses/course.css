@@ -67,7 +67,7 @@ body {
 }
 
 .nope {
-    display: none;
+    display: none!important;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -110,4 +110,11 @@ body {
 .up {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+}
+#a3{
+    border-color:darkred;
+    
+}
+#a4{
+    border-color:darkcyan;
 }
