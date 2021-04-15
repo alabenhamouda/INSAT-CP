@@ -4,6 +4,12 @@
 body {
     margin: 0;
 }
+h1 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
 a,a:focus,a:hover{
 	text-decoration:none;
 	color:black;
@@ -19,7 +25,7 @@ section.main {
     align-items: center;
     font-family: 'Dela Gothic One', cursive;
     text-shadow: 0 5px 10px black;
-    letter-spacing: 1px;
+    /* letter-spacing: 1px; */
     color: #eee;
 }
 
@@ -35,47 +41,6 @@ div.slide {
     top: 10%;
 }
 
-section.links {
-    display: flex;
-    justify-content: space-around;
-    padding: 80px 15%;
-    font-family: 'new tegomin', serif;
-    font-size: 16pt;
-    flex-wrap: wrap;
-}
-
-.break {
-    flex-basis: 100%;
-  height: 0;
-}
-
-section.links a {
-    display: inline-block;
-    color: #333;
-    text-decoration: none;
-    width: 200px;
-    /* height: 150px; */
-    text-align: center;
-    /* line-height: 150px; */
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 50px;
-    box-sizing: border-box;
-    margin: 20px 0;
-    /* background: radial-gradient(circle, rgba(237,218,218,1) 0%, rgba(252,252,252,1) 100%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 0% 0%; */
-    transition: all 0.5s;
-    font-weight: bold;
-}
-
-section.links a:hover{
-    /* background-size: 100% 100%; */
-    background-color: #333;
-    color: white;
-    border-color: white;
-}
 .logo {
     font-family: 'New Tegomin';
     font-weight: bold;
@@ -136,7 +101,7 @@ header>nav a{
 
 .card:hover {
 	box-shadow: 0 0px 5px 1px rgba(0,0,0,.125);
-	transform:scale(1.005); 
+	transform:scale(1.03); 
 }
 
 @keyframes slidein {
@@ -154,10 +119,68 @@ header>nav a{
 }
 
 @keyframes fadein {
+    from {
+        opacity: 0;
+    }
     to {
         opacity: 1;
     }
 }
 .footer-contacts p a{
 	color:#ecc06c;
+}
+
+.card {
+    transition: box-shadow,transform 0.3s;
+}
+
+span.arrow {
+    transform: translateX(10px) rotate(45deg);
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    display: block;
+    width: 25px;
+    height: 25px;
+}
+
+div.scroll-down {
+    position: relative;
+    width: 60px;
+    height: 100px;
+    margin: 0 auto;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 50px;
+    opacity: 0;
+    animation: fadein 1s 1.5s forwards;
+    cursor: pointer;
+}
+
+.scroll-down>div {
+    position: absolute;
+    width: 50px;
+    left: calc(50% - 25px);
+    top: 5px;
+}
+
+.scroll-down>div>.arrow:nth-child(1) {
+    animation: scroll-animation 0.5s alternate infinite;
+}
+
+.scroll-down>div>.arrow:nth-child(2) {
+    animation: scroll-animation 0.5s 0.1s alternate infinite;
+}
+
+.scroll-down>div>.arrow:nth-child(3) {
+    animation: scroll-animation 0.5s 0.2s alternate infinite;
+}
+
+@keyframes scroll-animation {
+   from {
+       opacity: 1;
+   } 
+   to {
+       opacity: 0;
+   }
 }
