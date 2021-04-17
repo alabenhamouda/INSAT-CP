@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/slate/bootstrap.min.css"> -->
     <link rel="stylesheet" href="assets/css/Footer-Dark.css">
     <link rel="stylesheet" href="assets/css/Pretty-Footer.css">
+    <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
@@ -39,7 +41,7 @@
     <div class="container-fluid container-lg p-5" id="links">
         <div class="row">
             <div class="col-sm-6 col-md-3 mt-2 ">
-                <a href="#">
+                <a href="/problemset.php">
                     <div class="card h-100">
                         <img src="assets/images/rubik cube.jpeg" class="card-images-top" alt="...">
                         <div class="card-body">
@@ -94,37 +96,9 @@
         </div>
     </div>
 
-    <footer>
-        <div class="row">
-            <div class="col-sm-6 col-md-4 footer-navigation">
-                <h3><a class="logo" href="#">INSAT&nbsp;<span class="logoCP">CP</span></a></h3>
-                <p class="links"><a href="#">Home</a><strong> · </strong><a href="#">ProblemSet</a><strong> ·
-                    </strong><a href="#">Contests</a><strong> · </strong><a href="#">Tutorial</a><strong> · </strong><a
-                        href="#"></a>Tools</a></p>
-                <p class="company-name">INSAT CP © 2021</p>
-            </div>
-            <div class="col-sm-6 col-md-4 footer-contacts">
-                <div><span class="fa fa-map-marker-alt footer-contacts-icon"> </span>
-                    <p><span class="new-line-span">centre urbain nord</span> Tunis, Tunisia</p>
-                </div>
-                <div><i class="fa fa-phone-alt footer-contacts-icon"></i>
-                    <p class="footer-center-info email text-left"> +216 22 222 222</p>
-                </div>
-                <div><i class="fa fa-envelope footer-contacts-icon"></i>
-                    <p> <a href="#" target="_blank">InsatCP@gmail.com</a></p>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-md-4 footer-about">
-                <h4>About this website</h4>
-                <p> Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor
-                    lacus vehicula sit amet. </p>
-                <div class="social-links social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i
-                            class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a
-                        href="#"><i class="fab fa-github"></i></a></div>
-            </div>
-        </div>
-    </footer>
+   <?php 
+        include_once("footer.php");
+   ?>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
