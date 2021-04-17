@@ -103,7 +103,7 @@ header>nav a{
     overflow: hidden;
     position: relative;
     backface-visibility: hidden;
-    transition: transform .6s linear;
+    transition: transform 1s linear;
 }
 .front
 {  
