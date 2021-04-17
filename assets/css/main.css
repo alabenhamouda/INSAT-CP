@@ -3,6 +3,7 @@
 
 body {
     margin: 0;
+    background-color: #292c2f;
 }
 h1 {
     font-size: 2rem;
@@ -134,6 +135,8 @@ header>nav a{
 {  
 
     transform: perspective(600px) rotateY(0deg);
+    border-style: solid;
+    border-color: #eee;
 }
 .back
 {
@@ -142,9 +145,13 @@ header>nav a{
     height: 100%;
     width: 100%;
     transform: perspective(600px) rotateY(180deg);
+    border-style: solid;
+    border-color: #eee;
 }
 .card {
     transition: box-shadow,transform 0.3s;
+    background-color: #292c2f;
+    
 }
 .card:hover > .front
 {
