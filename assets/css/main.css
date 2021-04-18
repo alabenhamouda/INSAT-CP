@@ -114,12 +114,7 @@ header>nav a{
 }
 .card-text-last
 {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    left: 40%;
-    align-items: center;
+    margin: 0;
     text-align: center; 
 }
 
@@ -147,6 +142,9 @@ header>nav a{
     transform: perspective(600px) rotateY(180deg);
     border-style: solid;
     border-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .card {
     transition: box-shadow,transform 0.3s;

@@ -44,7 +44,7 @@
                     <div class="card h-100">
                         <img src="assets/images/rubik cube.png" class="card-images-top front" alt="...">
                         <div class="back">
-                            <p class="card-text-first"> ProblemSet
+                            <p class="card-text-last"> ProblemSet
                                 <br> more than 69 problem made by our incredible team.
                             </p>
                         </div>
@@ -57,7 +57,7 @@
                     <div class="card h-100">
                         <img src="assets/images/contest.jpg" class="card-images-top front" alt="...">
                         <div class="back">
-                            <p class="card-text-center"> Contests
+                            <p class="card-text-last"> Contests
                                 <br> weekly contests that help you learn CP and improve
                                 your problem solving skill .
                             </p>
@@ -71,7 +71,7 @@
                     <div class="card h-100">
                         <img src="assets/images/coding.png" class="card-images-top front" alt="...">
                         <div class="back">
-                            <p class="card-text-center"> Tutorial
+                            <p class="card-text-last"> Tutorial
                                 <br>Learn new algorithme and train to make yourself a better programmer and problem
                                 Solver .
                             </p>
