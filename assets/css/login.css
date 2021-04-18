@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+
+body {
+    margin: 0;
+}
+h1 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+a,a:focus,a:hover{
+	text-decoration:none;
+	color:black;
+}
+
+.logo {
+    font-family: 'New Tegomin';
+    font-weight: bold;
+    font-size: 150%;
+}
+.logoCP {
+    color: #b77126 !important;
+    font-weight: bolder !important;
+}
+
+.bg-img {
+    height: 100%;
+    width: 100vw;
+    position: absolute;
+    background: url(../images/insat.jpg);
+    background-size: cover;
+    filter: blur(2px);
+    justify-content: center;
+    align-items: center;
+    
+}
