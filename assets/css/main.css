@@ -93,29 +93,22 @@ header>nav a{
     width: 100%;
     position: absolute;
 }
-.card-text-center
-{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    text-align: center; 
-}
-.card-text-first
-{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    left: 8%;
-    align-items: center;
-    text-align: center; 
-}
-.card-text-last
+.card-text
 {
     margin: 0;
     text-align: center; 
-    font-size: 90%;
+    font-size: 1.5vw;
+}
+
+@media (max-width: 786px) {
+    .card-text {
+        font-size: 2vw;
+    }
+}
+@media (max-width: 576px) {
+    .card-text {
+        font-size: 3vw;
+    }
 }
 
 
