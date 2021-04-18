@@ -3,7 +3,6 @@
 
 body {
     margin: 0;
-    background-color: #292c2f;
 }
 h1 {
     font-size: 2rem;
@@ -116,6 +115,7 @@ header>nav a{
 {
     margin: 0;
     text-align: center; 
+    font-size: 90%;
 }
 
 
@@ -124,14 +124,14 @@ header>nav a{
     overflow: hidden;
     position: relative;
     backface-visibility: hidden;
-    transition: transform 1s linear;
+    transition: transform 1s ease-out;
 }
 .front
 {  
 
     transform: perspective(600px) rotateY(0deg);
-    border-style: solid;
-    border-color: #eee;
+    /* border-style: solid;
+    border-color: #eee; */
 }
 .back
 {
@@ -140,15 +140,16 @@ header>nav a{
     height: 100%;
     width: 100%;
     transform: perspective(600px) rotateY(180deg);
-    border-style: solid;
-    border-color: #eee;
+    /* border-style: solid; */
+    /* border-color: #eee; */
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 .card {
     transition: box-shadow,transform 0.3s;
-    background-color: #292c2f;
+    border:none;
     
 }
 .card:hover > .front
