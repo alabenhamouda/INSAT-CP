@@ -1,0 +1,53 @@
+{% extends 'headerBase.html.twig' %}
+
+{% block title %}Hello ProblemController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-9">
+{#                <ul class="nav border rounded">#}
+{#                    <li class="nav-item border-right"><a href="#" class="nav-link">Problems</a></li>#}
+{#                    <li class="nav-item border-right"><a href="#" class="nav-link">ScoreBoard</a></li>#}
+{#                    <li class="nav-item border-right"><a href="#" class="nav-link">submissions</a></li>#}
+{#                </ul>#}
+                <nav class="nav nav-pills nav-justified">
+                    <a class="nav-item nav-link bg-primary text-white" href="#">Problems</a>
+                    <a class="nav-item nav-link bg-primary text-white" href="#">Scoreboard</a>
+                    <a class="nav-item nav-link bg-primary text-white" href="#">submissions</a>
+                </nav>
+                <hr>
+                <div class="problem mt-2">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Problem</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Solution</a>
+                        </li>
+                    </ul>
+
+                    <div class="problem-wrapper p-2">
+                        <h1>A. Do Not Be Distracted!</h1>
+                    </div>
+                    <p>
+                        Polycarp has 26 tasks. Each task is designated by a capital letter of the Latin alphabet.
+
+                        The teacher asked Polycarp to solve tasks in the following way: if Polycarp began to solve some task, then he must solve it to the end, without being distracted by another task. After switching to another task, Polycarp cannot return to the previous task.
+
+                        Polycarp can only solve one task during the day. Every day he wrote down what task he solved. Now the teacher wants to know if Polycarp followed his advice.
+
+                        For example, if Polycarp solved tasks in the following order: "DDBBCCCBBEZ", then the teacher will see that on the third day Polycarp began to solve the task 'B', then on the fifth day he got distracted and began to solve the task 'C', on the eighth day Polycarp returned to the task 'B'. Other examples of when the teacher is suspicious: "BAB", "AABBCCDDEEBZZ" and "AAAAZAAAAA".
+
+                        If Polycarp solved the tasks as follows: "FFGZZZY", then the teacher cannot have any suspicions. Please note that Polycarp is not obligated to solve all tasks. Other examples of when the teacher doesn't have any suspicious: "BA", "AFFFCC" and "YYYYY".
+
+                        Help Polycarp find out if his teacher might be suspicious.
+                    </p>
+                </div>
+            </div>
+            <div class="col-3">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

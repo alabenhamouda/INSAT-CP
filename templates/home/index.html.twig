@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}INSATCP{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h1 class="logo">INSAT <span class="logoCP">CP</span></h1>
+        <nav>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="#">Sign Up</a></li>
+        </nav>
+    </header>
+    <section class="main">
+        <div class="slide">
+            <h1>INSAT's competitive programming platform</h1>
+            <h3>Platform for organizing contests and training</h3>
+            <div class="scroll-down">
+                <div>
+                    <span class="arrow"></span>
+                    <span class="arrow"></span>
+                    <span class="arrow"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container-fluid p-5" id="links">
+        <div class="row">
+            <div class="col-sm-6 col-md-3 mt-2 ">
+                <a href="/problemset.php">
+                    <div class="card h-100">
+                        <img src="{{ asset('build/rubik cube.png') }}" class="card-images-top front" alt="...">
+                        <div class="back">
+                            <p class="card-text"> ProblemSet
+                                <br> more than 69 problem made by our incredible team.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-6 col-md-3 mt-2 ">
+                <a href="#">
+                    <div class="card h-100">
+                        <img src="{{ asset('build/contest.jpg') }}" class="card-images-top front" alt="...">
+                        <div class="back">
+                            <p class="card-text"> Contests
+                                <br> weekly contests that help you learn CP and improve
+                                your problem solving skill .
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-6 col-md-3  mt-2 ">
+                <a href="#">
+                    <div class="card h-100">
+                        <img src="{{ asset('build/coding.png') }}" class="card-images-top front" alt="...">
+                        <div class="back">
+                            <p class="card-text"> Tutorial
+                                <br>Learn new algorithme and train to make yourself a better programmer and problem
+                                Solver .
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-6 col-md-3  mt-2 ">
+                <a href="#">
+                    <div class="card h-100">
+                        <img src="{{ asset('build/tools.png') }}" class="card-images-top front" alt="...">
+                        <div class="back">
+                            <p class="card-text"> Tools
+                                <br> yes tools.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

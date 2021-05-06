@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+
+body {
+    margin: 0;
+}
+h1 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+p
+{
+    color:#eee;
+}
+section.main {
+    width: 100%;
+    height: 100vh;
+    background: url(../images/insat.jpg);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dela Gothic One', cursive;
+    /* letter-spacing: 1px; */
+    color: #eee;
+}
+
+section.main h1, section.main h3 {
+    text-shadow: 0 5px 10px black;
+}
+
+div.slide {
+    animation-name: slidein;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    text-align: center;
+    opacity: 0;
+    position: relative;
+    top: 10%;
+}
+
+
+header {
+    font-family: 'new tegomin', serif;
+    color: #333;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin-left: -40vw;
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    animation-name: fadein;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+header>nav{
+    display: flex;
+    align-items: center;
+}
+header>nav>li {
+    box-sizing: border-box;
+    list-style: none;
+    font-size:120%;
+    /* padding: 10px; */
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    transition: border 0.5s ease;
+}
+header>nav>li:hover{
+    border-right: 2px solid #eee;
+    border-left: 2px solid #eee;
+    /* border-radius: 5px; */
+}
+header>nav a{
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    margin: 10px;
+}
+.card-images-top {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.card-text
+{
+    margin: 0;
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+@media (max-width: 786px) {
+    .card-text {
+        font-size: 2vw;
+    }
+}
+@media (max-width: 576px) {
+    .card-text {
+        font-size: 3vw;
+    }
+}
+
+
+.front,.back
+{
+    overflow: hidden;
+    position: relative;
+    backface-visibility: hidden;
+    transition: transform 1s ease-out;
+}
+.front
+{
+
+    transform: perspective(600px) rotateY(0deg);
+    /* border-style: solid;
+    border-color: #eee; */
+}
+.back
+{
+    position: absolute;
+    background-color: #292c2f;
+    height: 100%;
+    width: 100%;
+    transform: perspective(600px) rotateY(180deg);
+    /* border-style: solid; */
+    /* border-color: #eee; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.card {
+    transition: box-shadow,transform 0.3s;
+    border:none;
+
+}
+.card:hover > .front
+{
+    transform: perspective(600px) rotateY(-180deg);
+}
+.card:hover > .back
+{
+    transform: perspective(600px) rotateY(0deg);
+}
+@keyframes slidein {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    80%{
+        opacity: 0.7;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+span.arrow {
+    transform: translateX(10px) rotate(45deg);
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    display: block;
+    width: 25px;
+    height: 25px;
+}
+
+div.scroll-down {
+    position: relative;
+    width: 60px;
+    height: 100px;
+    margin: 0 auto;
+    /* border: 2px solid white;
+    border-radius: 5px; */
+    margin-top: 50px;
+    opacity: 0;
+    animation: fadein 1s 1.5s forwards;
+    cursor: pointer;
+}
+
+.scroll-down>div {
+    position: absolute;
+    width: 50px;
+    left: calc(50% - 25px);
+    top: 5px;
+}
+
+.scroll-down>div>.arrow:nth-child(1) {
+    animation: scroll-animation 0.5s alternate infinite;
+}
+
+.scroll-down>div>.arrow:nth-child(2) {
+    animation: scroll-animation 0.5s 0.1s alternate infinite;
+}
+
+.scroll-down>div>.arrow:nth-child(3) {
+    animation: scroll-animation 0.5s 0.2s alternate infinite;
+}
+
+@keyframes scroll-animation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

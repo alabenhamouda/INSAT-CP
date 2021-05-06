@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('bootswatch') }}
+{% endblock %}
+
+{% block header %}
+    {% include 'header.html.twig' %}
+{% endblock %}

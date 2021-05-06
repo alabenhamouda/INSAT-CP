@@ -1,0 +1,20 @@
+body {
+    min-height: 100vh;
+}
+a,a:focus,a:hover{
+    text-decoration:none;
+    color:black;
+}
+.logo {
+    font-family: 'New Tegomin';
+    font-weight: bold;
+}
+.logoCP {
+    /* color: rgb(145, 68, 46)!important; */
+    /* wela hatha */
+    color: #b77126 !important;
+    font-weight: bolder !important;
+}
+.footer-contacts p a{
+    color:#ecc06c;
+}
