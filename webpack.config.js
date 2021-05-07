@@ -24,6 +24,7 @@ Encore
     .addEntry('home', './assets/home.js')
     .addEntry('bootswatch', './assets/bootswatch.js')
     .addEntry('courses', './assets/styles/courses.css')
+    .addEntry('problem', './assets/problem.js')
 
     .copyFiles({
         from: './assets/images'

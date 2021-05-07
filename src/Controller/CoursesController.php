@@ -28,7 +28,7 @@ class CoursesController extends AbstractController
      */
     public function course()
     {
-        return $this->render()
+        return $this->render();
 
     }
 

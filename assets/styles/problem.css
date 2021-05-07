@@ -1,0 +1,12 @@
+.examples{
+    padding: 20px;
+    background-color: #ffffeb;
+    border: #6d7597 2px solid;
+    border-radius: 3px;
+}
+.tocopy
+{
+    cursor:pointer;
+    background:none;
+    border:none;
+}

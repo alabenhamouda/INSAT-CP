@@ -1,16 +1,20 @@
 {% extends 'headerBase.html.twig' %}
 
-{% block title %}Hello ProblemController!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
 
+    {{ encore_entry_link_tags('problem') }}
+{% endblock %}
+
+        {% block javascripts %}
+            {{ parent() }}
+            {{ encore_entry_script_tags('problem') }}
+        {% endblock %}
+{% block title %}Hello ProblemController!{% endblock %}
 {% block body %}
     <div class="container mt-2">
         <div class="row">
             <div class="col-9">
-{#                <ul class="nav border rounded">#}
-{#                    <li class="nav-item border-right"><a href="#" class="nav-link">Problems</a></li>#}
-{#                    <li class="nav-item border-right"><a href="#" class="nav-link">ScoreBoard</a></li>#}
-{#                    <li class="nav-item border-right"><a href="#" class="nav-link">submissions</a></li>#}
-{#                </ul>#}
                 <nav class="nav nav-pills nav-justified">
                     <a class="nav-item nav-link bg-primary text-white" href="#">Problems</a>
                     <a class="nav-item nav-link bg-primary text-white" href="#">Scoreboard</a>
@@ -33,17 +37,84 @@
                     <p>
                         Polycarp has 26 tasks. Each task is designated by a capital letter of the Latin alphabet.
 
-                        The teacher asked Polycarp to solve tasks in the following way: if Polycarp began to solve some task, then he must solve it to the end, without being distracted by another task. After switching to another task, Polycarp cannot return to the previous task.
+                        The teacher asked Polycarp to solve tasks in the following way: if Polycarp began to solve some
+                        task, then he must solve it to the end, without being distracted by another task. After
+                        switching to another task, Polycarp cannot return to the previous task.
 
-                        Polycarp can only solve one task during the day. Every day he wrote down what task he solved. Now the teacher wants to know if Polycarp followed his advice.
+                        Polycarp can only solve one task during the day. Every day he wrote down what task he solved.
+                        Now the teacher wants to know if Polycarp followed his advice.
 
-                        For example, if Polycarp solved tasks in the following order: "DDBBCCCBBEZ", then the teacher will see that on the third day Polycarp began to solve the task 'B', then on the fifth day he got distracted and began to solve the task 'C', on the eighth day Polycarp returned to the task 'B'. Other examples of when the teacher is suspicious: "BAB", "AABBCCDDEEBZZ" and "AAAAZAAAAA".
+                        For example, if Polycarp solved tasks in the following order: "DDBBCCCBBEZ", then the teacher
+                        will see that on the third day Polycarp began to solve the task 'B', then on the fifth day he
+                        got distracted and began to solve the task 'C', on the eighth day Polycarp returned to the task
+                        'B'. Other examples of when the teacher is suspicious: "BAB", "AABBCCDDEEBZZ" and "AAAAZAAAAA".
 
-                        If Polycarp solved the tasks as follows: "FFGZZZY", then the teacher cannot have any suspicions. Please note that Polycarp is not obligated to solve all tasks. Other examples of when the teacher doesn't have any suspicious: "BA", "AFFFCC" and "YYYYY".
+                        If Polycarp solved the tasks as follows: "FFGZZZY", then the teacher cannot have any suspicions.
+                        Please note that Polycarp is not obligated to solve all tasks. Other examples of when the
+                        teacher doesn't have any suspicious: "BA", "AFFFCC" and "YYYYY".
 
                         Help Polycarp find out if his teacher might be suspicious.
                     </p>
+
+                    <section>
+                        <div>INPUT:</div>
+                        e first line contains three integers n, m and w (2≤n,m≤2⋅103, 1≤w≤109), where n and m
+                        are city size, w
+
+                        is time during which Dima moves between unoccupied cells.
+
+                        The next n
+                        lines each contain m numbers (−1≤aij≤109
+
+                        ) — descriptions of cells.
+
+                        It is guaranteed that the cells (1,1)
+                        and (n,m) are free.
+                    </section>
+                    <section>
+                        <div>OUTPUT:</div>
+                        Output the minimum time it will take for Dima to get to school. If he cannot get to school at
+                        all, then output "-1".
+                    </section>
+                    <div class="row mt-3">
+                        <div class="col-md-5 examples">
+                            INPUT:
+                            <button data-clipboard-target="#input1" class="tocopy">
+                                <i alt="copy" class="fas fa-copy"></i></button>
+                            <pre class="mt-1" id="input1">
+7 11
+42 77 94 76 40 66 43 28 66 23
+27 34 41 31 83 13 64 69 81 82
+23 81 0 22 39 51 4 37 84 43
+62 37 82 86 26 67 45 78 85 2
+79 18 72 62 68 84 69 88 19 48
+0 27 21 51 71 13 87 45 39 11
+74 57 32 0 97 41 87 96 17 98
+69 58 76 32 51 16 38 68 86 82 64
+53 47 33 7 51 75 43 14 96 86 70
+80 58 12 76 94 50 59 2 1 54 25
+14 14 62 28 12 43 15 70 65 44 41
+56 50 50 54 53 34 16 3 2 59 88
+27 85 50 79 48 86 27 81 78 78 64
+                            </pre>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 examples">
+                            OUTPUT:
+                            <button data-clipboard-target="#output1" class="tocopy">
+                                <i alt="copy" class="fas fa-copy"></i></button>
+                            <pre class="mt-1" id="output1">498</pre>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                    </div>
+
                 </div>
+
             </div>
             <div class="col-3">
 

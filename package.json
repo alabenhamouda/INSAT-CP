@@ -21,6 +21,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.3",
         "bootswatch": "^4.6.0",
+        "clipboard": "^2.0.8",
         "file-loader": "^6.2.0"
     }
 }
