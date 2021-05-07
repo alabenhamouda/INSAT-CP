@@ -1,0 +1,54 @@
+{% extends 'headerBase.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('courses') }}
+{% endblock %}
+{% block title %}Courses {% endblock title %}
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Welcome to courses!</h1>
+        <h2 class="mt-5">this is the list of our topics:</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 otter" >
+                <div class="course">
+                    <a href="path">
+                    <h3>Algorithmic complexity</h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4  otter">
+                <div class="course">
+                    <h3>Sorting and searching</h3>
+                </div>
+            </div>
+            <div class="col-md-4  otter">
+                <div class="course">
+                    <h3>basic data structures</h3>
+                </div>
+            </div>
+            <div class="col-md-4  otter">
+                <div class="course">
+                    <h3>tree data structures</h3>
+                </div>
+            </div>
+            <div class="col-md-4  otter">
+                <div class="course">
+                    <h3>dynamic programming</h3>
+                </div>
+            </div>
+            <div class="col-md-4  otter">
+                <div class="course">
+                    <h3>graph algorithms</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock body %}
+
+
