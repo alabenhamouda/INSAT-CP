@@ -13,5 +13,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import $ from 'jquery/dist/jquery.min';
 import 'bootstrap';
 
+require('bootstrap');
+
+$(document).ready(function() {
+    $('[data-toggle="popover"]').popover();
+});
+
 // start the Stimulus application
 import './bootstrap';
