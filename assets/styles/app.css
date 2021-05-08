@@ -18,4 +18,12 @@ a,a:focus,a:hover{
 .footer-contacts p a{
     color:#ecc06c;
 }
-
+.header-signup{
+    background-color: white!important;
+    color:black!important;
+    transition: ease;
+}
+.header-signup:hover{
+    background-color:#ddd!important;
+    color:black!important;
+}

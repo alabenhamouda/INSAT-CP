@@ -22,9 +22,12 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('home', './assets/home.js')
+    .addEntry('login_js', './assets/login.js')
     .addEntry('bootswatch', './assets/bootswatch.js')
     .addEntry('courses', './assets/styles/courses.css')
+    .addEntry('signup', './assets/styles/signup.css')
     .addEntry('problem', './assets/problem.js')
+    .addEntry('login', './assets/styles/login.css')
 
     .copyFiles({
         from: './assets/images'

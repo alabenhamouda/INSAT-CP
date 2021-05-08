@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}INSATCP{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('bootswatch') }}
+    {{ encore_entry_link_tags('signup') }}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+
+{% block body %}
+    <div class="svg-container">
+        <div class="waveWrapper waveAnimation">
+            <div class="waveWrapperInner bgTop" style="top:0;">
+                <div class="wave waveTop"
+                     style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgMiddle" style="top:0">
+                <div class="wave waveMiddle"
+                     style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgBottom" style="top:0">
+                <div class="wave waveBottom"
+                     style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+            </div>
+
+            <div class="row register-form">
+                <div class="col-md-8 offset-md-2">
+                    <form class="custom-form">
+                        <h1>Register Form</h1>
+                        <div class="form-row form-group">
+                            <div class="col-sm-4 label-column"><label class="col-form-label" for="name-input-field">Full
+                                    name </label></div>
+                            <div class="col-sm-6 input-column"><input class="form-control" type="text"  required></div>
+                        </div>
+                        <div class="form-row form-group">
+                            <div class="col-sm-4 label-column"><label class="col-form-label" for="name-input-field">Username&nbsp;</label>
+                            </div>
+                            <div class="col-sm-6 input-column"><input class="form-control" type="text" required></div>
+                        </div>
+                        <div class="form-row form-group">
+                            <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Email </label>
+                            </div>
+                            <div class="col-sm-6 input-column"><input class="form-control" type="email" required></div>
+                        </div>
+                        <div class="form-row form-group">
+                            <div class="col-sm-4 label-column"><label class="col-form-label"
+                                                                      for="pawssword-input-field">Password </label>
+                            </div>
+                            <div class="col-sm-6 input-column"><input class="form-control" type="password" minlength="6" required>
+                            </div>
+                        </div>
+                        <div class="form-row form-group">
+                            <div class="col-sm-4 label-column"><label class="col-form-label"
+                                                                      for="repeat-pawssword-input-field">Repeat
+                                    Password </label></div>
+                            <div class="col-sm-6 input-column"><input class="form-control" type="password" required>
+                            </div>
+                        </div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label
+                                    class="form-check-label" for="formCheck-1">I've read and accept the terms and
+                                conditions</label></div>
+                        <button class="btn btn-light submit-button" type="button">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'header.html.twig' %}
+{% endblock %}

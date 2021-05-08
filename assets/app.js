@@ -10,7 +10,7 @@ import './styles/app.css';
 import './styles/footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import $ from 'jquery';
+import $ from 'jquery/dist/jquery.min';
 import 'bootstrap';
 
 // start the Stimulus application
