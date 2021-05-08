@@ -9,6 +9,7 @@
 /public/bundles/
 /var/
 /vendor/
+null
 ###< symfony/framework-bundle ###
 
 ###> symfony/webpack-encore-bundle ###

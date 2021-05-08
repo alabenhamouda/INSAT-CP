@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -40,6 +42,16 @@ class Users
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contest::class, mappedBy="creator")
+     */
+    private $createdContests;
+
+    public function __construct()
+    {
+        $this->createdContests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +102,36 @@ class Users
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contest[]
+     */
+    public function getCreatedContests(): Collection
+    {
+        return $this->createdContests;
+    }
+
+    public function addCreatedContest(Contest $createdContest): self
+    {
+        if (!$this->createdContests->contains($createdContest)) {
+            $this->createdContests[] = $createdContest;
+            $createdContest->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedContest(Contest $createdContest): self
+    {
+        if ($this->createdContests->removeElement($createdContest)) {
+            // set the owning side to null (unless already changed)
+            if ($createdContest->getCreator() === $this) {
+                $createdContest->setCreator(null);
+            }
+        }
 
         return $this;
     }
