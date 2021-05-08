@@ -1,3 +1,11 @@
+import CodeMirror from 'codemirror/lib/codemirror'
+import   'codemirror/mode/clike/clike'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/duotone-dark.css'
+import 'codemirror/addon/hint/show-hint'
+import 'codemirror/addon/hint/show-hint.css'
+import 'codemirror/addon/edit/closebrackets'
+import 'codemirror/addon/edit/matchbrackets'
 import './styles/problem.css'
 import ClipboardJS from 'clipboard/dist/clipboard.min';
 import $ from 'jquery'
@@ -29,6 +37,16 @@ cli.on('success', function(e) {
 });
 
 console.log("here");
+var edtior = CodeMirror.fromTextArea(document.getElementById('editor'),{
+    mode : "clike",
+    theme:"duotone-dark",
+    lineNumbers : true,
+    extraKeys: {"Ctrl-Space": "autocomplete"},
+    matchBrackets:true,
+    autoCloseBrackets: true,
+    styleActiveLine: true
+});
+
 
 // MathJax = {
 //     tex: {

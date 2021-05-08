@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('problem') }}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -69,7 +70,7 @@ all, then output "-1".</pre>
                         </section>
                         <div class="container">
                             <div class="row mt-3">
-                                <div class="col-md-5 examples">
+                                <div class="col-md-5 examples input">
                                     INPUT:
                                     <button data-clipboard-target="#input1"
                                             class="tocopy float-right"
@@ -95,20 +96,22 @@ all, then output "-1".</pre>
                                     </pre>
                                 </div>
                                 <div class="col-md-1"></div>
-                                <div class="col-md-5 examples">
+                                <div class="col-md-5 examples output">
                                     OUTPUT:
                                     <button data-clipboard-target="#output1" class="tocopy float-right">
                                         <i alt="copy" class="fas fa-copy"></i></button>
                                     <pre class="mt-1" id="output1">498</pre>
                                 </div>
                             </div>
+                            <textarea  id="editor"></textarea>
                         </div>
+
                     </div>
                 </div>
             </div>
             <div class="col-3">
-
             </div>
-        </div>
+        </div >
+
     </div>
 {% endblock %}
