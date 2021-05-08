@@ -23,13 +23,13 @@ class CoursesController extends AbstractController
         return $this->render('courses/sorting_and_searching.html.twig');
 
     }
-    /**
-     * @Route("/courses/{id}",name="course_id")
-     */
-    public function course()
-    {
-        return $this->render();
+    ///**
+    // * @Route("/courses/{id}",name="course_id")
+    // */
+    //public function course()
+    //{
+    //    return $this->render();
 
-    }
+    //}
 
 }
