@@ -2,6 +2,7 @@ import './styles/problem.css'
 import ClipboardJS from 'clipboard/dist/clipboard.min';
 import $ from 'jquery'
 import 'bootstrap'
+import 'mathjax/es5/tex-svg'
 let cli=new ClipboardJS('.tocopy');
 //TODO add a copied message
 $(function(){
@@ -28,3 +29,12 @@ cli.on('success', function(e) {
 });
 
 console.log("here");
+
+// MathJax = {
+//     tex: {
+//         inlineMath: [['$', '$'], ['\\(', '\\)']]
+//     },
+//     svg: {
+//         fontCache: 'global'
+//     }
+// };
