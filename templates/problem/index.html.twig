@@ -2,14 +2,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
     {{ encore_entry_link_tags('problem') }}
 {% endblock %}
 
-        {% block javascripts %}
-            {{ parent() }}
-            {{ encore_entry_script_tags('problem') }}
-        {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('problem') }}
+{% endblock %}
+
 {% block title %}Hello ProblemController!{% endblock %}
 {% block body %}
     <div class="container mt-2">
@@ -73,8 +73,12 @@ The second line contains a string of length n, consisting of uppercase Latin let
                             <div class="row mt-3">
                                 <div class="col-md-5 examples">
                                     INPUT:
-                                    <button data-clipboard-target="#input1" class="tocopy">
-                                        <i alt="copy" class="fas fa-copy"></i></button>
+                                    <button data-clipboard-target="#input1"
+                                            class="tocopy float-right"
+                                            data-toggle="popover"
+                                    >
+                                        <i alt="copy" class="fas fa-copy"></i>
+                                    </button>
                                     <pre class="mt-1" id="input1">
                                         7 11
                                         42 77 94 76 40 66 43 28 66 23
@@ -95,13 +99,12 @@ The second line contains a string of length n, consisting of uppercase Latin let
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5 examples">
                                     OUTPUT:
-                                    <button data-clipboard-target="#output1" class="tocopy">
+                                    <button data-clipboard-target="#output1" class="tocopy float-right">
                                         <i alt="copy" class="fas fa-copy"></i></button>
                                     <pre class="mt-1" id="output1">498</pre>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

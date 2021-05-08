@@ -10,8 +10,13 @@ import './styles/app.css';
 import './styles/footer.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import $ from 'jquery';
-import 'bootstrap';
+
+// const $ = require('jquery');
+// require('bootstrap');
+
+// $(document).ready(function() {
+//     $('[data-toggle="popover"]').popover();
+// });
 
 // start the Stimulus application
 import './bootstrap';
