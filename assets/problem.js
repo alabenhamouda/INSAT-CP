@@ -35,21 +35,20 @@ cli.on('success', function(e) {
 
     e.clearSelection();
 });
-
-console.log("here");
-var edtior = CodeMirror.fromTextArea(document.getElementById('editor'),{
-    mode : "clike",
-    theme:"duotone-dark",
-    lineNumbers : true,
-    extraKeys: {"Ctrl-Space": "autocomplete"},
-    matchBrackets:true,
-    autoCloseBrackets: true,
-    styleActiveLine: true
-});
-
-
-
-
+if (typeof CodeMirror !== 'undefined') {
+    $('.editor').each(function () {
+        var editor = CodeMirror.fromTextArea(this, {
+            mode: "clike",
+            theme: "duotone-dark",
+            lineNumbers: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            styleActiveLine: true
+        });
+        $(this).data('editor', editor);
+    });
+}
 // MathJax = {
 //     tex: {
 //         inlineMath: [['$', '$'], ['\\(', '\\)']]
@@ -58,3 +57,14 @@ var edtior = CodeMirror.fromTextArea(document.getElementById('editor'),{
 //         fontCache: 'global'
 //     }
 // };
+$('#btn-open-file').click(function() {
+    $('#input-open-file').trigger('click');
+});
+$('#input-open-file').on('change', function(e) {
+    var fileData = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+        $('.editor').data('editor').doc.setValue(reader.result);
+    };
+    reader.readAsText(fileData);
+});
