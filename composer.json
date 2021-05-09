@@ -68,11 +68,14 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fzaninotto/faker": "^1.9",
         "symfony/debug-bundle": "^5.2",
         "symfony/maker-bundle": "^1.30",
         "symfony/stopwatch": "^5.2",
         "symfony/twig-bundle": "^5.2",
         "symfony/var-dumper": "^5.2",
-        "symfony/web-profiler-bundle": "^5.2"
+        "symfony/web-profiler-bundle": "^5.2",
+        "zenstruck/foundry": "^1.10"
     }
 }
