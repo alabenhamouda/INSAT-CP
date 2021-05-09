@@ -1,17 +1,22 @@
 {% extends 'headerBase.html.twig' %}
-
 {% block title %}Contest {{ id }}{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    {{ encore_entry_script_tags('contest') }}
+{% endblock %}
 {% block body %}
-    <div class="container">
+<div class="container mt-2">
+    <table class="table table-hover" id="table">
+        <tr class ="table bg-dark" style="color: white">
+            <th scope="row">Difficulty</th>
+            <th scope="row">Name</th>
+        </tr>
         {% for problem in problems %}
-            <div class="row mt-1 p-1" style="border: black solid 2px;border-radius: 2px;font-size:1.4rem">
-                <a href="/contest/{{ id }}/{{ problem.letter }}">
-                    <p>
-                        {{ problem.letter }} ) {{ problem.title }}
-                    </p>
-                </a>
-
-            </div>
+            <tr >
+            <td><a href="/contest/{{ id }}/{{ problem.letter }}">{{ problem.letter }} </a></td>
+                <td>{{ problem.title}}</td>
+            </tr>
         {% endfor %}
+    </table>
     </div>
 {% endblock %}

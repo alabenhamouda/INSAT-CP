@@ -65,10 +65,22 @@ class ContestsController extends AbstractController
     /**
      * @Route("/contest/{id}/{letter}/submit",name="submit", methods={"GET"})
      */
-    public function solution(Contest $contest, $letter)
+    public function submit(Contest $contest, $letter)
     {
         $letter = strtoupper($letter);
         return $this->render('problem/submit.html.twig', [
+            "problem" => $contest->getProblems()[ord($letter) - ord('A')],
+            'id' =>$contest->getId()
+        ]);
+
+    }
+    /**
+     * @Route("/contest/{id}/{letter}/solution",name="solution", methods={"GET"})
+     */
+    public function solution(Contest $contest, $letter)
+    {
+        $letter = strtoupper($letter);
+        return $this->render('problem/solution.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' =>$contest->getId()
         ]);
