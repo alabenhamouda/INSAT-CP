@@ -1,0 +1,17 @@
+{% extends 'headerBase.html.twig' %}
+
+{% block title %}Contest {{ id }}{% endblock %}
+{% block body %}
+    <div class="container">
+        {% for problem in problems %}
+            <div class="row mt-1 p-1" style="border: black solid 2px;border-radius: 2px;font-size:1.4rem">
+                <a href="/contest/{{ id }}/{{ problem.letter }}">
+                    <p>
+                        {{ problem.letter }} ) {{ problem.title }}
+                    </p>
+                </a>
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -48,9 +48,15 @@ class Users
      */
     private $createdContests;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Contest::class, mappedBy="participants")
+     */
+    private $contests;
+
     public function __construct()
     {
         $this->createdContests = new ArrayCollection();
+        $this->contests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +137,33 @@ class Users
             if ($createdContest->getCreator() === $this) {
                 $createdContest->setCreator(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contest[]
+     */
+    public function getContests(): Collection
+    {
+        return $this->contests;
+    }
+
+    public function addContest(Contest $contest): self
+    {
+        if (!$this->contests->contains($contest)) {
+            $this->contests[] = $contest;
+            $contest->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContest(Contest $contest): self
+    {
+        if ($this->contests->removeElement($contest)) {
+            $contest->removeParticipant($this);
         }
 
         return $this;

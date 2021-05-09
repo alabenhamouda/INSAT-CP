@@ -47,9 +47,15 @@ class Contest
      */
     private $problems;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=users::class, inversedBy="contests")
+     */
+    private $participants;
+
     public function __construct()
     {
         $this->problems = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +137,30 @@ class Contest
                 $problem->setContestSource(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|users[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(users $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(users $participant): self
+    {
+        $this->participants->removeElement($participant);
 
         return $this;
     }

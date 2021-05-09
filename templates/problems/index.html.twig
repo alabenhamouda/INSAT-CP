@@ -2,13 +2,31 @@
 
 {% block title %}Problemset{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('contests') }}
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-9">
+            {% for problem in problems %}
+                {# @var problem \App\Entity\Problem  #}
+                <a href="/contest/{{ problem.contestSource.id }}/{{ problem.letter }}">
+                    <div class="col-3 p-2">
+                        <div class="homie" style="" >
+                            {{ problem.letter }})
+                            {{ problem.title }}
+                            <br>
+                            TAGS:<br>
+                            {% for tag in problem.tags %}
+                                {# @var tag \App\Entity\Tag  #}
+                                {{ tag.name }}<br>
+                            {% endfor %}
+                        </div>
+                </a>
 
             </div>
-            <div class="col-3"></div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

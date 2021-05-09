@@ -20,6 +20,7 @@ class AppFixture extends Fixture
         $fa=Factory::create();
         $fa->seed(101010);
         $tagArr=[];
+        //create tags
         for($i=0;$i<50;$i++)
         {
             $tag=new Tag();
@@ -45,9 +46,15 @@ class AppFixture extends Fixture
             $contest = new Contest();
             $number=$fa->numberBetween(0, 39);
             $contest->setTitle($fa->sentence($fa->numberBetween(1,4)))
-                ->setStartTimme($fa->dateTime)
-                ->setDuration($fa->numberBetween(1, 3000000))
+                ->setStartTimme($fa->dateTimeBetween('-1 years','+1 years'))
+                ->setDuration($fa->numberBetween(1, 300))
                 ->setCreator($userArr[$number]);
+            for($j=0;$j<$fa->numberBetween(1,40);$j++)
+            {
+                $contest->addParticipant($fa->unique()->randomElement($userArr));
+            }
+            $fa->unique(true);
+            //create problems
             $letter='A';
             for($j=0;$j<$fa->numberBetween(1,20);$j++)
             {
@@ -56,11 +63,16 @@ class AppFixture extends Fixture
                     ->setInputSpec($fa->text)
                     ->setOutputSpec($fa->text(200))
                     ->setLetter($letter)
-                    ->setStatement($fa->text)
+                    ->setStatement($fa->realTextBetween(400,1000))
                     ->setValidator($fa->text)
-                    ->setContestSource($contest)
-                    ->addTag($tagArr[$fa->numberBetween(1,40)]);
+                    ->setContestSource($contest);
+            for($k=0;$k<$fa->numberBetween(1,3);$k++) {
+                $problem->addTag($fa->unique()->randomElement($tagArr));
+            }
+            $fa->unique(true);
+
                 $letter++;
+                //create sample input
                 for($k=0;$k<$fa->numberBetween(1,5);$k++)
                 {
                     $sample=new SampleInput();

@@ -1,0 +1,10 @@
+.homie {
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: black solid 3px;
+    background: black;
+    color: white;
+    height: 20vh;
+}
