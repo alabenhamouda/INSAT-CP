@@ -25,10 +25,13 @@
                 <div class="problem mt-2">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Problem</a>
+                            <a class="nav-link active" href="/contest/{{ id }}/{{ problem.letter }}/">Problem</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Solution</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}/submit">Submit</a>
                         </li>
                     </ul>
                     <div class="problem-wrapper p-2">
@@ -69,7 +72,7 @@
                                 </div>
                             </div>
                             {% endfor %}
-                            <textarea  id="editor"></textarea>
+
                         </div>
 
                     </div>
