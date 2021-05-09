@@ -4,56 +4,73 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('bootswatch') }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     {{ encore_entry_link_tags('login') }}
 {% endblock %}
-{% block background %}
-    style="background-image:url('{{ asset('build/insat-login.jpg') }}');  background-repeat: no-repeat;
-    background-size: cover;"
-{% endblock %}
 {% block body %}
-    {% include 'header.html.twig' %}
+    {% include 'headerLogIn.html.twig' %}
     <div class="container">
-
-        <div class="row register-form">
-            <div class="col-md-8 offset-md-2">
-                <form class="custom-form">
-                    <h1>Sign In UwU</h1>
-                    <div class="form-row form-group">
-                        <div class="col-sm-4 label-column">
-                            <label class="col-form-label" for="name-input-field">Username </label>
-                        </div>
-                        <div class="col-sm-6 input-column">
-                            <label>
-                                <input class="form-control" type="text" required>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-row form-group">
-                        <div class="col-sm-4 label-column">
-                            <label class="col-form-label" for="name-input-field">Password&nbsp;</label>
-                        </div>
-                        <div class="col-sm-6 input-column">
-                            <label>
-                                <input class="form-control" type="text" required>
-                            </label>
-                        </div>
-
-                    </div>
-                    <div class="d-flex" style="justify-content: center">
-
-                        <button class="btn btn-danger " data-bss-hover-animate="rubberBand"
-                                style="border-radius:20px;" type="button">Login
-                        </button>
-                    </div>
-                </form>
-            </div>
+    <div class="forms-container">
+        <div class="signin-signup">
+            <form action="#" class="sign-in-form">
+                <h2 class="title">Sign in</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" />
+                </div>
+                <input type="submit" value="Login" class="btn solid" />
+            </form>
+            <form action="#" class="sign-up-form">
+                <h2 class="title">Sign up</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" />
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" />
+                </div>
+                <input type="submit" class="btn" value="Sign up" />
+            </form>
         </div>
     </div>
+
+    <div class="panels-container">
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>Not registered?</h3>
+                <p>
+                 What are you waiting for ? create an account and browse thousands of problems
+                </p>
+                <button class="btn transparent" id="sign-up-btn">
+                    Sign up
+                </button>
+            </div>
+            <img src="{{ asset('build/register.svg') }}" class="image" alt="" />
+        </div>
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>Already Have an account ?</h3>
+                <p>
+               Log in now and sharpen you problem solving skills
+                </p>
+                <button class="btn transparent" id="sign-in-btn">
+                    Sign in
+                </button>
+            </div>
+            <img src="{{ asset('build/log.svg') }}" class="image" alt="" />
+        </div>
+    </div>
+</div>
 {% endblock %}
     {% block javascripts %}
         {{ parent() }}
         {{ encore_entry_script_tags('login_js') }}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     {% endblock %}
-{% block footer %}{% endblock %}
