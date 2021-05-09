@@ -27,7 +27,8 @@
                             <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}">Problem</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/contest/{{ id }}/{{ problem.letter }}/solution">Solution</a>
+                            <a class="nav-link active"
+                               href="/contest/{{ id }}/{{ problem.letter }}/solution">Solution</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}/submit">Submit</a>
@@ -41,10 +42,27 @@
         <section>
             <h1>{{ problem.letter }}.{{ problem.title }}</h1>
 
-        <h3>Solution:</h3>
-        <pre>
-                                {{ problem.statement}}
-        </pre>
+            <h3>Solution:</h3>
+            {% if problem.proof is not null %}
+            <p>
+                {{ problem.proof }}
+            </p>
+            {% else %}
+            <p>
+                Unfortunately there's no explanation for this problem yet
+            </p>
+            {% endif %}
+
+            <h3>Code:</h3>
+            {% if problem.solution is not null %}
+                <p>
+                    {{ problem.solution }}
+                </p>
+            {% else %}
+                <p>
+                    Unfortunately there's no code solution for this problem yet
+                </p>
+            {% endif %}
         </section>
     </div>
 {% endblock %}

@@ -68,6 +68,16 @@ class Problem
      */
     private $sampleIn;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $solution;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $proof;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -213,6 +223,30 @@ class Problem
                 $sampleIn->setProblem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSolution(): ?string
+    {
+        return $this->solution;
+    }
+
+    public function setSolution(?string $solution): self
+    {
+        $this->solution = $solution;
+
+        return $this;
+    }
+
+    public function getProof(): ?string
+    {
+        return $this->proof;
+    }
+
+    public function setProof(?string $proof): self
+    {
+        $this->proof = $proof;
 
         return $this;
     }
