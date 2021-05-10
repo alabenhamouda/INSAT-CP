@@ -12,12 +12,12 @@
         <div class="row">
             {% for contest in contests %}
                 <div class="col-4 p-3">
-                    <a href="contest/{{ contest.id }}">
+                    <a href="{{ path('contest', {id: contest.id}) }}">
                         <div class="homie p-1">
                             <p style="text-align: center">
                                 title={{ contest.title }}<br>
                                 duration={{ contest.duration|duration_helper }}<br>
-                                start time={{ contest.startTimme|time_diff}}
+                                start time={{ contest.startTimme|time_diff }}
                             </p>
                         </div>
                     </a>

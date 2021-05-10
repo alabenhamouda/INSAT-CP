@@ -1,86 +1,45 @@
-{% extends 'headerBase.html.twig' %}
+{% extends 'problem/layout.html.twig' %}
+{% block main %}
+    <div class="problem-wrapper p-2">
+        <h1>{{ problem.letter }}.{{ problem.title }}</h1>
+        <pre>{{ problem.statement }}</pre>
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('problem') }}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('problem') }}
-{% endblock %}
-
-{% block title %}{{ problem.letter }} {{ problem.title }}{% endblock %}
-{% block body %}
-    <div class="container mt-2">
-        <div class="row">
-            <div class="col-9">
-                <nav class="nav nav-pills nav-justified">
-                    <a class="nav-item nav-link bg-dark text-white" href="{{ path('problems') }}">Problems</a>
-                    <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
-                    <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
-                </nav>
-                <hr>
-                <div class="problem mt-2">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/contest/{{ id }}/{{ problem.letter }}/">Problem</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}/solution">Solution</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}/submit">Submit</a>
-                        </li>
-                    </ul>
-                    <div class="problem-wrapper p-2">
-                        <h1>{{ problem.letter }}.{{ problem.title }}</h1>
-<pre>{{ problem.statement }}</pre>
-
-                        <section>
-                            <h3>input:</h3>
-                            <pre>
+        <section>
+            <h3>input:</h3>
+            <pre>
                                 {{ problem.inputSpec }}
                             </pre>
-                        </section>
-                        <section>
-                            <h3>output:</h3>
-                            <pre>
+        </section>
+        <section>
+            <h3>output:</h3>
+            <pre>
                                 {{ problem.outputSpec }}
                             </pre>
-                        </section>
-                        <div class="container">
-                            {%  for sample in problem.sampleIn %}
-                            <div class="row mt-3">
-                                <div class="col-md-5 examples input">
-                                    INPUT:
-                                    <button data-clipboard-target="#input1"
-                                            class="tocopy float-right"
-                                            data-toggle="popover"
-                                    >
-                                        <i alt="copy" class="fas fa-copy"></i>
-                                    </button>
-                                    <pre class="mt-1" id="input1">{{ sample.input }}</pre>
-                                </div>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-5 examples output">
-                                    OUTPUT:
-                                    <button data-clipboard-target="#output1" class="tocopy float-right">
-                                        <i alt="copy" class="fas fa-copy"></i></button>
-                                    <pre class="mt-1" id="output1">{{ sample.output }}</pre>
-                                </div>
-                            </div>
-                            {% endfor %}
-
-                        </div>
-
+        </section>
+        <div class="container">
+            {% for sample in problem.sampleIn %}
+                <div class="row mt-3">
+                    <div class="col-md-5 examples input">
+                        INPUT:
+                        <button data-clipboard-target="#input1"
+                                class="tocopy float-right"
+                                data-toggle="popover"
+                        >
+                            <i alt="copy" class="fas fa-copy"></i>
+                        </button>
+                        <pre class="mt-1" id="input1">{{ sample.input }}</pre>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5 examples output">
+                        OUTPUT:
+                        <button data-clipboard-target="#output1" class="tocopy float-right">
+                            <i alt="copy" class="fas fa-copy"></i></button>
+                        <pre class="mt-1" id="output1">{{ sample.output }}</pre>
                     </div>
                 </div>
-            </div>
-            <div class="col-3">
-            </div>
-        </div >
+            {% endfor %}
+
+        </div>
 
     </div>
 {% endblock %}

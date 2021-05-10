@@ -5,11 +5,15 @@ namespace App\Controller;
 
 
 use App\Entity\Contest;
-use App\Entity\Problem;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ContestsController
+ * @package App\Controller
+ * @Route("/contests")
+ */
 class ContestsController extends AbstractController
 {
     private $em;
@@ -20,7 +24,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route("/contest",name="contests",methods={"GET"})
+     * @Route("/",name="contests",methods={"GET"})
      */
     public function contestList()
     {
@@ -34,7 +38,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route("/contest/{id}",name="contest",methods={"GET"})
+     * @Route("/{id}",name="contest",methods={"GET"})
      */
     public function contest(Contest $contest)
     {
@@ -49,40 +53,41 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route("/contest/{id}/{letter}",name="problem", methods={"GET"})
+     * @Route("/{id}/problem/{letter}",name="problem", methods={"GET"})
      */
     public function problem(Contest $contest, $letter)
     {
         $letter = strtoupper($letter);
         return $this->render('problem/index.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' =>$contest->getId()
+            'id' => $contest->getId()
         ]);
 
 
     }
 
     /**
-     * @Route("/contest/{id}/{letter}/submit",name="submit", methods={"GET"})
+     * @Route("/{id}/problem/{letter}/submit",name="submit", methods={"GET"})
      */
     public function submit(Contest $contest, $letter)
     {
         $letter = strtoupper($letter);
         return $this->render('problem/submit.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' =>$contest->getId()
+            'id' => $contest->getId()
         ]);
 
     }
+
     /**
-     * @Route("/contest/{id}/{letter}/solution",name="solution", methods={"GET"})
+     * @Route("/{id}/problem/{letter}/solution",name="solution", methods={"GET"})
      */
     public function solution(Contest $contest, $letter)
     {
         $letter = strtoupper($letter);
         return $this->render('problem/solution.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' =>$contest->getId()
+            'id' => $contest->getId()
         ]);
 
     }

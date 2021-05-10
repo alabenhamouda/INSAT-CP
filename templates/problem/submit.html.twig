@@ -1,52 +1,16 @@
-{% extends 'headerBase.html.twig' %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('problem') }}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('problem') }}
-{% endblock %}
-{% block title %}{{ problem.letter }} {{ problem.title }}{% endblock %}
-{% block body %}
-<div class="container mt-2">
-    <div class="row">
-        <div class="col-9">
-            <nav class="nav nav-pills nav-justified">
-                <a class="nav-item nav-link bg-dark text-white" href="{{ path('problems') }}">Problems</a>
-                <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
-                <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
-            </nav>
-            <hr>
-            <div class="problem mt-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}">Problem</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contest/{{ id }}/{{ problem.letter }}/solution">Solution</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/contest/{{ id }}/{{ problem.letter }}/submit">Submit</a>
-                    </li>
-                </ul>
-                </div>
+{% extends 'problem/layout.html.twig' %}
+{% set show = "submit" %}
+{% block main %}
+    <div class="container" style="margin-top: 10px">
+        <textarea class="form-control editor" id="editor"></textarea>
+        <div class="form-group">
+            <div class="col-sm-5">
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-open-file" type="button" class="btn btn-primary">
+                    <i class="fas fa-folder-open"> </i> Open
+                </button>
+                <input type="file" id="input-open-file" style="display:none;">
             </div>
         </div>
     </div>
-<div class="container" style="margin-top: 10px">
-    <textarea   class="form-control editor" id="editor"></textarea>
-    <div class="form-group">
-        <div class="col-sm-5">
-            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-            <button id="btn-open-file" type="button" class="btn btn-primary">
-                <i class="fas fa-folder-open"> </i>  Open
-            </button>
-            <input type="file" id="input-open-file" style="display:none;">
-        </div>
-    </div>
-    </div>
-{% endblock%}
+{% endblock %}
