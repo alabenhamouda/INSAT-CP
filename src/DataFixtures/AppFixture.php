@@ -66,6 +66,21 @@ class AppFixture extends Fixture
                     ->setStatement($fa->realTextBetween(400,1000))
                     ->setValidator($fa->text)
                     ->setContestSource($contest);
+                
+                if($fa->numberBetween(1,10)<9)
+                {
+                    $problem->setProof($fa->realText(400));
+                }
+                else{
+                    $problem->setProof(null);
+                }
+                if($fa->numberBetween(1,10)<9)
+                {
+                    $problem->setSolution($fa->realText(400));
+                }
+                else{
+                    $problem->setSolution(null);
+                }
             for($k=0;$k<$fa->numberBetween(1,3);$k++) {
                 $problem->addTag($fa->unique()->randomElement($tagArr));
             }
