@@ -38,7 +38,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}",name="contest",methods={"GET"})
+     * @Route("/{id<\d+>}",name="contest",methods={"GET"})
      */
     public function contest(Contest $contest)
     {
@@ -91,4 +91,17 @@ class ContestsController extends AbstractController
         ]);
 
     }
+    /**
+     * @Route("/create",name="create_contest",methods={"GET"})
+     */
+    public function create()
+    {
+        $contest=new Contest();
+
+        return $this->render('contests/create.html.twig',[
+            'contest'=>$contest
+        ]);
+
+    }
+
 }

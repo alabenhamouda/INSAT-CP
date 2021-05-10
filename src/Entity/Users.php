@@ -53,10 +53,16 @@ class Users
      */
     private $contests;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Submission::class, mappedBy="user")
+     */
+    private $submissions;
+
     public function __construct()
     {
         $this->createdContests = new ArrayCollection();
         $this->contests = new ArrayCollection();
+        $this->submissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +170,36 @@ class Users
     {
         if ($this->contests->removeElement($contest)) {
             $contest->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Submission[]
+     */
+    public function getSubmissions(): Collection
+    {
+        return $this->submissions;
+    }
+
+    public function addSubmission(Submission $submission): self
+    {
+        if (!$this->submissions->contains($submission)) {
+            $this->submissions[] = $submission;
+            $submission->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmission(Submission $submission): self
+    {
+        if ($this->submissions->removeElement($submission)) {
+            // set the owning side to null (unless already changed)
+            if ($submission->getUser() === $this) {
+                $submission->setUser(null);
+            }
         }
 
         return $this;
