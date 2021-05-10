@@ -26,10 +26,7 @@ class Contest
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $startTimme;
+
 
     /**
      * @ORM\Column(type="integer")
@@ -51,6 +48,23 @@ class Contest
      * @ORM\ManyToMany(targetEntity=users::class, inversedBy="contests")
      */
     private $participants;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublished=false;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $start_time;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $start_date;
+
+
 
     public function __construct()
     {
@@ -75,17 +89,6 @@ class Contest
         return $this;
     }
 
-    public function getStartTimme(): ?\DateTimeInterface
-    {
-        return $this->startTimme;
-    }
-
-    public function setStartTimme(\DateTimeInterface $startTimme): self
-    {
-        $this->startTimme = $startTimme;
-
-        return $this;
-    }
 
     public function getDuration(): ?int
     {
@@ -164,4 +167,42 @@ class Contest
 
         return $this;
     }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?\DateTimeInterface
+    {
+        return $this->start_time;
+    }
+
+    public function setStartTime(\DateTimeInterface $start_time): self
+    {
+        $this->start_time = $start_time;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->start_date;
+    }
+
+    public function setStartDate(\DateTimeInterface $start_date): self
+    {
+        $this->start_date = $start_date;
+
+        return $this;
+    }
+
+
 }

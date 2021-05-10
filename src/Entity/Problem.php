@@ -78,10 +78,21 @@ class Problem
      */
     private $proof;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $points;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Submission::class, mappedBy="problem")
+     */
+    private $submissions;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->sampleIn = new ArrayCollection();
+        $this->submissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +258,48 @@ class Problem
     public function setProof(?string $proof): self
     {
         $this->proof = $proof;
+
+        return $this;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(int $points): self
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Submission[]
+     */
+    public function getSubmissions(): Collection
+    {
+        return $this->submissions;
+    }
+
+    public function addSubmission(Submission $submission): self
+    {
+        if (!$this->submissions->contains($submission)) {
+            $this->submissions[] = $submission;
+            $submission->setProblem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmission(Submission $submission): self
+    {
+        if ($this->submissions->removeElement($submission)) {
+            // set the owning side to null (unless already changed)
+            if ($submission->getProblem() === $this) {
+                $submission->setProblem(null);
+            }
+        }
 
         return $this;
     }
