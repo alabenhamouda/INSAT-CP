@@ -14,41 +14,35 @@
 {% block title %}{{ problem.letter }} {{ problem.title }}{% endblock %}
 {% block body %}
     <div class="container mt-2">
-        <div class="row">
-            <div class="col-9">
-                <nav class="nav nav-pills nav-justified">
-                    <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
-                    <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
-                    <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
-                </nav>
-                <hr>
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link {{ (show|default("problem") == "problem") ? "active" : "" }}"
-                           href="{{ path('problem', {id: id, letter: problem.letter}) }}">
-                            Problem
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ show|default("problem") == "solution" ? "active" : "" }}"
-                           href="{{ path("solution", {id: id, letter: problem.letter}) }}">
-                            Solution
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ show|default("problem") == "submit" ? "active" : "" }}"
-                           href="{{ path("submit", {id: id, letter: problem.letter}) }}">
-                            Submit
-                        </a>
-                    </li>
-                </ul>
-                <main class="mt-2">
-                    {% block main %}
-                    {% endblock %}
-                </main>
-            </div>
-            <div class="col-3">
-            </div>
-        </div>
+        <nav class="nav nav-pills nav-justified">
+            <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
+            <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
+            <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
+        </nav>
+        <hr>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link {{ (show|default("problem") == "problem") ? "active bg-dark" : "" }}"
+                   href="{{ path('problem', {id: id, letter: problem.letter}) }}">
+                    Problem
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}"
+                   href="{{ path("solution", {id: id, letter: problem.letter}) }}">
+                    Solution
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ show|default("problem") == "submit" ? "active bg-dark" : "" }}"
+                   href="{{ path("submit", {id: id, letter: problem.letter}) }}">
+                    Submit
+                </a>
+            </li>
+        </ul>
+        <main class="mt-2">
+            {% block main %}
+            {% endblock %}
+        </main>
     </div>
 {% endblock %}
