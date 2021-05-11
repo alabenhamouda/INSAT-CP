@@ -22,14 +22,13 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('home', './assets/home.js')
-    .addEntry('login_js', './assets/login.js')
+    .addEntry('login', './assets/login.js')
     .addEntry('bootswatch', './assets/bootswatch.js')
     .addEntry('courses', './assets/styles/courses.css')
     .addEntry('signup', './assets/styles/signup.css')
     .addEntry('problem', './assets/problem.js')
-    .addEntry('login', './assets/styles/login.css')
     .addEntry('contests', './assets/styles/contests.css')
-    .addEntry('contest','./assets/contest.js')
+    .addEntry('contest', './assets/contest.js')
     .copyFiles({
         from: './assets/images'
     })
@@ -67,21 +66,21 @@ Encore
         config.corejs = 3;
     })
 
-    // enables Sass/SCSS support
-    //.enableSassLoader()
+// enables Sass/SCSS support
+//.enableSassLoader()
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
-    // uncomment if you use React
-    //.enableReactPreset()
+// uncomment if you use React
+//.enableReactPreset()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
+// uncomment to get integrity="..." attributes on your script & link tags
+// requires WebpackEncoreBundle 1.4 or higher
+//.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();
