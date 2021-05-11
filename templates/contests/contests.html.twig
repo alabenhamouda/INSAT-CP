@@ -6,26 +6,68 @@
     {{ parent() }}
     {{ encore_entry_link_tags('contests') }}
 {% endblock %}
-
+{% block javascripts %}
+    {{ encore_entry_script_tags('contests') }}
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
-            {% for contest in contests %}
-                <div class="col-4 p-3">
-                    <a href="{{ path('contest', {id: contest.id}) }}">
-                        <div class="homie p-1">
-                            <p style="text-align: center">
-                                title={{ contest.title }}<br>
-                                duration={{ contest.duration|duration_helper }}<br>
-                                start time={{ contest.startTimme|time_diff }}
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+            <div class="col-9">
+        <form class="d-flex" id="form" style="margin-top: 15px" method="get">
+            <input class="form-control" type="text"  id="title" placeholder="Search for contest" name="title">
+            <button type="submit" class="btn  bg-dark" id="button" style="color: white" >Search</button>
+        </form>
+            {% if contests %}
+                  <table class="table table-hover" id="table">
+                      <tr class="table bg-dark" style="color: white">
+                          <th scope="row">Title</th>
+                          <th scope="row">Start Time</th>
+                          <th scope="row">Duration</th>
+                      </tr>
+                      {% for contest in contests %}
+                          <tr>
+                              <td>
+                                  <a href="{{ path("contest", {id: contest.id}) }}">
+                                      {{ contest.title }}
+                                  </a>
+                              </td>
+                              <td>{{ contest.startDate|time_diff }}</td>
+                               <td>{{ contest.duration|duration_helper }}</td>
+                          </tr>
+                      {% endfor %}
+              </table>
+            {% else%}
+                <table class="table table-hover">
+                    <tr class="table-danger">
+                    <th scope="row">No contest was found</th>
+                    </tr>
+                    </table>
+            {% endif %}
         </div>
+      <div class="col-3">
+          <div class="accordion">
+              <div class="contentA">
+              <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Upcoming Contests </div>
+              <div class="content">
+                      {% for contest in up %}
+                      <a class="dropdown-item"  href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
+                      {% endfor %}
+                  </div>
+              </div>
+              </div>
+          <div class="accordion">
+              <div class="contentA">
+                  <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Recent Contests </div>
+                  <div class="content">
+                      {% for contest in rec %}
+                          <a class="dropdown-item"  href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
+                      {% endfor %}
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
+        </div>
 {% endblock %}
-
 {% block footer %}
 {% endblock %}

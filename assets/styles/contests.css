@@ -8,3 +8,35 @@
     color: white;
     height: 20vh;
 }
+.container
+{
+    max-width: 1500px !important;
+}
+.contentA .label::before{
+    content: '+' ;
+    color: white;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+}
+.active .label::before{
+    content: '-' ;
+    color: white;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+}
+.contentA .content {
+    overflow: hidden;
+    height: 0;
+    transition: 0.5s;
+    overflow-y: hidden;
+}
+.active .content{
+    height: 200px;
+    padding: 10px;
+}

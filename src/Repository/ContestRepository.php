@@ -19,6 +19,62 @@ class ContestRepository extends ServiceEntityRepository
         parent::__construct($registry, Contest::class);
     }
 
+     /**
+      * @return Contest[] Returns an array of Contest objects
+      */
+
+    public function findByTitle($title)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.title like :title')
+            ->setParameter('title', '%'.$title.'%')
+            ->orderBy('c.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
+
+    public function findupcoming()
+    {
+        $date = date("Y-m-d");
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.start_date >= :date')
+            ->setParameter('date',$date )
+            ->orderBy('c.start_date', 'ASC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
+    public function findrecent()
+    {
+        $date = date("Y-m-d");
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.start_date < :date')
+            ->setParameter('date',$date )
+            ->orderBy('c.start_date', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /*
+    public function findOneBySomeField($value): ?Contest
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
     // /**
     //  * @return Contest[] Returns an array of Contest objects
     //  */
@@ -32,18 +88,6 @@ class ContestRepository extends ServiceEntityRepository
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Contest
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
         ;
     }
     */

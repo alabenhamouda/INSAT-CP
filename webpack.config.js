@@ -28,8 +28,8 @@ Encore
     .addEntry('signup', './assets/styles/signup.css')
     .addEntry('problem', './assets/problem.js')
     .addEntry('login', './assets/styles/login.css')
-    .addEntry('contests', './assets/styles/contests.css')
     .addEntry('contest','./assets/contest.js')
+    .addEntry('contests' ,'./assets/contests.js')
     .copyFiles({
         from: './assets/images'
     })

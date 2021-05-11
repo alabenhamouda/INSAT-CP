@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Contest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,17 +27,23 @@ class ContestsController extends AbstractController
     /**
      * @Route("/",name="contests",methods={"GET"})
      */
-    public function contestList()
+    public function contestList(Request $request)
     {
         $repo = $this->em->getRepository(Contest::class);
-        $contests = $repo->findAll();
+        $title=$request->query->get('title');
+        $up = $repo->findupcoming();
+        $rec = $repo->findrecent();
+        if($title)
+        {
+            $contests = $repo->findByTitle($title);
+        }
+        else $contests = $repo->findAll();
         return $this->render('contests/contests.html.twig', [
-            'contests' => $contests
+            'contests' => $contests,
+            'up'=>$up,
+            'rec'=>$rec
         ]);
-
-
     }
-
     /**
      * @Route("/{id<\d+>}",name="contest",methods={"GET"})
      */
