@@ -16,8 +16,8 @@
     <header>
         <h1 class="logo">INSAT <span class="logoCP">CP</span></h1>
         <nav>
-            <li><a href="{{ path('login') }}"> Log in </a></li>
-            <li><a href="{{ path('signup') }}"> Sign Up </a></li>
+            <li><a href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
+            <li><a href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
         </nav>
     </header>
     <section class="main">

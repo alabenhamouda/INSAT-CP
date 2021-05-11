@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form 'form/form_errors.html.twig' %}
+
 {% block title %}INSATCP{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -11,7 +13,7 @@
     {{ encore_entry_script_tags('login') }}
 {% endblock %}
 {% block body %}
-    {% include 'headerLogIn.html.twig' %}
+    {# {% include 'headerLogIn.html.twig' %} #}
     <div class="container {{ signup ? "sign-up-mode" : "" }}">
         <div class="forms-container">
             <div class="signin-signup">
@@ -27,22 +29,35 @@
                     </div>
                     <input type="submit" value="Login" class="btn solid"/>
                 </form>
-                <form action="#" class="sign-up-form">
-                    <h2 class="title">Sign up</h2>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username"/>
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email"/>
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password"/>
-                    </div>
-                    <input type="submit" class="btn" value="Sign up"/>
-                </form>
+                {{ form_start(form, {attr: {class: "sign-up-form"}}) }}
+                <h2 class="title">Sign up</h2>
+                <div class="input-field">
+                    <i class="fas fa-user-tie"></i>
+                    {{ form_widget(form.fullName, {attr: {placeholder: form.fullName.vars.label}}) }}
+                </div>
+                {{ form_errors(form.fullName) }}
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    {{ form_widget(form.username, {attr: {placeholder: form.username.vars.label}}) }}
+                </div>
+                {{ form_errors(form.username) }}
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    {{ form_widget(form.email, {attr: {placeholder: form.email.vars.label}}) }}
+                </div>
+                {{ form_errors(form.email) }}
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    {{ form_widget(form.password.first, {attr: {placeholder: form.password.first.vars.label}}) }}
+                </div>
+                {{ form_errors(form.password.first) }}
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    {{ form_widget(form.password.second, {attr: {placeholder: form.password.second.vars.label}}) }}
+                </div>
+                {{ form_errors(form.password.second) }}
+                <input type="submit" class="btn" value="Sign up"/>
+                {{ form_end(form) }}
             </div>
         </div>
 
@@ -73,4 +88,6 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block footer %}
 {% endblock %}
