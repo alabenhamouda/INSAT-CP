@@ -15,6 +15,7 @@ class Problem
 {
 
     use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -56,7 +57,7 @@ class Problem
      * @ORM\ManyToOne(targetEntity=Contest::class, inversedBy="problems")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $contestSource;
+    private $contest;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="problems")
@@ -172,14 +173,14 @@ class Problem
         return $this;
     }
 
-    public function getContestSource(): ?Contest
+    public function getContest(): ?Contest
     {
-        return $this->contestSource;
+        return $this->contest;
     }
 
-    public function setContestSource(?Contest $contestSource): self
+    public function setContest(?Contest $contest): self
     {
-        $this->contestSource = $contestSource;
+        $this->contest = $contest;
 
         return $this;
     }

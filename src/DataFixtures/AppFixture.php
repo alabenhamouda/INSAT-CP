@@ -7,7 +7,7 @@ use App\Entity\Problem;
 use App\Entity\SampleInput;
 use App\Entity\Submission;
 use App\Entity\Tag;
-use App\Entity\Users;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -28,11 +28,11 @@ class AppFixture extends Fixture
             array_push($tagArr, $tag);
             $manager->persist($tag);
         }
-        $repo = $manager->getRepository(Users::class);
+        $repo = $manager->getRepository(User::class);
         //create users
         $userArr = [];
         for ($i = 0; $i < 40; $i++) {
-            $user = new Users();
+            $user = new User();
             $user->setUsername($fa->userName)
                 ->setEmail($fa->email)
                 ->setFullName($fa->name)
@@ -46,7 +46,7 @@ class AppFixture extends Fixture
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
             $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
-                ->setStartDate($fa->dateTimeBetween('-1 years','+1 years'))
+                ->setStartDate($fa->dateTimeBetween('-1 years', '+1 years'))
                 ->setStartTime($fa->dateTime())
                 ->setDuration($fa->numberBetween(1, 300))
                 ->setCreator($userArr[$number]);
@@ -64,7 +64,7 @@ class AppFixture extends Fixture
                     ->setLetter($letter)
                     ->setStatement($fa->realTextBetween(400, 1000))
                     ->setValidator($fa->text)
-                    ->setContestSource($contest)
+                    ->setContest($contest)
                     ->setPoints($fa->randomDigitNotZero());
 
 
