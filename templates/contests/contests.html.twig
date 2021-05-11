@@ -43,19 +43,6 @@
                     </tr>
                     </table>
             {% endif %}
-            {% for contest in contests %}
-                <div class="col-4 p-3">
-                    <a href="{{ path('contest', {id: contest.id}) }}">
-                        <div class="homie p-1">
-                            <p style="text-align: center">
-                                title={{ contest.title }}<br>
-                                duration={{ contest.duration|duration_helper }}<br>
-                                start time={{ contest.startTime|time_diff }}
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
         </div>
       <div class="col-3">
           <div class="accordion">
