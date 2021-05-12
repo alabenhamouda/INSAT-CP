@@ -17,16 +17,24 @@
     <div class="container {{ signup ? "sign-up-mode" : "" }}">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="#" class="sign-in-form">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <form class="sign-in-form" method="post">
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username"/>
+                        <input type="text" placeholder="Username" value="{{ last_username }}" name="username" required
+                               autofocus autocomplete="username"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Password" name="password" required
+                               autocomplete="current-password"/>
                     </div>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
                     <input type="submit" value="Login" class="btn solid"/>
                 </form>
                 {{ form_start(form, {attr: {class: "sign-up-form"}}) }}
