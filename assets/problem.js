@@ -1,8 +1,7 @@
 import CodeMirror from 'codemirror/lib/codemirror'
 import 'codemirror/mode/clike/clike'
+import 'codemirror/mode/python/python'
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/duotone-dark.css'
-import 'codemirror/theme/monokai.css'
 import 'codemirror/theme/ayu-mirage.css'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/show-hint.css'
@@ -14,8 +13,17 @@ import $ from 'jquery'
 import 'bootstrap'
 import 'mathjax/es5/tex-svg'
 
+function mime(str) {
+    return CodeMirror.mimeModes[`text/x-${str}`];
+}
+
 let cli = new ClipboardJS('.tocopy');
-//TODO add a copied message
+let languages = {
+    'c++': mime("c++src"),
+    c: mime("c"),
+    java: mime("java"),
+    python: mime("python"),
+}
 $(function () {
     $(".tocopy")
         .popover({
@@ -29,33 +37,42 @@ $(function () {
                 console.log(this);
                 $(this).popover("hide");
             }, 1000)
-        })
+        });
+    const langSel = $("#languages");
+    for (let lang in languages) {
+        let option = $("<option></option>").text(lang);
+        langSel.append(option);
+    }
+    let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: CodeMirror.mimeModes['text/x-c++src'],
+        theme: "ayu-mirage",
+        lineNumbers: true,
+        extraKeys: {
+            "Ctrl-Space":
+                "autocomplete"
+        },
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        styleActiveLine: true
+    });
+    langSel.on('change', e => {
+        editor.setOption("mode", languages[langSel.val()]);
+    })
+    $('#btn-open-file').click(function () {
+        $('#input-open-file').trigger('click');
+    });
+    $('#input-open-file').on('change', function (e) {
+        let fileData = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function () {
+            editor.doc.setValue(reader.result);
+        };
+        reader.readAsText(fileData);
+    });
 })
 cli.on('success', function (e) {
-    // console.info('Action:', e.action);
-    // console.info('Text:', e.text);
-    // console.info('Trigger:', e.trigger);
-
     e.clearSelection();
 });
-if (typeof CodeMirror !== 'undefined') {
-    console.log(CodeMirror.mimeModes)
-    $('.editor').each(function () {
-        var editor = CodeMirror.fromTextArea(this, {
-            mode: CodeMirror.mimeModes['text/x-c++src'],
-            theme: "ayu-mirage",
-            lineNumbers: true,
-            extraKeys: {
-                "Ctrl-Space":
-                    "autocomplete"
-            },
-            matchBrackets: true,
-            autoCloseBrackets: true,
-            styleActiveLine: true
-        });
-        $(this).data('editor', editor);
-    });
-}
 // MathJax = {
 //     tex: {
 //         inlineMath: [['$', '$'], ['\\(', '\\)']]
@@ -64,14 +81,3 @@ if (typeof CodeMirror !== 'undefined') {
 //         fontCache: 'global'
 //     }
 // };
-$('#btn-open-file').click(function () {
-    $('#input-open-file').trigger('click');
-});
-$('#input-open-file').on('change', function (e) {
-    var fileData = e.target.files[0];
-    var reader = new FileReader();
-    reader.onload = function () {
-        $('.editor').data('editor').doc.setValue(reader.result);
-    };
-    reader.readAsText(fileData);
-});

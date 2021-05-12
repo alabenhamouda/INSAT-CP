@@ -2,19 +2,14 @@
 {% block main %}
     <div class="problem-wrapper p-2">
         <h1>{{ problem.letter }}.{{ problem.title }}</h1>
-        <pre>{{ problem.statement }}</pre>
-
+        {{ problem.statement|striptags|raw }}
         <section>
             <h3>input:</h3>
-            <pre>
-                                {{ problem.inputSpec }}
-                            </pre>
+            {{ problem.inputSpec }}
         </section>
         <section>
             <h3>output:</h3>
-            <pre>
-                                {{ problem.outputSpec }}
-                            </pre>
+            {{ problem.outputSpec }}
         </section>
         {# <div class="container"> #}
         {% for sample in problem.sampleIn %}
