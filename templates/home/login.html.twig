@@ -37,7 +37,7 @@
                     >
                     <input type="submit" value="Login" class="btn solid"/>
                 </form>
-                {{ form_start(form, {attr: {class: "sign-up-form"}}) }}
+                {{ form_start(form, {attr: {class: "sign-up-form", action:  path("register") }}) }}
                 <h2 class="title">Sign up</h2>
                 <div class="input-field">
                     <i class="fas fa-user-tie"></i>

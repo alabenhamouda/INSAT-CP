@@ -26,7 +26,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/{action<(login|signup)>}",name="auth")
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity, $action, AuthenticationUtils $authenticationUtils)
+    public function signup($action, AuthenticationUtils $authenticationUtils)
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -37,20 +37,34 @@ class HomeController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            $entity->persist($user);
-            $entity->flush();
-            return $this->redirectToRoute("home");
-        }
+        $form = $this->createform(usertype::class);
         return $this->render('home/login.html.twig', [
             'signup' => ($action == 'signup'),
             'form' => $form->createView(),
             'last_username' => $lastUsername,
             'error' => $error
+        ]);
+    }
+
+    /**
+     * @Route("/register", name="register", methods={"POST"})
+     */
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity)
+    {
+        $user = new user();
+        $form = $this->createform(usertype::class, $user);
+        $form->handlerequest($request);
+        if ($form->issubmitted() && $form->isvalid()) {
+            $user->setpassword($encoder->encodepassword($user, $user->getpassword()));
+            $entity->persist($user);
+            $entity->flush();
+            return $this->redirecttoroute("home");
+        }
+        return $this->render('home/login.html.twig', [
+            'signup' => 'signup',
+            'form' => $form->createView(),
+            'last_username' => "",
+            'error' => null
         ]);
     }
 }
