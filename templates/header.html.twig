@@ -13,14 +13,14 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('contests') }}">Contests</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('courses') }}">Tutorial</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Tools</a></li>
+                    {% if app.user %}
+                        <li><a class="btn btn-primary mr-2" href="{{ path('app_logout') }}"> Log out </a></li>
+                    {% else %}
+                        <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
+                        <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
+                    {% endif %}
                 </ul>
                 {# <a class="btn btn-primary mr-2" type="button" href="{{ path('auth', {action: "login"}) }}">SiGN IN</a> #}
-                {% if app.user %}
-                    <li><a class="btn btn-primary mr-2" href="{{ path('app_logout') }}"> Log out </a></li>
-                {% else %}
-                    <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
-                    <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
-                {% endif %}
             </div>
         </div>
     </nav>

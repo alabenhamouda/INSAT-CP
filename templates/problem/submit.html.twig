@@ -2,6 +2,13 @@
 {% set show = "submit" %}
 {% block main %}
     <div class="container" style="margin-top: 10px">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="languages">Language</label>
+            </div>
+            <select class="custom-select" id="languages">
+            </select>
+        </div>
         <textarea class="form-control editor" id="editor"></textarea>
         <div class="form-group">
             <div class="col-sm-5">
