@@ -11,7 +11,7 @@
         <div class="row">
             {% for problem in problems %}
             {# @var problem \App\Entity\Problem #}
-            <a href="{{ path('problem', {id: problem.contestSource.id, letter: problem.letter}) }}">
+            <a href="{{ path('problem', {id: problem.contest.id, letter: problem.letter}) }}">
                 <div class="col-3 p-2">
                     <div class="homie" style="">
                         {{ problem.letter }})

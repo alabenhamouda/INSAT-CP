@@ -14,7 +14,7 @@
             {% for problem in problems %}
                 <tr>
                     <td>
-                        <a href="{{ path("problem", {id: problem.contestSource.id, letter: problem.letter}) }}">
+                        <a href="{{ path("problem", {id: problem.contest.id, letter: problem.letter}) }}">
                             {{ problem.letter }}
                         </a>
                     </td>

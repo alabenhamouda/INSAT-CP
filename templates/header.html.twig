@@ -1,7 +1,8 @@
 <header>
     <nav class="navbar navbar-dark bg-dark navbar-expand-md">
         <div class="container-fluid"><a class="navbar-brand logo" href="/">INSAT <span class="logoCP">CP</span>
-            </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
+            </a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
                         class="sr-only">Toggle
                         navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
@@ -13,7 +14,13 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('courses') }}">Tutorial</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Tools</a></li>
                 </ul>
-                <a class="btn btn-primary mr-2" type="button" href="{{ path('login') }}">SiGN IN</a>
+                {# <a class="btn btn-primary mr-2" type="button" href="{{ path('auth', {action: "login"}) }}">SiGN IN</a> #}
+                {% if app.user %}
+                    <li><a class="btn btn-primary mr-2" href="{{ path('app_logout') }}"> Log out </a></li>
+                {% else %}
+                    <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
+                    <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
+                {% endif %}
             </div>
         </div>
     </nav>

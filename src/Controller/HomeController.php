@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Users;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
@@ -20,42 +24,33 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/signup",name="signup")
+     * @Route("/{action<(login|signup)>}",name="auth")
      */
-    public function signup()
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity, $action, AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('home/signup.html.twig');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $entity->persist($user);
+            $entity->flush();
+            return $this->redirectToRoute("home");
+        }
+        return $this->render('home/login.html.twig', [
+            'signup' => ($action == 'signup'),
+            'form' => $form->createView(),
+            'last_username' => $lastUsername,
+            'error' => $error
+        ]);
     }
-    /**
-     * @Route("/login",name="login")
-     */
-    public function login()
-    {
-        return $this->render('home/login.html.twig');
-
-    }
-
-    /**
-     * @Route("/process-signup",name="process_signup" ,methods="POST")
-     */
-    public function process_signup(Request $request,EntityManagerInterface $entityManager)
-    {
-        $user=new Users();
-        $data=$request->request;
-        $user->setFullName($data->get('name'))
-        ->setEmail($data->get('email'))
-            ->setPassword($data->get('password'))
-            ->setUsername($data->get('username'))
-            ;
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-        return $this->render('home/index.html.twig');
-
-
-
-    }
-
 }

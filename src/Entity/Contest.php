@@ -14,6 +14,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class Contest
 {
     use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,32 +28,20 @@ class Contest
     private $title;
 
 
-
     /**
      * @ORM\Column(type="integer")
      */
     private $duration;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="createdContests")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $creator;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Problem::class, mappedBy="contestSource")
+     * @ORM\OneToMany(targetEntity=Problem::class, mappedBy="contest")
      */
     private $problems;
 
     /**
-     * @ORM\ManyToMany(targetEntity=users::class, inversedBy="contests")
-     */
-    private $participants;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublished=false;
+    private $isPublished = false;
 
     /**
      * @ORM\Column(type="time")
@@ -64,6 +53,16 @@ class Contest
      */
     private $start_date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdContests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $creator;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contests")
+     */
+    private $participants;
 
 
     public function __construct()
@@ -102,18 +101,6 @@ class Contest
         return $this;
     }
 
-    public function getCreator(): ?Users
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(?Users $creator): self
-    {
-        $this->creator = $creator;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Problem[]
      */
@@ -126,7 +113,7 @@ class Contest
     {
         if (!$this->problems->contains($problem)) {
             $this->problems[] = $problem;
-            $problem->setContestSource($this);
+            $problem->setContest($this);
         }
 
         return $this;
@@ -136,34 +123,10 @@ class Contest
     {
         if ($this->problems->removeElement($problem)) {
             // set the owning side to null (unless already changed)
-            if ($problem->getContestSource() === $this) {
-                $problem->setContestSource(null);
+            if ($problem->getContest() === $this) {
+                $problem->setContest(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|users[]
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(users $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(users $participant): self
-    {
-        $this->participants->removeElement($participant);
 
         return $this;
     }
@@ -200,6 +163,42 @@ class Contest
     public function setStartDate(\DateTimeInterface $start_date): self
     {
         $this->start_date = $start_date;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(User $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(User $participant): self
+    {
+        $this->participants->removeElement($participant);
 
         return $this;
     }

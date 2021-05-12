@@ -12,18 +12,13 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class Submission
 {
     use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=users::class, inversedBy="submissions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=problem::class, inversedBy="submissions")
@@ -41,21 +36,15 @@ class Submission
      */
     private $language;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="submissions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?users
-    {
-        return $this->user;
-    }
-
-    public function setUser(?users $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getProblem(): ?problem
@@ -90,6 +79,18 @@ class Submission
     public function setLanguage(string $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -16,7 +16,12 @@
     <header>
         <h1 class="logo">INSAT <span class="logoCP">CP</span></h1>
         <nav>
-            <li><a href="{{ path('login') }}">Get Started </a></li>
+            {% if app.user %}
+                <li><a href="{{ path('app_logout') }}"> Log out </a></li>
+            {% else %}
+                <li><a href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
+                <li><a href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
+            {% endif %}
         </nav>
     </header>
     <section class="main">
