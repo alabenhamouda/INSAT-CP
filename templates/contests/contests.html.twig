@@ -43,7 +43,9 @@
                         </tr>
                     </table>
                 {% endif %}
+                {% if contests %}
                 {{ knp_pagination_render(contests,  'pagination_template.html.twig') }}
+                {% endif %}
             </div>
             <div class="col-3">
                 <div class="accordion">

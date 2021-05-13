@@ -23,16 +23,21 @@ class ProblemsController extends AbstractController
      */
     public function index(Request $request,PaginatorInterface $paginator): Response
     {
-        $repo=$this->em->getRepository(Problem::class);
+        $repo = $this->em->getRepository(Problem::class);
+        $title=$request->query->get('title');
+        if($title)
+        {
+            $problems = $repo->findByTitle($title);
+        }
+        else $problems = $repo->findAll();
         /**@var \App\Entity\Problem $problems*/
-        $problems=$paginator->paginate(
-            $repo->findAll(),
-            $request->query->getInt('page',1),
-            $request->query->getInt('jumpBy',24)
-        );;
-
-
-
+        if($problems) {
+            $problems = $paginator->paginate(
+                $problems,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('jumpBy', 10)
+            );;
+        }
         return $this->render('problems/index.html.twig', [
             'problems'=>$problems
         ]);

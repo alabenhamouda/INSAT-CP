@@ -18,7 +18,20 @@ class ProblemRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Problem::class);
     }
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
 
+    public function findByTitle($title)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.title like :title')
+            ->setParameter('title', '%'.$title.'%')
+            ->orderBy('p.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Problem[] Returns an array of Problem objects
     //  */

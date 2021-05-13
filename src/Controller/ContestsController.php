@@ -40,12 +40,14 @@ class ContestsController extends AbstractController
             $contests = $repo->findByTitle($title);
         }
         else $contests = $repo->findAllOrderedbyDate();
-
-        $visible_contests=$paginator->paginate(
-            $contests,
-            $request->query->getInt('page',1),
-            $request->query->getInt('jumpBy',10)
-        );
+        $visible_contests = $contests;
+            if($visible_contests) {
+                $visible_contests = $paginator->paginate(
+                    $contests,
+                    $request->query->getInt('page', 1),
+                    $request->query->getInt('jumpBy', 10)
+                );
+            }
         //dd($visible_contests);
         return $this->render('contests/contests.html.twig', [
             'contests' => $visible_contests,
