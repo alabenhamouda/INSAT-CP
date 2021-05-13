@@ -16,4 +16,4 @@ document.addEventListener('click',(e)=>{
         e.target.parentNode.classList.toggle('active');
         //.classList.toggle('active');
     }
-})
+});

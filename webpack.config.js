@@ -29,6 +29,7 @@ Encore
     .addEntry('problem', './assets/problem.js')
     .addEntry('contests', './assets/contests.js')
     .addEntry('contest', './assets/contest.js')
+    .addEntry('problems' , './assets/problems.js')
     .copyFiles({
         from: './assets/images'
     })

@@ -4,29 +4,54 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('contests') }}
+    {{ encore_entry_link_tags('problems') }}
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('problems') }}
 {% endblock %}
 {% block body %}
-    <div class="container">
-        <div class="row">
-            {% for problem in problems %}
-            {# @var problem \App\Entity\Problem #}
-            <a href="{{ path('problem', {id: problem.contest.id, letter: problem.letter}) }}">
-                <div class="col-3 p-2">
-                    <div class="homie" style="">
-                        {{ problem.letter }})
-                        {{ problem.title }}
-                        <br>
-                        TAGS:<br>
-                        {% for tag in problem.tags %}
-                            {# @var tag \App\Entity\Tag #}
-                            {{ tag.name }}<br>
-                        {% endfor %}
-                    </div>
-            </a>
-
-        </div>
-        {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <form class="d-flex" id="form" style="margin-top: 15px" method="get">
+                <input class="form-control" type="text" id="title" placeholder="Search for problem" name="title"  value="{{ app.request.get('title') }}">
+                <button type="submit" class="btn  bg-dark" id="button" style="color: white">Search</button>
+            </form>
+            {% if problems%}
+            <table class="table table-hover" id="table">
+                <tr class="table bg-dark" style="color: white">
+                    <th scope="row">#</th>
+                    <th scope="row">Title</th>
+                </tr>
+                {% for problem in problems %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('problem', {id: problem.contest.id, letter: problem.letter}) }}">
+                                {{ problem.letter }}
+                            </a>
+                        </td>
+                        <td>
+                            <div style="float: left">{{ problem.title }}</div>
+                            <div style="float: right;font-size: 1.1rem;padding-top: 1px;text-align: right">
+                                {% for tag in problem.tags %}
+                                    {% if  loop.last%}
+                                    <span style="white-space: nowrap">{{ tag.name }}</span>
+                                    {% else  %}
+                                        <span style="white-space: nowrap">{{ tag.name }} , </span>
+                                        {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <table class="table table-hover">
+                <tr class="table-danger">
+                    <th scope="row">No problem was found</th>
+                </tr>
+            </table>
+            {% endif %}
     </div>
     {{ knp_pagination_render(problems,  'pagination_template.html.twig') }}
     </div>
