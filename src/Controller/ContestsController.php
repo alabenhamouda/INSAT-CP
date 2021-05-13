@@ -206,18 +206,19 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             $this->redirectToRoute('myContests');
         }
-        return $this->render('contests/edit.html.twig',[
-            'contest'=>$contest,
-            'problems'=>$contest->getProblems()
+        return $this->render('contests/edit.html.twig', [
+            'contest' => $contest,
+            'problems' => $contest->getProblems()
         ]);
     }
+
     /**
      * @Route ("/{id<\d+>}/edit/addProblem",name="addProblem",methods="POST")
      */
-    public function addProblem(Contest $contest,Request $request,EntityManagerInterface $em)
+    public function addProblem(Contest $contest, Request $request, EntityManagerInterface $em)
     {
         //TODO check user
-        $problem =new Problem();
+        $problem = new Problem();
         $problem->setTitle("")
             ->setContest($contest)
             ->setValidator("")
@@ -226,31 +227,51 @@ class ContestsController extends AbstractController
             ->setSolution("")
             ->setProof("")
             ->setStatement("")
-            ->setLetter(chr(sizeof($contest->getProblems())+ord('A')))
+            ->setLetter(chr(sizeof($contest->getProblems()) + ord('A')))
             ->setOutputSpec("")
             ->setInputSpec("");
         $contest->addProblem($problem);
         $em->persist($problem);
         $em->persist($contest);
         $em->flush();
-        return $this->redirectToRoute('editProblem',['id'=>$contest->getId(),'letter'=>$problem->getLetter()]);
-
-
+        return $this->redirectToRoute('edit_problem', ['id' => $contest->getId(), 'letter' => $problem->getLetter()]);
 
 
     }
 
     /**
-     * @Route ("/{id<\d+>}/edit/{letter}",name="editProblem",methods={"GET"})
+     * @Route ("/{id<\d+>}/edit/{letter}",name="edit_problem",methods={"GET"})
      */
-    public function editProblem(Contest $contest,$letter)
+    public function editProblem(Contest $contest, $letter)
     {
         //TODO check user
         //TODO check letter
-        $problem=$contest->getProblems()[ord($letter) - ord('A')];
-        return $this->render('contests/editProblem.html.twig',[
-            'problem'=>$problem
+        $problem = $contest->getProblems()[ord($letter) - ord('A')];
+        return $this->render('contests/editProblem.html.twig', [
+            'problem' => $problem
         ]);
+
+
+    }
+
+    /**
+     * @Route ("/{id<\d+>}/edit/{letter}/process" ,name="process_edit_problem" ,methods={"POST"})
+     */
+    public function processEditProblem(Contest $contest, Request $request, EntityManagerInterface $em, $letter)
+    {
+        //TODO check user
+        //TODO check letter
+
+
+        $r = $request->request;
+//        dd($letter);
+        $problem = $contest->getProblems()[ord($letter) - ord('A')];
+        //TODO check POST input or use symfony form
+        $problem->setTitle($r->get('title'))
+            ->setStatement($r->get('statement'));
+        $em->persist($problem);
+        $em->flush();
+        return $this->redirectToRoute('myContests');
 
 
     }
