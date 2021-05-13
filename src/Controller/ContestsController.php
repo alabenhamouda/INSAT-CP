@@ -5,7 +5,9 @@ namespace App\Controller;
 
 
 use App\Entity\Contest;
+use ContainerMRFnOzc\getKnpPaginatorService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +29,7 @@ class ContestsController extends AbstractController
     /**
      * @Route("/",name="contests",methods={"GET"})
      */
-    public function contestList(Request $request)
+    public function contestList(Request $request,PaginatorInterface $paginator)
     {
         $repo = $this->em->getRepository(Contest::class);
         $title=$request->query->get('title');
@@ -37,9 +39,16 @@ class ContestsController extends AbstractController
         {
             $contests = $repo->findByTitle($title);
         }
-        else $contests = $repo->findAll();
+        else $contests = $repo->findAllOrderedbyDate();
+
+        $visible_contests=$paginator->paginate(
+            $contests,
+            $request->query->getInt('page',1),
+            $request->query->getInt('jumpBy',10)
+        );
+        //dd($visible_contests);
         return $this->render('contests/contests.html.twig', [
-            'contests' => $contests,
+            'contests' => $visible_contests,
             'up'=>$up,
             'rec'=>$rec
         ]);

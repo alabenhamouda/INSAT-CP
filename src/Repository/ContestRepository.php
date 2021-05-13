@@ -52,7 +52,7 @@ class ContestRepository extends ServiceEntityRepository
     /**
      * @return Contest[] Returns an array of Contest objects
      */
-    public function findrecent()
+    public function findrecent(): array
     {
         $date = date("Y-m-d");
         return $this->createQueryBuilder('c')
@@ -64,6 +64,21 @@ class ContestRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
+
+    public function findAllOrderedbyDate(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.start_date <= :date')
+            ->setParameter('date',date("Y-m-d"))
+            ->orderBy('c.start_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Contest
     {
