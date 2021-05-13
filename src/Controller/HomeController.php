@@ -67,4 +67,6 @@ class HomeController extends AbstractController
             'error' => null
         ]);
     }
+
+
 }

@@ -1,0 +1,42 @@
+{% extends 'headerBase.html.twig' %}
+{% block title %}Edit Contest {{ contest.id }}{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('contest') }}
+{% endblock %}
+{% block body %}
+    <div class="container mt-2">
+        <h1>Contest {{ contest.id }} </h1> <br>
+        <h5>
+            status:
+            {% if contest.isPublished %}
+                <span style="color: green">
+                published
+            </span>
+            {% else %}
+                <span style="color: red">
+                unpublished
+            </span>
+            {% endif %}
+        </h5>
+        <table class="table table-hover" id="table">
+            <tr class="table bg-dark" style="color: white">
+                <th scope="row">#</th>
+                <th scope="row">Name</th>
+            </tr>
+            {% for problem in problems %}
+                <tr>
+                    <td>
+                        <a href="/contests/{{ contest.id }}/edit/{{ problem.letter }}">
+                            {{ problem.letter }}
+                        </a>
+                    </td>
+                    <td>{{ problem.title }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form method="post" action="/contests/{{ contest.id }}/edit/addProblem">
+            <button class="btn btn-dark" type="submit" name="add" value="ok">add a problem</button>
+        </form>
+    </div>
+{% endblock %}

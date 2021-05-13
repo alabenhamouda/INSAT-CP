@@ -1,0 +1,106 @@
+{% extends 'headerBase.html.twig' %}
+
+{% block title %}My Contests{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+{#        unpublished contests#}
+        <div class="row">
+            <div class="col-10">
+                <h1> Unpublished contests</h1>
+                {% if unpublished is not null %}
+                    <table class="table table-hover" id="table">
+                        <tr class="table bg-dark" style="color: white">
+                            <th scope="row">Title</th>
+                            <th scope="row">Start Time</th>
+                            <th scope="row">Duration</th>
+                        </tr>
+                        {% for contest in unpublished %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path("contest", {id: contest.id}) }}">
+                                        {{ contest.title }}
+                                    </a>
+                                </td>
+                                <td>{{ contest.startDate|time_diff }}</td>
+                                <td>{{ contest.duration|duration_helper }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <table class="table table-hover">
+                        <tr class="table-info">
+                            <th scope="row">0 unpublished contest were found</th>
+                        </tr>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+{#        published contests#}
+        <div class="row">
+            <div class="col-10">
+                <h1> published contests</h1>
+                {% if published is not null%}
+                    <table class="table table-hover" id="table">
+                        <tr class="table bg-dark" style="color: white">
+                            <th scope="row">Title</th>
+                            <th scope="row">Start Time</th>
+                            <th scope="row">Duration</th>
+                        </tr>
+                        {% for contest in published %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path("contest", {id: contest.id}) }}">
+                                        {{ contest.title }}
+                                    </a>
+                                </td>
+                                <td>{{ contest.startDate|time_diff }}</td>
+                                <td>{{ contest.duration|duration_helper }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <table class="table table-hover">
+                        <tr class="table-info">
+                            <th scope="row">0 published contests were found</th>
+                        </tr>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+
+{#        particiapations#}
+        <div class="row">
+            <div class="col-10">
+                <h1> participations</h1>
+                {% if participated is not null %}
+                    <table class="table table-hover" id="table">
+                        <tr class="table bg-dark" style="color: white">
+                            <th scope="row">Title</th>
+                            <th scope="row">Start Time</th>
+                            <th scope="row">Duration</th>
+                        </tr>
+                        {% for contest in participated %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path("contest", {id: contest.id}) }}">
+                                        {{ contest.title }}
+                                    </a>
+                                </td>
+                                <td>{{ contest.startDate|time_diff }}</td>
+                                <td>{{ contest.duration|duration_helper }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <table class="table table-hover">
+                        <tr class="table-info">
+                            <th scope="row">0 contests were found</th>
+                        </tr>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
