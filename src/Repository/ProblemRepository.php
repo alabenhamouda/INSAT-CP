@@ -32,6 +32,38 @@ class ProblemRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
+
+    public function findByTitleAndTags($title , $tags)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+            ->from('App\Entity\Problem', 'p')
+            ->where('p.title like :title')
+            ->innerJoin('p.tags','tag')
+            ->andWhere('tag In (:tags)')
+            ->setParameter('title', '%'.$title.'%')
+            ->setParameter('tags', $tags)
+        ;
+        return   $qb->getQuery()->getResult();
+
+    }
+    public function findByTags($tags)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+            ->from('App\Entity\Problem', 'p')
+            ->innerJoin('p.tags','tag')
+           ->where('tag In (:tags)')
+         ->setParameter('tags', $tags)
+            ;
+        return   $qb->getQuery()->getResult();
+}
+
     // /**
     //  * @return Problem[] Returns an array of Problem objects
     //  */
