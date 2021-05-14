@@ -11,66 +11,74 @@
     {{ encore_entry_script_tags('problems') }}
 {% endblock %}
 {% block body %}
-<div class="container" style="margin-top: 15px">
-    <div class="row">
-        <div class="col-9">
+    <div class="container" style="margin-top: 15px">
+        <div class="row">
+            <div class="col-9">
 
-            {% if problems%}
-            <table class="table table-hover" id="table">
-                <tr class="table bg-dark" style="color: white">
-                    <th scope="row">#</th>
-                    <th scope="row">Title</th>
-                </tr>
-                {% for problem in problems %}
-                    <tr>
-                        <td>
-                            <a href="{{ path('problem', {id: problem.contest.id, letter: problem.letter}) }}">
-                                {{ problem.letter }}
-                            </a>
-                        </td>
-                        <td>
-                            <div style="float: left">{{ problem.title }}</div>
-                            <div style="float: right;font-size: 1.1rem;padding-top: 1px;text-align: right">
-                                {% for tag in problem.tags %}
-                                    {% if  loop.last%}
-                                    <span style="white-space: nowrap">{{ tag.name }}</span>
-                                    {% else  %}
-                                        <span style="white-space: nowrap">{{ tag.name }} , </span>
+                {% if problems %}
+                    <table class="table table-hover" id="table">
+                        <tr class="table bg-dark" style="color: white">
+                            <th scope="row">#</th>
+                            <th scope="row">Title</th>
+                        </tr>
+                        {% for problem in problems %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('problem', {id: problem.contest.id, letter: problem.letter}) }}">
+                                        {{ problem.letter }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <div style="float: left">{{ problem.title }}</div>
+                                    <div style="float: right;font-size: 1.1rem;padding-top: 1px;text-align: right">
+                                        {% for tag in problem.tags %}
+                                            {% if  loop.last %}
+                                                <span style="white-space: nowrap">{{ tag.name }}</span>
+                                            {% else %}
+                                                <span style="white-space: nowrap">{{ tag.name }} , </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <table class="table table-hover">
+                        <tr class="table-danger">
+                            <th scope="row">No problem was found</th>
+                        </tr>
+                    </table>
+                {% endif %}
+                {% if problems %}
+                    {{ knp_pagination_render(problems,  'pagination_template.html.twig') }}
+                {% endif %}
+            </div>
+            <div class="col-3">
+                <form>
+                    <div class="form-group" id="form" style="margin-top: 15px">
+                        <input class="form-control" type="text" id="title" placeholder="Search for problem" name="title"
+                               value="{{ app.request.get('title') }}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Select tag</label>
+                        <select class="selectpicker" multiple name="tag[]" data-selected-text-format="count > 3">
+                            {% for tag in tags %}
+                                <option
+                                        {% if tag.name in app.request.get('tag') %}
+                                            selected
                                         {% endif %}
-                                {% endfor %}
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            {% else %}
-            <table class="table table-hover">
-                <tr class="table-danger">
-                    <th scope="row">No problem was found</th>
-                </tr>
-            </table>
-            {% endif %}
-            {% if problems %}
-                {{ knp_pagination_render(problems,  'pagination_template.html.twig') }}
-            {% endif %}
-    </div>
-        <div class="col-3">
-            <form>
-            <div class="form-group" id="form" style="margin-top: 15px" method="get">
-                <input class="form-control" type="text" id="title" placeholder="Search for problem" name="title"  value="{{ app.request.get('title') }}">
-                </div>
-                <div class="input-group mb-3">
-                    <label class="input-group-text">Select tag</label>
-                <select class="selectpicker" multiple  name="tag[]" data-selected-text-format="count > 3">
-                    {% for tag in tags %}
-                    <option>{{ tag.name }}</option>
-                   {% endfor%}
-                </select>
-                </div>
-                <button type="submit" class="btn  bg-dark" id="button" style="color: white;float: right" >Search</button>
+                                >
+                                    {{ tag.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn  bg-dark" id="button" style="color: white;float: right">Search
+                    </button>
                 </form>
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 

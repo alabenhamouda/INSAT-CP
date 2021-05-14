@@ -18,6 +18,7 @@ class ProblemRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Problem::class);
     }
+
     /**
      * @return Contest[] Returns an array of Contest objects
      */
@@ -26,47 +27,46 @@ class ProblemRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.title like :title')
-            ->setParameter('title', '%'.$title.'%')
+            ->setParameter('title', '%' . $title . '%')
             ->orderBy('p.title', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
-    /**
-     * @return Contest[] Returns an array of Contest objects
-     */
 
-    public function findByTitleAndTags($title , $tags)
+    private function findByTagsQuery($tags)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $qb->select('p')
+        $qb->select('p, t')
             ->from('App\Entity\Problem', 'p')
-            ->where('p.title like :title')
-            ->innerJoin('p.tags','tag')
-            ->andWhere('tag In (:tags)')
-            ->setParameter('title', '%'.$title.'%')
-            ->setParameter('tags', $tags)
-        ;
-        return   $qb->getQuery()->getResult();
+            ->join('p.tags', 't');
+        foreach ($tags as $idx => $tag) {
+            $qb->andWhere(':tag' . $idx . ' MEMBER OF p.tags')
+                ->setParameter('tag' . $idx, $tag);
+        }
+        return $qb;
+    }
+
+    /**
+     * @return Problem[] Returns an array of Problem objects
+     */
+    public function findByTitleAndTags($title, $tags)
+    {
+        $qb = $this->findByTagsQuery($tags);
+        $qb->where('p.title like :title')
+            ->setParameter('title', '%' . $title . '%');
+        return $qb->getQuery()->getResult();
 
     }
+
+    /**
+     * @return Problem[] Returns an array of Problem objects
+     */
     public function findByTags($tags)
     {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $qb->select('p')
-            ->from('App\Entity\Problem', 'p')
-            ->innerJoin('p.tags','tag')
-           ->where('tag In (:tags)')
-         ->setParameter('tags', $tags)
-            ;
-        return   $qb->getQuery()->getResult();
-}
+        return $this->findByTagsQuery($tags)->getQuery()->getResult();
+    }
 
-    // /**
-    //  * @return Problem[] Returns an array of Problem objects
-    //  */
     /*
     public function findByExampleField($value)
     {
