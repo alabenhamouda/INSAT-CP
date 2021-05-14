@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Problem;
 use App\Entity\Tag;
+use App\Entity\Contest;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,7 @@ class ProblemsController extends AbstractController
         $repo = $this->em->getRepository(Problem::class);
         $tags = $this->em->getRepository(Tag::class)->findAll();
         $title=$request->query->get('title');
+        $up = $this->em->getRepository(Contest::class)->findupcoming();
         $prob_tags=$request->query->get('tag');
         $prob_tags=$this->em->getRepository(Tag::class)->findBy([
             'name'=>$prob_tags
@@ -55,7 +57,8 @@ class ProblemsController extends AbstractController
         }
         return $this->render('problems/index.html.twig', [
             'problems'=>$problems,
-            'tags'=>$tags
+            'tags'=>$tags,
+            'up'=>$up
         ]);
     }
 }

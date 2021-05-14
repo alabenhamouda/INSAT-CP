@@ -55,6 +55,7 @@
             {% endif %}
     </div>
         <div class="col-3">
+            <div >
             <form>
             <div class="form-group" id="form" style="margin-top: 15px" method="get">
                 <input class="form-control" type="text" id="title" placeholder="Search for problem" name="title"  value="{{ app.request.get('title') }}">
@@ -66,9 +67,22 @@
                     <option>{{ tag.name }}</option>
                    {% endfor%}
                 </select>
+                    <button type="submit" class="btn btn-dark" id="button" style="color: white; margin-top: 15px" >Search</button>
                 </div>
-                <button type="submit" class="btn  bg-dark" id="button" style="color: white;float: right" >Search</button>
                 </form>
+                </div>
+            <div class="accordion" style="margin-top: 15px">
+                <div class="contentA active">
+                    <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Upcoming Contests</div>
+                    <div class="content">
+                        {% for contest in up %}
+                            <a class="dropdown-item"
+                               href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>

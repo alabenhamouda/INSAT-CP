@@ -191,7 +191,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}/edit",name="contest",methods={"GET"})
+     * @Route("/edit/{id<\d+>}",name="editContest",methods={"GET"})
      */
     public function edit(Contest $contest, EntityManagerInterface $em)
     {
@@ -213,7 +213,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route ("/{id<\d+>}/edit/addProblem",name="addProblem",methods="POST")
+     * @Route ("/edit/{id<\d+>}/addProblem",name="addProblem",methods="POST")
      */
     public function addProblem(Contest $contest, Request $request, EntityManagerInterface $em)
     {
@@ -240,7 +240,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route ("/{id<\d+>}/edit/{letter}",name="edit_problem",methods={"GET"})
+     * @Route ("/edit/{id<\d+>}/{letter}",name="edit_problem",methods={"GET"})
      */
     public function editProblem(Contest $contest, $letter)
     {
@@ -255,7 +255,7 @@ class ContestsController extends AbstractController
     }
 
     /**
-     * @Route ("/{id<\d+>}/edit/{letter}/process" ,name="process_edit_problem" ,methods={"POST"})
+     * @Route ("/edit/{id<\d+>}/{letter}/process" ,name="process_edit_problem" ,methods={"POST"})
      */
     public function processEditProblem(Contest $contest, Request $request, EntityManagerInterface $em, $letter)
     {

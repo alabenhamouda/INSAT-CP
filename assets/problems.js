@@ -12,3 +12,9 @@ $(document).ready(function() {
         }
     });
 });
+document.addEventListener('click',(e)=>{
+    if(e.target.className=='label navbar bg-dark'){
+        e.target.parentNode.classList.toggle('active');
+        //.classList.toggle('active');
+    }
+});
