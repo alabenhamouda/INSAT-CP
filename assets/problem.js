@@ -7,6 +7,7 @@ import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/addon/edit/matchbrackets'
+import 'codemirror/keymap/vim'
 import './styles/problem.css'
 import ClipboardJS from 'clipboard/dist/clipboard.min';
 import $ from 'jquery'
@@ -53,6 +54,7 @@ $(function () {
         },
         matchBrackets: true,
         autoCloseBrackets: true,
+        keyMap: "default",
         styleActiveLine: true
     });
     langSel.on('change', e => {
@@ -69,6 +71,17 @@ $(function () {
         };
         reader.readAsText(fileData);
     });
+    let vimMode = false;
+    $("#vim").on('click', function () {
+        vimMode = !vimMode;
+        if (vimMode) {
+            $(this).addClass('vimMode');
+            editor.setOption('keyMap', "vim");
+        } else {
+            $(this).removeClass('vimMode');
+            editor.setOption('keyMap', "default");
+        }
+    })
 })
 cli.on('success', function (e) {
     e.clearSelection();
