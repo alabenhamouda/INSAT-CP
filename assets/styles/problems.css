@@ -1,9 +1,9 @@
-.container
-{
+.container {
     max-width: 1500px !important;
 }
-.contentA .label::before{
-    content: '+' ;
+
+.contentA .label::before {
+    content: '+';
     color: white;
     position: absolute;
     top: 50%;
@@ -11,8 +11,9 @@
     transform: translateY(-50%);
     font-size: 1.5em;
 }
-.active .label::before{
-    content: '-' ;
+
+.active .label::before {
+    content: '-';
     color: white;
     position: absolute;
     top: 50%;
@@ -20,13 +21,24 @@
     transform: translateY(-50%);
     font-size: 1.5em;
 }
+
 .contentA .content {
     overflow: hidden;
     height: 0;
     transition: 0.5s;
     overflow-y: hidden;
 }
-.active .content{
+
+.active .content {
     height: 200px;
     padding: 10px;
+}
+
+.tag {
+    background-color: #e1e4e6;
+    border-top-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    padding: 5px;
+    white-space: nowrap;
+    color: #343a40;
 }

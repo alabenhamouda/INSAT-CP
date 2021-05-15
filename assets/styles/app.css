@@ -4,29 +4,39 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
-a,a:focus,a:hover{
-    text-decoration:none;
-    color:black;
+
+a, a:focus, a:hover {
+    text-decoration: none;
+    color: black;
 }
+
 .logo {
     font-family: 'New Tegomin';
     font-weight: bold;
 }
+
 .logoCP {
     /* color: rgb(145, 68, 46)!important; */
     /* wela hatha */
     color: #b77126 !important;
     font-weight: bolder !important;
 }
-.footer-contacts p a{
-    color:#ecc06c;
+
+.footer-contacts p a {
+    color: #ecc06c;
 }
-.header-signup{
-    background-color: white!important;
-    color:black!important;
+
+.header-signup {
+    background-color: white !important;
+    color: black !important;
     transition: ease;
 }
-.header-signup:hover{
-    background-color:#ddd!important;
-    color:black!important;
+
+.header-signup:hover {
+    background-color: #ddd !important;
+    color: black !important;
+}
+
+tr:not(tr:first-of-type) {
+    cursor: pointer;
 }

@@ -13,9 +13,19 @@ $(document).ready(function () {
         }
     });
 });
-document.addEventListener('click',(e)=>{
-    if(e.target.className=='label navbar bg-dark'){
+document.addEventListener('click', (e) => {
+    if (e.target.className == 'label navbar bg-dark') {
         e.target.parentNode.classList.toggle('active');
         //.classList.toggle('active');
     }
 });
+let select = $(".selectpicker");
+$("tr .tag").on('click', function (e) {
+    let name = $(this).text();
+    $(".selectpicker option").filter(function () {
+        return $(this).text().trim() == name.trim();
+    }).prop("selected", true);
+    select.selectpicker('refresh');
+    $("form").submit();
+    e.stopPropagation();
+})

@@ -24,10 +24,11 @@ class AppFixture extends Fixture
         //create tags
         for ($i = 0; $i < 50; $i++) {
             $tag = new Tag();
-            $tag->setName($fa->word);
+            $tag->setName($fa->unique()->word);
             array_push($tagArr, $tag);
             $manager->persist($tag);
         }
+        $fa->unique(true);
         $repo = $manager->getRepository(User::class);
         //create users
         $userArr = [];

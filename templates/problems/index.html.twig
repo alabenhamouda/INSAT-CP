@@ -32,11 +32,7 @@
                                     <div style="float: left">{{ problem.title }}</div>
                                     <div style="float: right;font-size: 1.1rem;padding-top: 1px;text-align: right">
                                         {% for tag in problem.tags %}
-                                            {% if  loop.last %}
-                                                <span style="white-space: nowrap">{{ tag.name }}</span>
-                                            {% else %}
-                                                <span style="white-space: nowrap">{{ tag.name }} , </span>
-                                            {% endif %}
+                                            <span class="tag">{{ tag.name }}</span>
                                         {% endfor %}
                                     </div>
                                 </td>
