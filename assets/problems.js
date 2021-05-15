@@ -19,7 +19,43 @@ document.addEventListener('click', (e) => {
         //.classList.toggle('active');
     }
 });
+
 let select = $(".selectpicker");
+
+function addSelectedTag(tagName) {
+    let tag = $("<span></span>").addClass("tag").text(tagName);
+    let remove = $("<i class=\"fas fa-trash\"></i>").addClass("removeTag")
+    remove.on('click', function (e) {
+        let parent = $(this).parent();
+        let val = select.selectpicker('val').filter(t => t != parent.text());
+        select.selectpicker('val', val);
+        parent.remove();
+    })
+    tag.append(remove);
+    $(".selectedTags").append(tag);
+}
+
+function removeSelectedTag(tagName) {
+    $(".selectedTags .tag").filter(function () {
+        return $(this).text().trim() == tagName;
+    }).remove();
+}
+
+select.on('changed.bs.select', function (e, clickedIdx, isSelected, previousVal) {
+    if (clickedIdx != null) {
+        let tag = $('ul.dropdown-menu>li').eq(clickedIdx).text().trim();
+        if (isSelected)
+            addSelectedTag(tag);
+        else
+            removeSelectedTag(tag);
+    }
+})
+select.on('loaded.bs.select refreshed.bs.select', function () {
+    $('.selectedTags').html("");
+    for (let tag of select.selectpicker('val')) {
+        addSelectedTag(tag);
+    }
+})
 $("tr .tag").on('click', function (e) {
     let name = $(this).text();
     $(".selectpicker option").filter(function () {

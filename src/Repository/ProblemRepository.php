@@ -53,7 +53,7 @@ class ProblemRepository extends ServiceEntityRepository
     public function findByTitleAndTags($title, $tags)
     {
         $qb = $this->findByTagsQuery($tags);
-        $qb->where('p.title like :title')
+        $qb->andWhere('p.title like :title')
             ->setParameter('title', '%' . $title . '%');
         return $qb->getQuery()->getResult();
 
