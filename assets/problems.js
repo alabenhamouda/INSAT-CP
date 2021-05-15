@@ -65,3 +65,7 @@ $("tr .tag").on('click', function (e) {
     $("form").submit();
     e.stopPropagation();
 })
+$("#clear").on("click", function () {
+    console.log('ok');
+    $("#select").val('default').selectpicker("refresh");
+});

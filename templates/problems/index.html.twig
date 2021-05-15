@@ -59,7 +59,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text">Select tag</label>
-                            <select class="selectpicker" multiple name="tag[]" data-selected-text-format="count > 3">
+                            <select class="selectpicker" multiple name="tag[]" data-selected-text-format="count > 3" id="select">
                                 {% for tag in tags %}
                                     <option
                                             {% if tag.name in app.request.get('tag') %}
@@ -74,6 +74,7 @@
                             <button type="submit" class="btn btn-dark" id="button"
                                     style="color: white; margin-top: 15px">Search
                             </button>
+                            <button type="button" id="clear" class="btn btn-dark" style="margin-top: 15px;margin-left: 15px">Clear tags</button>
                         </div>
                     </form>
                 </div>
