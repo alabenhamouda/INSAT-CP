@@ -1,0 +1,31 @@
+{% extends 'courses/layout.html.twig' %}
+{% block body %}
+    <div class="jumbotron m-5">
+        <h1 class="display-4">tree data structure</h1>
+        <p class="lead">
+            We read the linear data structures like an array, linked list, stack and queue in which all the elements are
+            arranged in a sequential manner. The different data structures are used for different kinds of data.
+            Some factors are considered for choosing the data structure:
+        <ul class="lead">
+            <li>What type of data needs to be stored?: It might be a possibility that a certain data structure can be
+                the best fit for some kind of data.
+            </li>
+            <li>Cost of operations: If we want to minimize the cost for the operations for the most frequently performed
+                operations. For example, we have a simple list on which we have to perform the search operation; then,
+                we can create an array in which elements are stored in sorted order to perform the binary search. The
+                binary search works very fast for the simple list as it divides the search space into half.
+            </li>
+            <li>Memory usage: Sometimes, we want a data structure that utilizes less memory.</li>
+        </ul>
+        Let's understand some key points of the Tree data structure.
+<ul class="lead">
+        <li>A tree data structure is defined as a collection of objects or entities known as nodes that are linked
+            together to represent or simulate hierarchy.</li>
+        <li>A tree data structure is a non-linear data structure because it does not store in a sequential manner. It is
+            a hierarchical structure as elements in a Tree are arranged in multiple levels.</li>
+        <li>In the Tree data structure, the topmost node is known as a root node. Each node contains some data, and data
+        can be of any type. </li>
+    <li>Each node contains some data and the link or reference of other nodes that can be called children.</li>
+        </p>
+    </div>
+{% endblock %}

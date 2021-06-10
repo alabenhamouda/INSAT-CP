@@ -1,0 +1,29 @@
+{% extends 'courses/layout.html.twig' %}
+{% block body %}
+    <div class="jumbotron m-5">
+        <h1 class="display-4">dynamic programming</h1>
+        <p class="lead">
+            Dynamic Programming (DP) is an algorithmic technique for solving an optimization problem by breaking it down into simpler subproblems and utilizing the fact that the optimal solution to the overall problem depends upon the optimal solution to its subproblems.
+
+            Let’s take the example of the Fibonacci numbers. As we all know, Fibonacci numbers are a series of numbers in which each number is the sum of the two preceding numbers. The first few Fibonacci numbers are 0, 1, 1, 2, 3, 5, and 8, and they continue on from there.
+
+            If we are asked to calculate the nth Fibonacci number, we can do that with the following equation,
+            $$ Fib(n) = Fib(n-1) + Fib(n-2), for n > 1 $$
+        </p>
+        <h3 class="display-4">Top-down with Memoization</h3>
+        <p class="lead">
+            In this approach, we try to solve the bigger problem by recursively finding the solution to smaller sub-problems. Whenever we solve a sub-problem, we cache its result so that we don’t end up solving it repeatedly if it’s called multiple times. Instead, we can just return the saved result. This technique of storing the results of already solved subproblems is called Memoization.
+
+            We’ll see this technique in our example of Fibonacci numbers. First, let’s see the non-DP recursive solution for finding the nth Fibonacci number:
+        </p>
+        <pre><code class="language-cpp">{{ code1 }}</code></pre>
+        <p class="lead">
+            As we saw above, this problem shows the overlapping subproblems pattern, so let’s make use of memoization here. We can use an array to store the already solved subproblems .
+
+        </p>
+        <pre><code class="language-cpp">{{ code2 }}</code></pre>
+
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'headerBase.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sorting') }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/github-dark-dimmed.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tutorial') }}
+{% endblock %}
+

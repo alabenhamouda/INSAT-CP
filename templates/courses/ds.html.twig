@@ -1,0 +1,76 @@
+{% extends 'courses/layout.html.twig' %}
+{% block body %}
+    <div class="jumbotron m-5">
+        <h1 class="display-4">data structures</h1>
+        <p class="lead">A data structure is a particular way of organizing data in a computer so that it can be used
+            effectively.
+            <br>
+
+        </p>
+        <h3 class="display-4">linked list</h3>
+        <p class="lead">
+            A linked list is a linear data structure, in which the elements are not stored at contiguous memory
+            locations. The elements in a linked list are linked using pointers as shown in the below image:
+        </p>
+        <p class="lead">
+            A linked list is a linear data structure, in which the elements are not stored at contiguous memory
+            locations. The elements in a linked list are linked using pointers as shown in the below image:
+            <br>
+            Advantages over arrays
+            <br>1) Dynamic size
+            <br>2) Ease of insertion/deletion
+            <br>Drawbacks:
+            <br>1) Random access is not allowed. We have to access elements sequentially starting from the first node.
+            So we cannot do binary search with linked lists efficiently with its default implementation. Read about it
+            here.
+            <br>2) Extra memory space for a pointer is required with each element of the list.
+            <br>3) Not cache friendly. Since array elements are contiguous locations, there is locality of reference
+            which is not there in case of linked lists.
+        </p>
+        <h3 class="display-4">set</h3>
+        <p class="lead">
+            Sets are a type of associative containers in which each element has to be unique, because the value of the
+            element identifies it. The value of the element cannot be modified once it is added to the set, though it is
+            possible to remove and add the modified value of that element.
+        <ul class="lead">
+            <li>begin() – Returns an iterator to the first element in the set.
+            </li>
+            <li>end() – Returns an iterator to the theoretical element that follows last element in the set.
+            </li>
+            <li>size() – Returns the number of elements in the set.
+            </li>
+            <li>max_size() – Returns the maximum number of elements that the set can hold.
+            </li>
+            <li>empty() – Returns whether the set is empty.
+            </li>
+        </ul>
+        </p>
+        <h3 class="display-4">Maps</h3>
+        <p class="lead">
+            Maps are associative containers that store elements in a mapped fashion. Each element has a key value and a
+            mapped value. No two mapped values can have same key values.
+<ul class="lead">
+
+        <li>Some basic functions associated with Map:
+        </li>
+        <li>begin() – Returns an iterator to the first element in the map
+        </li>
+        <li>end() – Returns an iterator to the theoretical element that follows last element in the map
+        </li>
+        <li>size() – Returns the number of elements in the map
+        </li>
+        <li>max_size() – Returns the maximum number of elements that the map can hold
+        </li>
+        <li>empty() – Returns whether the map is empty
+        </li>
+        <li>pair insert(keyvalue, mapvalue) – Adds a new element to the map
+        </li>
+        <li>erase(iterator position) – Removes the element at the position pointed by the iterator
+        </li>
+        <li>erase(const g)– Removes the key value ‘g’ from the map
+        </li>
+        <li>clear() – Removes all the elements from the map</li>
+        </p>
+        </ul>
+    </div>
+{% endblock %}

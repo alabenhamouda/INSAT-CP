@@ -1,0 +1,123 @@
+
+body {
+    background-color: #c6cfd7;
+}
+
+.simulation {
+    margin: 0;
+    background-color: #eee;
+    display: flex;
+    /* justify-content: space-around; */
+    transition: all 1s ease;
+}
+
+.block {
+    border: 2px solid black;
+    transition: margin 1s ease, background-color 0.7s ease;
+    position: absolute;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-size: 5vw;
+    margin-top: 5vw;
+
+
+}
+
+.exp {
+    margin-top: 21vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.exp p {
+    margin: 0;
+}
+
+.slidecontainer {
+    width: 100%;
+    /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 25px;
+    /* Specified height */
+    background: #333;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    transition: opacity .2s;
+    border-radius: 7px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+.nope {
+    display: none !important;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #0069d9;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #0069d9;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.arrow {
+    /* background-color:purple; */
+    border: solid purple;
+    border-width: 0 1vw 1vw 0;
+    display: inline-block;
+    padding: 1vw;
+    position: absolute;
+    transition: 1s all ease;
+}
+
+
+.up {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+#a3 {
+    border-color: darkred;
+
+}
+
+#a4 {
+    border-color: darkcyan;
+}

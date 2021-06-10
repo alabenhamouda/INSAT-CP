@@ -1,0 +1,20 @@
+{% extends 'courses/layout.html.twig' %}
+{% block body %}
+<div class="jumbotron m-5">
+    <h1 class="display-4">algorithmic complexity</h1>
+    <p class="lead">Algorithmic complexity is a measure of how long an algorithm would take to complete given an input of size n. If an algorithm has to scale, it should compute the result within a finite and practical time bound even for large values of n. For this reason, complexity is calculated asymptotically as n approaches infinity. While complexity is usually in terms of time, sometimes complexity is also analyzed in terms of space, which translates to the algorithm's memory requirements.
+
+        Analysis of an algorithm's complexity is helpful when comparing algorithms or seeking improvements. Algorithmic complexity falls within a branch of theoretical computer science called computational complexity theory. It's important to note that we're concerned about the order of an algorithm's complexity, not the actual execution time in terms of milliseconds.
+
+        Algorithmic complexity is also called complexity or running time.
+    <br>
+        Big-O notation is the prevalent notation to represent algorithmic complexity. It gives an upper bound on complexity and hence it signifies the worst-case performance of the algorithm. With such a notation, it's easy to compare different algorithms because the notation tells clearly how the algorithm scales when input size increases. This is often called the order of growth.
+        <br>
+        In complexity analysis, only the dominant term is retained. For example, if an algorithm requires
+        $$ 2n^3 +lg(n) + n^2 + 99n $$
+        operations, its order is said to be
+        $$  O(n^3) $$
+        since n^3 the dominant term. Constants and scaling factors are ignored since we are concerned only about asymptotic.
+    </p>
+</div>
+{% endblock %}

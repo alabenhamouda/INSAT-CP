@@ -1,0 +1,71 @@
+{% extends 'courses/layout.html.twig' %}
+{% block body %}
+    <div class="jumbotron m-5">
+        <h1 class="display-4">algorithmic complexity</h1>
+        <p class="lead">A Graph is a non-linear data structure consisting of nodes and edges. The nodes are sometimes
+            also referred to as vertices and the edges are lines or arcs that connect any two nodes in the graph. More
+            formally a Graph can be defined as
+
+            <strong> A Graph consists of a finite set of vertices(or nodes) and set of Edges which connect a pair of
+                nodes.</strong>
+        </p>
+        <h1 class="display-4">DFS</h1>
+        <p class="lead">Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. The
+            only catch here is, unlike trees, graphs may contain cycles, a node may be visited twice. To avoid
+            processing a node more than once, use a boolean visited array.
+
+            Approach: Depth-first search is an algorithm for traversing or searching tree or graph data structures. The
+            algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph)
+            and explores as far as possible along each branch before backtracking. So the basic idea is to start from
+            the root or any arbitrary node and mark the node and move to the adjacent unmarked node and continue this
+            loop until there is no unmarked adjacent node. Then backtrack and check for other unmarked nodes and
+            traverse them. Finally print the nodes in the path.
+            <br>Algorithm:
+        <ol class="lead">
+            <li>Create a recursive function that takes the index of node and a visited array.</li>
+            <li>Mark the current node as visited and print the node.</li>
+            <li>Traverse all the adjacent and unmarked nodes and call the recursive function with index of adjacent
+                node.
+            </li>
+        </ol>
+        </p>
+        <h1 class="display-4">dijkstra</h1>
+        <p class="lead">
+            Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given
+            graph.
+            Dijkstra’s algorithm is very similar to Prim’s algorithm for minimum spanning tree. Like Prim’s MST, we
+            generate a SPT (shortest path tree) with given source as root. We maintain two sets, one set contains
+            vertices included in shortest path tree, other set includes vertices not yet included in shortest path tree.
+            At every step of the algorithm, we find a vertex which is in the other set (set of not yet included) and has
+            a minimum distance from the source.
+            Below are the detailed steps used in Dijkstra’s algorithm to find the shortest path from a single source
+            vertex to all other vertices in the given graph.
+
+            <br>Algorithm
+        <ol class="lead">
+
+            <li>Create a set sptSet (shortest path tree set) that keeps track of vertices included in shortest path
+                tree, i.e., whose minimum distance from source is calculated and finalized. Initially, this set is
+                empty.
+            </li>
+            <li>Assign a distance value to all vertices in the input graph. Initialize all distance values as INFINITE.
+                Assign distance value as 0 for the source vertex so that it is picked first.
+            </li>
+            <li>While sptSet doesn’t include all vertices
+                <ol>
+
+                    <li>Pick a vertex u which is not there in sptSet and has minimum distance value.</li>
+                    <li>Include u to sptSet.</li>
+                    <li>Update distance value of all adjacent vertices of u. To update the distancevalues, iterate
+                        through all adjacent vertices. For every adjacent vertex v, if sum of distance value of u (from
+                        source) and weight of edge u-v, is less than the distance value of v, then update the distance
+                        value of v.
+                    </li>
+                </ol>
+            </li>
+        </ol>
+        </p>
+
+
+    </div>
+{% endblock %}

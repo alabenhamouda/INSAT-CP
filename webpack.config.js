@@ -30,6 +30,9 @@ Encore
     .addEntry('contests', './assets/contests.js')
     .addEntry('contest', './assets/contest.js')
     .addEntry('problems' , './assets/problems.js')
+    .addEntry('tutorial' , './assets/tutorial.js')
+    .addEntry('sortingjs' , './assets/sorting.js')
+    .addEntry('sorting', './assets/styles/sorting.css')
     .copyFiles({
         from: './assets/images'
     })
