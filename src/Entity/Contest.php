@@ -109,6 +109,16 @@ class Contest
         return $this->problems;
     }
 
+    public function getProblem($letter)
+    {
+        $problems = $this->getProblems();
+        foreach ($problems as $problem) {
+            if ($problem->getLetter() == $letter)
+                return $problem;
+        }
+        return null;
+    }
+
     public function addProblem(Problem $problem): self
     {
         if (!$this->problems->contains($problem)) {

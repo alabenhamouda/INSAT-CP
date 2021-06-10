@@ -2,23 +2,35 @@
 {% set show = "submit" %}
 {% block main %}
     <div class="container" style="margin-top: 10px">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="languages">Language</label>
+        {% for error in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ error }}
             </div>
-            <select class="custom-select" id="languages">
-            </select>
-            <button class="btn ml-2" id="vim">Vim Mode</button>
-        </div>
-        <textarea class="form-control editor" id="editor"></textarea>
-        <div class="form-group">
-            <div class="col-sm-5">
-                <button id="submit" type="submit" class="btn btn-primary bg-dark">Submit</button>
-                <button id="btn-open-file" type="button" class="btn btn-primary bg-dark">
-                    <i class="fas fa-folder-open"> </i> Open
-                </button>
-                <input type="file" id="input-open-file" style="display:none;">
+        {% endfor %}
+        {% for success in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ success }}
             </div>
-        </div>
+        {% endfor %}
+        <form action="{{ path("process_submit", {id: id, letter: problem.letter}) }}" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="languages">Language</label>
+                </div>
+                <select class="custom-select" id="languages" name="language_id">
+                </select>
+                <button class="btn ml-2" id="vim" type="button">Vim Mode</button>
+            </div>
+            <textarea class="form-control editor" id="editor" name="source_code"></textarea>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    <button id="submit" type="submit" class="btn btn-primary bg-dark">Submit</button>
+                    <button id="btn-open-file" type="button" class="btn btn-primary bg-dark">
+                        <i class="fas fa-folder-open"> </i> Open
+                    </button>
+                    <input type="file" id="input-open-file" style="display:none;">
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}
