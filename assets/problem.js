@@ -19,12 +19,19 @@ function mime(str) {
 }
 
 let cli = new ClipboardJS('.tocopy');
-let languages = {
-    'c++': mime("c++src"),
-    c: mime("c"),
-    java: mime("java"),
-    python: mime("python"),
+
+function Language(id, name, mime) {
+    this.id = id;
+    this.name = name;
+    this.mime = mime;
 }
+
+let languages = [
+    new Language(54, 'c++', mime("c++src")),
+    new Language(50, 'c', mime("c")),
+    new Language(62, 'java', mime("java")),
+    new Language(71, 'python', mime("python")),
+]
 $(function () {
     $(".tocopy")
         .popover({
@@ -40,8 +47,8 @@ $(function () {
             }, 1000)
         });
     const langSel = $("#languages");
-    for (let lang in languages) {
-        let option = $("<option></option>").text(lang);
+    for (let lang of languages) {
+        let option = $("<option></option>").text(lang.name).val(lang.id);
         langSel.append(option);
     }
     let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -58,7 +65,8 @@ $(function () {
         styleActiveLine: true
     });
     langSel.on('change', e => {
-        editor.setOption("mode", languages[langSel.val()]);
+        const lang = languages.find(l => l.id == langSel.val());
+        editor.setOption("mode", lang.mime);
     })
     $('#btn-open-file').click(function () {
         $('#input-open-file').trigger('click');
@@ -70,6 +78,7 @@ $(function () {
             editor.doc.setValue(reader.result);
         };
         reader.readAsText(fileData);
+        $(this).val("");
     });
     let vimMode = false;
     $("#vim").on('click', function () {

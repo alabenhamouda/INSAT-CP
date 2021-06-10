@@ -6,19 +6,15 @@ namespace App\Controller;
 
 use App\Entity\Contest;
 use App\Entity\Problem;
+use App\Entity\Submission;
 use App\Entity\User;
-use App\Form\UserType;
-use App\Security\ContestLoginException;
-use Doctrine\DBAL\Exception\ServerException;
+use App\Service\Judge;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
@@ -105,6 +101,30 @@ class ContestsController extends AbstractController
             'id' => $contest->getId()
         ]);
 
+    }
+
+    /**
+     * @Route("/{id}/problem/{letter}/submit",name="process_submit", methods={"POST"})
+     */
+    public function processSubmit(Contest $contest, $letter, Request $request, Judge $j, EntityManagerInterface $entity)
+    {
+        $user = $this->getUser();
+        if ($user) {
+            $data = $request->request->all();
+            $submission = new Submission();
+            $submission->setUser($user);
+            $submission->setCode($data['source_code']);
+            $submission->setLanguage($data['language_id']);
+            $submission->setProblem($contest->getProblem($letter));
+            $token = $j->submit($submission);
+            $submission->setToken($token);
+            $entity->persist($submission);
+            $entity->flush();
+            $this->addFlash("success", "Code was submitted");
+        } else {
+            $this->addFlash('error', 'You must be logged in to submit a solution');
+        }
+        return $this->redirectToRoute("submit", ['id' => $contest->getId(), 'letter' => $letter]);
     }
 
     /**
