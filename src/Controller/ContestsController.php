@@ -6,9 +6,11 @@ namespace App\Controller;
 
 use App\Entity\Contest;
 use App\Entity\Problem;
+use App\Entity\SampleInput;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Service\Judge;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -168,9 +170,9 @@ class ContestsController extends AbstractController
         $r = $request->request;
         $contest->setTitle($r->get('title'))
             ->setDuration($r->get('duration'))
-            ->setStartTime(new \DateTime("00:00"))
+            ->setStartTime(new DateTime("00:00"))
             ->setCreator($user)
-            ->setStartDate(new \DateTime($r->get('date')));
+            ->setStartDate(new DateTime($r->get('date')));
         $em->persist($contest);
         $em->flush();
 
@@ -239,6 +241,10 @@ class ContestsController extends AbstractController
     {
         //TODO check user
         $problem = new Problem();
+        $sample = new SampleInput();
+        $sample->setProblem($problem)
+            ->setOutput("")
+            ->setInput("");
         $problem->setTitle("")
             ->setContest($contest)
             ->setValidator("")
@@ -249,8 +255,10 @@ class ContestsController extends AbstractController
             ->setStatement("")
             ->setLetter(chr(sizeof($contest->getProblems()) + ord('A')))
             ->setOutputSpec("")
-            ->setInputSpec("");
+            ->setInputSpec("")
+            ->addSampleIn($sample);
         $contest->addProblem($problem);
+        $em->persist($sample);
         $em->persist($problem);
         $em->persist($contest);
         $em->flush();
@@ -268,7 +276,9 @@ class ContestsController extends AbstractController
         //TODO check letter
         $problem = $contest->getProblems()[ord($letter) - ord('A')];
         return $this->render('contests/editProblem.html.twig', [
-            'problem' => $problem
+            'id' => $contest->getId(),
+            'problem' => $problem,
+            'sample' => $problem->getSampleIn()[0]
         ]);
 
 
@@ -287,11 +297,23 @@ class ContestsController extends AbstractController
 //        dd($letter);
         $problem = $contest->getProblems()[ord($letter) - ord('A')];
         //TODO check POST input or use symfony form
+        $sample = new SampleInput();
+        $sample->setInput($r->get('insamp'))
+            ->setOutput($r->get('outsamp'))
+            ->setProblem($problem);
         $problem->setTitle($r->get('title'))
-            ->setStatement($r->get('statement'));
+            ->setStatement($r->get('statement'))
+            ->setInputSpec($r->get('input_spec'))
+            ->setOutputSpec($r->get('output_spec'))
+            ->setProof($r->get('proof'))
+            ->setValidator($r->get('validator'))
+            ->setSolution($r->get('solution'))
+            ->addSampleIn($sample)
+            ->setPoints($r->get('points'));
+        $em->persist($sample);
         $em->persist($problem);
         $em->flush();
-        return $this->redirectToRoute('myContests');
+        return $this->redirectToRoute('editContest', ['id' => $contest->getId()]);
 
 
     }
