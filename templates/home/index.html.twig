@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    <section class="header">
+    <section class="header vh-100">
         <nav>
         <a href="" class="navbar-brand logo">
             INSAT
@@ -44,26 +44,26 @@
             </div>
         </section>
     </section>
-    <section class="tutorial" id="tuto">
+    <section class="tutorial min-vh-100" id="tuto">
         <h1>Tutorials</h1>
         <p>Browse through our library of resources made to simplify algorithms for you</p>
-        <div class="row">
-            <div class="course-col">
+        <div class="row align-text-middle">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('complexity')}}"><h3>Algorithmic Complexity</h3></a>
             </div>
-            <div class="course-col">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('sorting')}}"> <h3>Sorting And Searching</h3></a>
             </div>
-            <div class="course-col">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('ds')}}" ><h3>Basic Data Structures</h3></a>
             </div>
-            <div class="course-col">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('tree')}}"><h3>Tree Data Structures</h3></a>
             </div>
-            <div class="course-col">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('dp')}}"><h3>Dynamic Programming</h3></a>
             </div>
-            <div class="course-col">
+            <div class="course-col col-6 col-lg-4">
                 <a href="{{path('graph')}}"><h3>Graph Algorithms</h3></a>
             </div>
         </div>
@@ -73,8 +73,8 @@
         <p>Challenge yourself by browsing our various problems and competing in our contests</p>
             <div class="container">
                 <div class="row">
-            <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
-                <div class="card h-100" style="width: 18rem;">
+            <div class="problems-col col mb-2" >
+                <div class="card h-100 mx-auto" style="width: 18rem;">
                     <img class="card-img-top" src="{{ asset('build/problem.png') }}" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Problems</h5>
@@ -83,8 +83,8 @@
                     </div>
                 </div>
             </div>
-            <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
-                <div class="card h-100" style="width: 18rem;">
+            <div class="problems-col col mb-2" >
+                <div class="card h-100 mx-auto" style="width: 18rem;">
                     <img class="card-img-top" src="{{ asset('build/contest.png') }}" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Contests</h5>
@@ -100,8 +100,8 @@
         <p>A few tools to help you along your journey</p>
         <div class="container">
             <div class="row">
-                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
-                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                <div class="problems-col col mb-2" >
+                    <div class="card h-100 mx-auto bg-dark" style="width: 18rem;">
                         <img class="card-img-top" src="{{ asset('build/graph.png') }}" alt="">
                         <div class="card-body">
                             <h5 class="card-title" style="color: white">Graph Drawer</h5>
@@ -109,8 +109,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
-                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                <div class="problems-col col mb-2" >
+                    <div class="card h-100 mx-auto bg-dark " style="width: 18rem;">
                         <img class="card-img-top" src="{{ asset('build/whiteboard.jpg') }}" alt="">
                         <div class="card-body">
                             <h5 class="card-title" style="color: white">WhiteBoard</h5>

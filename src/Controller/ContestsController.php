@@ -144,10 +144,19 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
      */
-    public function scoreboard(Contest $contest ) // ,Scoreboard_service $sc_s)
+    public function scoreboard(Contest $contest )//,Request $request,PaginatorInterface $paginator ,Scoreboard_service $sc_s)
     {
         //mazelt ma7btch t5dem
         //$scoreboard=$sc_s->get_scoreboard($contest->getid());
+
+        /*   =$paginator->paginate(
+            $xxxxxxx,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('jumpBy', 10)
+        );
+        */
+
+
         return $this->render('problem/scoreboard.html.twig', [
             "problems" => $contest->getProblems(),
             "problem" => $contest->getProblems()[0],

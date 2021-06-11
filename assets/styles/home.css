@@ -6,7 +6,6 @@
     padding: 0;
 }
 .header{
-    min-height: 100vh;
     width: 100%;
     background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url("../images/test.png");
     background-position: center;
@@ -290,8 +289,8 @@ p {
     background: #343a40;
     text-align: center;
     justify-items: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 80px;
+    padding-bottom: 80px;
     font-family: 'Poppins', sans-serif;
 }
 .problems-col{
