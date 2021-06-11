@@ -12,52 +12,52 @@
 
         <div class="form-group">
             <label for="">Title
-                <input type="text" class="form-control" id="" name="title" aria-describedby="" placeholder="Enter Title">
+                <input type="text" class="form-control" id="" name="title" aria-describedby="" placeholder="Enter Title" value="{{ problem.title }}">
             </label>
         </div>
         <div class="form-group">
             <label >Statement
-                <textarea class="form-control" form="contestform" name="statement" rows="6"></textarea>
+                <textarea class="form-control" form="contestform" name="statement" rows="6" >{{ problem.statement }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >input specifications
-                <textarea class="form-control" form="contestform" name="input_spec" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="input_spec" rows="4">{{ problem.inputSpec }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >output specifications
-                <textarea class="form-control" form="contestform" name="output_spec" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="output_spec" rows="4">{{ problem.outputSpec }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >validator
-                <textarea class="form-control" form="contestform" name="validator" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="validator" rows="4">{{ problem.validator }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >solution
-                <textarea class="form-control" form="contestform" name="solution" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="solution" rows="4">{{ problem.solution }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >proof
-                <textarea class="form-control" form="contestform" name="proof" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="proof" rows="4">{{ problem.proof }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >input sample
-                <textarea class="form-control" form="contestform" name="insamp" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="insamp" rows="4">{{ sample.input }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >output sample
-                <textarea class="form-control" form="contestform" name="outsamp" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="outsamp" rows="4">{{ sample.output }}</textarea>
             </label>
         </div>
         <div class="form-group">
             <label >points
-                <input type="number" class="form-control" id="" name="points" aria-describedby="" placeholder="Enter Points">
+                <input type="number" class="form-control" id="" name="points" aria-describedby="" placeholder="Enter Points" value="{{ problem.points }}">
             </label>
         </div>
 

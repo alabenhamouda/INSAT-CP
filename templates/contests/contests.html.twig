@@ -50,14 +50,21 @@
                 {% endif %}
             </div>
             <div class="col-3">
+                <div class="pt-2">
+                    <a href="{{ path('create_contest') }}" >
+                        <button class="btn bg-info" style="color: white;width: 100%;">create contest</button>
+                    </a>
+                </div>
                 <div class="accordion">
                     <div class="contentA active">
                         <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Upcoming Contests</div>
                         <div class="content">
                             {% for contest in up %}
+                                {% if contest.isPublished %}
                                 <a class="dropdown-item"
                                    href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
 
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -67,8 +74,10 @@
                         <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Recent Contests</div>
                         <div class="content">
                             {% for contest in rec %}
+                                {% if contest.isPublished %}
                                 <a class="dropdown-item"
                                    href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>

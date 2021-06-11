@@ -23,6 +23,7 @@
             <tr class="table bg-dark" style="color: white">
                 <th scope="row">#</th>
                 <th scope="row">Name</th>
+                <th scope="row"></th>
             </tr>
             {% for problem in problems %}
                 <tr>
@@ -32,6 +33,10 @@
                         </a>
                     </td>
                     <td>{{ problem.title }}</td>
+                    <td class="d-flex" style="display:flex;flex-direction: column;align-items: flex-end;"><a href="{{ path('edit_problem',{'id':contest.id,'letter':problem.letter}) }}">
+                            <button class="btn bg-dark text-white" style="width: 10vw;">edit</button>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
