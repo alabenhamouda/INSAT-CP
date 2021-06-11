@@ -1,0 +1,39 @@
+{% extends 'headerBase.html.twig' %}
+
+{% block title %}Tools{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('tools') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('tools') }}
+{% endblock %}
+{% block body %}
+    <section class="tools">
+        <h1>Tools</h1>
+        <p>A few tools to help you along your journey</p>
+        <div class="container" style="margin-top: 50px">
+            <div class="row">
+                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('build/graph.png') }}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white">Graph Drawer</h5>
+                            <a href="https://alabenhamouda.github.io/graph-drawer/" class="btn btn-primary" style="background: white;color: black">Visit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('build/whiteboard.jpg') }}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white">WhiteBoard</h5>
+                            <a href="https://www.tutorialspoint.com/whiteboard.htm" class="btn btn-primary" style="background: white;color: black">Visit</a>
+                        </div>
+                    </div>
+                </div></div>
+        </div>
+    </section>
+{% endblock %}

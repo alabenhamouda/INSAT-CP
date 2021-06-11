@@ -17,7 +17,7 @@
         {% block published %}
             <nav class="nav nav-pills nav-justified">
                 <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
-                <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
+                <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
                 <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
             </nav>
             <hr>

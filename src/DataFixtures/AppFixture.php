@@ -50,6 +50,7 @@ class AppFixture extends Fixture
                 ->setStartDate($fa->dateTimeBetween('-1 years', '+1 years'))
                 ->setStartTime($fa->dateTime())
                 ->setDuration($fa->numberBetween(1, 300))
+                ->setIsPublished(true)
                 ->setCreator($userArr[$number]);
             for ($j = 0; $j < $fa->numberBetween(1, 40); $j++) {
                 $contest->addParticipant($fa->unique()->randomElement($userArr));
