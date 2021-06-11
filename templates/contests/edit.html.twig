@@ -40,8 +40,14 @@
                 </tr>
             {% endfor %}
         </table>
-        <form method="post" action="{{ path('addProblem', {'id': contest.id}) }}">
-            <button class="btn btn-dark" type="submit" name="add" value="ok">add a problem</button>
-        </form>
+        <div class="d-flex" style="display:flex;flex-direction: row;justify-content: space-evenly;">
+
+            <form method="post" action="{{ path('addProblem', {'id': contest.id}) }}">
+                <button class="btn btn-dark" type="submit" name="add" value="ok">add a problem</button>
+            </form>
+            <form method="post" action="{{ path('publish', {'id': contest.id}) }}">
+                <button class="btn btn-danger" type="submit" name="publish" value="ok">publish</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

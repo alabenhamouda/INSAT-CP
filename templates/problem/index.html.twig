@@ -4,15 +4,21 @@
         <h1>{{ problem.letter }}.{{ problem.title }}</h1>
         <section>
             <h3>statement:</h3>
-            {{ problem.statement }}
+            <p>
+                {{ problem.statement }}
+            </p>
         </section>
         <section>
             <h3>input:</h3>
-            {{ problem.inputSpec }}
+            <p>
+                {{ problem.inputSpec }}
+            </p>
         </section>
         <section>
             <h3>output:</h3>
-            {{ problem.outputSpec }}
+            <p>
+                {{ problem.outputSpec }}
+            </p>
         </section>
         {# <div class="container"> #}
         {% for sample in problem.sampleIn %}
@@ -38,3 +44,5 @@
         {# </div> #}
     </div>
 {% endblock %}
+{#endregion#}
+{#</editor-fold>#}
