@@ -1,8 +1,9 @@
 import './styles/home.css';
 
 const scrollDiv = document.querySelector(".scroll-down");
-const links = document.querySelector("#links");
+const tuto = document.querySelector("#tuto");
 
 scrollDiv   .addEventListener('click', () => {
-    links.scrollIntoView({ behavior: "smooth" });
+    tuto.scrollIntoView({ behavior: "smooth" });
+    console.log("here");
 })
