@@ -1,7 +1,11 @@
 {% extends 'courses/layout.html.twig' %}
 {% block body %}
     <div class="jumbotron m-5">
-        <h1 class="display-4">tree data structure</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+            <h1 class="display-4 text-break">tree data structure</h1>
         <p class="lead">
             We read the linear data structures like an array, linked list, stack and queue in which all the elements are
             arranged in a sequential manner. The different data structures are used for different kinds of data.
@@ -27,5 +31,12 @@
         can be of any type. </li>
     <li>Each node contains some data and the link or reference of other nodes that can be called children.</li>
         </p>
+                </div>
+            </div>
+            <div class="col-12">
+                <img src="{{ asset('build/tree.png') }}"  class="rounded mw-100 mx-auto d-block" />
+            </div>
+    </div>
+    </div>
     </div>
 {% endblock %}

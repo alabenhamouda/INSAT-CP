@@ -1,7 +1,9 @@
 {% extends 'courses/layout.html.twig' %}
 {% block body %}
     <div class="jumbotron m-5">
-        <h1 class="display-4">dynamic programming</h1>
+        <div class="container-fluid">
+
+        <h1 class="display-4 text-break">dynamic programming</h1>
         <p class="lead">
             Dynamic Programming (DP) is an algorithmic technique for solving an optimization problem by breaking it down into simpler subproblems and utilizing the fact that the optimal solution to the overall problem depends upon the optimal solution to its subproblems.
 
@@ -22,8 +24,9 @@
 
         </p>
         <pre><code class="language-cpp">{{ code2 }}</code></pre>
-
-
-
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vYquumk4nWw" allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
 {% endblock %}

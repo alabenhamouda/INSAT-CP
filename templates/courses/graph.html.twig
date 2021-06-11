@@ -1,7 +1,8 @@
 {% extends 'courses/layout.html.twig' %}
 {% block body %}
     <div class="jumbotron m-5">
-        <h1 class="display-4">algorithmic complexity</h1>
+    <div class="container-fluid">
+        <h1 class="display-4 text-break">Graph Algorithms</h1>
         <p class="lead">A Graph is a non-linear data structure consisting of nodes and edges. The nodes are sometimes
             also referred to as vertices and the edges are lines or arcs that connect any two nodes in the graph. More
             formally a Graph can be defined as
@@ -10,6 +11,12 @@
                 nodes.</strong>
         </p>
         <h1 class="display-4">DFS</h1>
+        <div class="row">
+        <div class="col-12">
+           <div class="float-right w-md-50 ">
+               <img src="{{ asset('build/Dfs.gif') }}" class="w-100" />
+           </div>
+        <div class="pull-left">
         <p class="lead">Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. The
             only catch here is, unlike trees, graphs may contain cycles, a node may be visited twice. To avoid
             processing a node more than once, use a boolean visited array.
@@ -21,7 +28,8 @@
             loop until there is no unmarked adjacent node. Then backtrack and check for other unmarked nodes and
             traverse them. Finally print the nodes in the path.
             <br>Algorithm:
-        <ol class="lead">
+
+            <ol class="lead">
             <li>Create a recursive function that takes the index of node and a visited array.</li>
             <li>Mark the current node as visited and print the node.</li>
             <li>Traverse all the adjacent and unmarked nodes and call the recursive function with index of adjacent
@@ -29,6 +37,11 @@
             </li>
         </ol>
         </p>
+
+
+        </div>
+        </div>
+        <div class="col-12">
         <h1 class="display-4">dijkstra</h1>
         <p class="lead">
             Given a graph and a source vertex in the graph, find shortest paths from source to all vertices in the given
@@ -65,7 +78,13 @@
             </li>
         </ol>
         </p>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/GazC3A4OQTE" allowfullscreen></iframe>
+                </div>
 
+        </div>
 
+        </div>
+    </div>
     </div>
 {% endblock %}
