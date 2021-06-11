@@ -17,30 +17,10 @@
         {% block published %}
         <nav class="nav nav-pills nav-justified">
             <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
-            <a class="nav-item nav-link bg-dark text-white" href="#">Scoreboard</a>
+            <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
             <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
         </nav>
         <hr>
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link {{ (show|default("problem") == "problem") ? "active bg-dark" : "" }}"
-                   href="{{ path('problem', {id: id, letter: problem.letter}) }}">
-                    Problem
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}"
-                   href="{{ path("solution", {id: id, letter: problem.letter}) }}">
-                    Solution
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ show|default("problem") == "submit" ? "active bg-dark" : "" }}"
-                   href="{{ path("submit", {id: id, letter: problem.letter}) }}">
-                    Submit
-                </a>
-            </li>
-        </ul>
         {% endblock %}
         <main class="mt-2">
             {% block main %}

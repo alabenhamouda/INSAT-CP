@@ -1,24 +1,18 @@
-{% extends 'problem/layout.html.twig' %}
+{% extends 'problem/layout_index.html.twig' %}
 {% block main %}
     <div class="problem-wrapper p-2">
         <h1>{{ problem.letter }}.{{ problem.title }}</h1>
         <section>
             <h3>statement:</h3>
-            <p>
-                {{ problem.statement }}
-            </p>
+            {{ problem.statement }}
         </section>
         <section>
             <h3>input:</h3>
-            <p>
-                {{ problem.inputSpec }}
-            </p>
+            {{ problem.inputSpec }}
         </section>
         <section>
             <h3>output:</h3>
-            <p>
-                {{ problem.outputSpec }}
-            </p>
+            {{ problem.outputSpec }}
         </section>
         {# <div class="container"> #}
         {% for sample in problem.sampleIn %}
@@ -44,5 +38,3 @@
         {# </div> #}
     </div>
 {% endblock %}
-{#endregion#}
-{#</editor-fold>#}

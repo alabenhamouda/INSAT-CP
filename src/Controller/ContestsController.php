@@ -141,6 +141,20 @@ class ContestsController extends AbstractController
         ]);
 
     }
+    /**
+     * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
+     */
+    public function scoreboard(Contest $contest)
+    {
+        //$problems=$contest->getProblems();
+        return $this->render('problem/scoreboard.html.twig', [
+            "problems" => $contest->getProblems(),
+            "problem" => $contest->getProblems()[0],
+            'id' => $contest->getId(),
+            "contest"=>$contest
+        ]);
+
+    }
 
     /**
      * @Route("/create",name="create_contest",methods="GET")
