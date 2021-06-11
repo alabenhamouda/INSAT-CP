@@ -25,6 +25,7 @@
                             <th scope="row">Duration</th>
                         </tr>
                         {% for contest in contests %}
+                            {% if contest.isPublished %}
                             <tr>
                                 <td>
                                     <a href="{{ path("contest", {id: contest.id}) }}">
@@ -34,6 +35,7 @@
                                 <td>{{ contest.startDate|time_diff }}</td>
                                 <td>{{ contest.duration|duration_helper }}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
                     </table>
                 {% else %}

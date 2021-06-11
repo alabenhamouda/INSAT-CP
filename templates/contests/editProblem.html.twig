@@ -8,7 +8,7 @@
             width:100%;
         }
     </style>
-    <form action="/contests/{{ problem.contest.id }}/edit/{{ problem.letter }}/process" method="post" id="contestform">
+    <form action="{{ path("process_edit_problem",{'id':id,'letter':problem.letter}) }}" method="post" id="contestform">
 
         <div class="form-group">
             <label for="">Title
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group">
             <label >input sample
-                <textarea class="form-control" form="contestform" name="outsamp" rows="4"></textarea>
+                <textarea class="form-control" form="contestform" name="insamp" rows="4"></textarea>
             </label>
         </div>
         <div class="form-group">

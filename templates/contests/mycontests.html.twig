@@ -19,7 +19,7 @@
                         {% for contest in unpublished %}
                             <tr>
                                 <td>
-                                    <a href="{{ path("contest", {id: contest.id}) }}">
+                                    <a href="{{ path("editContest", {id: contest.id}) }}">
                                         {{ contest.title }}
                                     </a>
                                 </td>

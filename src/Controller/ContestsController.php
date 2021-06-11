@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Contest;
 use App\Entity\Problem;
+use App\Entity\SampleInput;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Service\Judge;
@@ -268,6 +269,7 @@ class ContestsController extends AbstractController
         //TODO check letter
         $problem = $contest->getProblems()[ord($letter) - ord('A')];
         return $this->render('contests/editProblem.html.twig', [
+            'id'=>$contest->getId(),
             'problem' => $problem
         ]);
 
@@ -287,8 +289,19 @@ class ContestsController extends AbstractController
 //        dd($letter);
         $problem = $contest->getProblems()[ord($letter) - ord('A')];
         //TODO check POST input or use symfony form
+        $sample=new SampleInput();
+        $sample->setInput($r->get('insamp'))
+            ->setOutput($r->get('outsamp'))
+            ->setProblem($problem);
         $problem->setTitle($r->get('title'))
-            ->setStatement($r->get('statement'));
+            ->setStatement($r->get('statement'))
+        ->setInputSpec($r->get('input_spec'))
+            ->setOutputSpec($r->get('output_spec'))
+            ->setProof($r->get('proof'))
+            ->setValidator($r->get('validator'))
+            ->setSolution($r->get('solution'))
+            ->addSampleIn($sample);
+        $em->persist($sample);
         $em->persist($problem);
         $em->flush();
         return $this->redirectToRoute('myContests');
