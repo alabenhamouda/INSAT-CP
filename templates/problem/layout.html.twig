@@ -15,16 +15,65 @@
 {% block body %}
     <div class="container mt-2">
         {% block published %}
-        <nav class="nav nav-pills nav-justified">
-            <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
-            <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
-            <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
-        </nav>
-        <hr>
+            <nav class="nav nav-pills nav-justified">
+                <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
+                <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
+                <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
+            </nav>
+            <hr>
         {% endblock %}
-        <main class="mt-2">
-            {% block main %}
-            {% endblock %}
-        </main>
+        <div class="row mt-2">
+            <main class="{{ submissions is empty ? "col-12" : "col-8" }}">
+                {% block main %}
+                {% endblock %}
+            </main>
+            {% if submissions is not empty %}
+                <aside class="col-4">
+                    {# <ul class="list-group"> #}
+                    {# {% for submission in submissions|sort()|reverse %} #}
+                    {# <li class="list-group-item"> #}
+                    {# {% if submission.status.id <= 2 %} #}
+                    {# <i class="fas fa-spinner"></i> #}
+                    {# {% elseif submission.status.id == 3 %} #}
+                    {# <i class="fas fa-check" style="color: #1fc61f;"></i> #}
+                    {# {% else %} #}
+                    {# <i class="fas fa-exclamation" style="color: #b21313;"></i> #}
+                    {# {% endif %} #}
+                    {# {{ submission.createdAt|date("D/m/Y G:i:s") }} #}
+                    {# {{ submission.status.description }} #}
+                    {# </li> #}
+                    {# {% endfor %} #}
+                    {# </ul> #}
+                    <table class="table table-sm">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Submitted at</th>
+                            <th>Verdict</th>
+                        </tr>
+                        </thead>
+                        {% for submission in submissions|sort()|reverse %}
+                            <tr>
+                                <td>
+                                    {% if submission.status.id <= 2 %}
+                                        <i class="fas fa-spinner"></i>
+                                    {% elseif submission.status.id == 3 %}
+                                        <i class="fas fa-check" style="color: #1fc61f;"></i>
+                                    {% else %}
+                                        <i class="fas fa-exclamation" style="color: #b21313;"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ submission.createdAt|date("D/m/Y G:i:s") }}
+                                </td>
+                                <td>
+                                    {{ submission.status.description }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </aside>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

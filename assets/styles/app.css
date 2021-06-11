@@ -36,7 +36,3 @@ a, a:focus, a:hover {
     background-color: #ddd !important;
     color: black !important;
 }
-
-tr:not(tr:first-of-type) {
-    cursor: pointer;
-}

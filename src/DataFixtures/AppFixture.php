@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Contest;
 use App\Entity\Problem;
 use App\Entity\SampleInput;
-use App\Entity\Submission;
+use App\Entity\Status;
 use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -84,15 +84,15 @@ class AppFixture extends Fixture
                     $problem->addTag($fa->unique()->randomElement($tagArr));
                 }
                 $fa->unique(true);
-                for ($k = 0; $k < $fa->numberBetween(1, 40); $k++) {
-                    $submission = new Submission();
-                    $submission->setUser($fa->unique()->randomElement($userArr))
-                        ->setProblem($problem)
-                        ->setCode($fa->realText())
-                        ->setLanguage($fa->word);
-                    $manager->persist($submission);
-                }
-                $fa->unique(true);
+//                for ($k = 0; $k < $fa->numberBetween(1, 40); $k++) {
+//                    $submission = new Submission();
+//                    $submission->setUser($fa->unique()->randomElement($userArr))
+//                        ->setProblem($problem)
+//                        ->setCode($fa->realText())
+//                        ->setLanguage($fa->word);
+//                    $manager->persist($submission);
+//                }
+//                $fa->unique(true);
 
 
                 $letter++;
@@ -108,9 +108,21 @@ class AppFixture extends Fixture
 
             }
             $manager->persist($contest);
-            $manager->flush();
         }
 
+        // add statuses
+        $descriptions = [
+            "In Queue", "Processing", "Accepted", "Wrong Answer",
+            "Time Limit Exceeded", "Compilation Error", "Runtime Error (SIGSEGV)",
+            "Runtime Error (SIGXFSZ)", "Runtime Error (SIGFPE)", "Runtime Error (SIGABRT)",
+            "Runtime Error (NZEC)", "Runtime Error (Other)", "Internal Error",
+            "Exec Format Error"
+        ];
+        for ($i = 0; $i < count($descriptions); $i++) {
+            $status = new Status();
+            $status->setDescription($descriptions[$i]);
+            $manager->persist($status);
+        }
         $manager->flush();
     }
 }
