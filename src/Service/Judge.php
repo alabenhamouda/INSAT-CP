@@ -8,10 +8,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class Judge
 {
     private $client;
+    private $url;
+    private $key;
+    private $host;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, $url, $key, $host)
     {
         $this->client = $client;
+        $this->url = $url;
+        $this->key = $key;
+        $this->host = $host;
     }
 
     public function submit(Submission $submission)
@@ -21,9 +27,10 @@ class Judge
             'language_id' => $submission->getLanguage(),
             'cpu_time_limit' => 1
         ];
-        $response = $this->client->request('POST', 'http://localhost/submissions', [
+        $response = $this->client->request('POST', $this->url . '/submissions', [
             'headers' => [
-                'X-Auth-Token' => 'bonjour'
+                'x-rapidapi-key' => $this->key,
+                "x-rapidapi-host" => $this->host,
             ],
             'json' => $data
         ]);
@@ -33,9 +40,10 @@ class Judge
 
     public function getSubmission($token)
     {
-        $response = $this->client->request('GET', 'http://localhost/submissions/' . $token, [
+        $response = $this->client->request('GET', $this->url . '/submissions/' . $token, [
             'headers' => [
-                'X-Auth-Token' => 'bonjour'
+                'x-rapidapi-key' => $this->key,
+                "x-rapidapi-host" => $this->host,
             ],
             'query' => [
                 'base64_encoded' => 'true'
