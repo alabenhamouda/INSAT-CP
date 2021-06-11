@@ -13,86 +13,111 @@
 {% endblock %}
 
 {% block body %}
-    <header>
-        <h1 class="logo">INSAT <span class="logoCP">CP</span></h1>
+    <section class="header">
         <nav>
+        <a href="" class="navbar-brand logo">
+            INSAT
+            <span class="logoCP">CP</span>
+        </a>
+        <div class="nav-links">
+            <ul>
             {% if app.user %}
                 <li><a href="{{ path('app_logout') }}"> Log out </a></li>
             {% else %}
                 <li><a href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
                 <li><a href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
             {% endif %}
+            </ul>
+        </div>
         </nav>
-    </header>
-    <section class="main">
-        <div class="slide">
-            <h1>INSAT's competitive programming platform</h1>
-            <h3>Platform for organizing contests and training</h3>
-            <div class="scroll-down">
-                <div>
-                    <span class="arrow"></span>
-                    <span class="arrow"></span>
-                    <span class="arrow"></span>
+        <section class="main">
+            <div class="slide">
+                <h1>INSAT's competitive programming platform</h1>
+                <h3>Platform for organizing contests and training</h3>
+                <div class="scroll-down">
+                    <div>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                    </div>
                 </div>
+            </div>
+        </section>
+    </section>
+    <section class="tutorial" id="tuto">
+        <h1>Tutorials</h1>
+        <p>Browse through our library of resources made to simply algorithms for you</p>
+        <div class="row">
+            <div class="course-col">
+                <a href="{{path('complexity')}}"><h3>Algorithmic Complexity</h3></a>
+            </div>
+            <div class="course-col">
+                <a href="{{path('sorting')}}"> <h3>Sorting And Searching</h3></a>
+            </div>
+            <div class="course-col">
+                <a href="{{path('ds')}}" ><h3>Basic Data Structures</h3></a>
+            </div>
+            <div class="course-col">
+                <a href="{{path('tree')}}"><h3>Tree Data Structures</h3></a>
+            </div>
+            <div class="course-col">
+                <a href="{{path('dp')}}"><h3>Dynamic Programming</h3></a>
+            </div>
+            <div class="course-col">
+                <a href="{{path('graph')}}"><h3>Graph Algorithms</h3></a>
             </div>
         </div>
     </section>
-
-    <div class="container-fluid p-5" id="links">
-        <div class="row">
-            <div class="col-sm-6 col-md-3 mt-2 ">
-                <a href="{{ path("problems") }}">
-                    <div class="card h-100">
-                        <img src="{{ asset('build/rubik cube.png') }}" class="card-images-top front" alt="...">
-                        <div class="back">
-                            <p class="card-text"> ProblemSet
-                                <br> more than 69 problem made by our incredible team.
-                            </p>
-                        </div>
+    <section class="problems">
+        <h1>Problem Solving</h1>
+        <p>Challenge yourself by browsing our various problems and competing in our contests</p>
+            <div class="container">
+                <div class="row">
+            <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                <div class="card h-100" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('build/problem.png') }}" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">Problems</h5>
+                        <p class="card-text">Various problems spanning over multiple tags to challenge yourself</p>
+                        <a href="{{ path('problems') }}" class="btn btn-primary bg-dark">Get started</a>
                     </div>
-                </a>
+                </div>
             </div>
-
-            <div class="col-sm-6 col-md-3 mt-2 ">
-                <a href="{{ path('contests') }}">
-                    <div class="card h-100">
-                        <img src="{{ asset('build/contest.jpg') }}" class="card-images-top front" alt="...">
-                        <div class="back">
-                            <p class="card-text"> Contests
-                                <br> weekly contests that help you learn CP and improve
-                                your problem solving skill .
-                            </p>
-                        </div>
+            <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                <div class="card h-100" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('build/contest.png') }}" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">Contests</h5>
+                        <p class="card-text">Compete with other users to see how well you handle pressure</p>
+                        <a href="{{ path('contests') }}" class="btn btn-primary bg-dark">Get started</a>
                     </div>
-                </a>
-            </div>
-
-            <div class="col-sm-6 col-md-3  mt-2 ">
-                <a href="{{ path('courses') }}">
-                    <div class="card h-100">
-                        <img src="{{ asset('build/coding.png') }}" class="card-images-top front" alt="...">
-                        <div class="back">
-                            <p class="card-text"> Tutorial
-                                <br>Learn new algorithme and train to make yourself a better programmer and problem
-                                Solver .
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-sm-6 col-md-3  mt-2 ">
-                <a href="#">
-                    <div class="card h-100">
-                        <img src="{{ asset('build/tools.png') }}" class="card-images-top front" alt="...">
-                        <div class="back">
-                            <p class="card-text"> Tools
-                                <br> yes tools.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            </div></div>
         </div>
-    </div>
+    </section>
+    <section class="tools">
+        <h1>Tools</h1>
+        <p>A few tools to help you along your journey</p>
+        <div class="container">
+            <div class="row">
+                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('build/graph.png') }}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white">Graph Drawer</h5>
+                            <a href="https://alabenhamouda.github.io/graph-drawer/" class="btn btn-primary" style="background: white;color: black">Visit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="problems-col" style="margin-left: 100px;margin-right: 100px">
+                    <div class="card h-100 bg-dark" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('build/whiteboard.jpg') }}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white">WhiteBoard</h5>
+                            <a href="https://www.tutorialspoint.com/whiteboard.htm" class="btn btn-primary" style="background: white;color: black">Visit</a>
+                        </div>
+                    </div>
+                </div></div>
+        </div>
+    </section>
 {% endblock %}
