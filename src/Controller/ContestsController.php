@@ -6,8 +6,8 @@ namespace App\Controller;
 
 use App\Entity\Contest;
 use App\Entity\Problem;
-use App\Entity\Status;
 use App\Entity\SampleInput;
+use App\Entity\Status;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Service\Judge;
@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -181,6 +180,7 @@ class ContestsController extends AbstractController
         ]);
 
     }
+
     /**
      * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
      */
@@ -191,7 +191,8 @@ class ContestsController extends AbstractController
             "problems" => $contest->getProblems(),
             "problem" => $contest->getProblems()[0],
             'id' => $contest->getId(),
-            "contest"=>$contest
+            "contest" => $contest,
+            'submissions' => null
         ]);
 
     }
@@ -352,17 +353,16 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
-        $problems=$contest->getProblems();
-        $size=sizeof($problems);
-        if($this->checkLetter($letter) or ord($letter)-ord("A")>=$size )
-        {
+        $problems = $contest->getProblems();
+        $size = sizeof($problems);
+        if ($this->checkLetter($letter) or ord($letter) - ord("A") >= $size) {
             throw $this->createNotFoundException('This problem does not exist');
         }
         $problem = $problems[ord($letter) - ord('A')];
         return $this->render('contests/editProblem.html.twig', [
             'id' => $contest->getId(),
             'problem' => $problem,
-            'sample' => $problem->getSampleIn()[0]
+            'sample' => $problem->getSampleIn()[0],
         ]);
 
 
@@ -384,10 +384,9 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
-        $problems=$contest->getProblems();
-        $size=sizeof($problems);
-        if($this->checkLetter($letter) or ord($letter)-ord("A")>=$size )
-        {
+        $problems = $contest->getProblems();
+        $size = sizeof($problems);
+        if ($this->checkLetter($letter) or ord($letter) - ord("A") >= $size) {
             throw $this->createNotFoundException('This problem does not exist');
         }
         $problem = $problems[ord($letter) - ord('A')];
@@ -431,7 +430,6 @@ class ContestsController extends AbstractController
         return $this->redirectToRoute('myContests');
 
     }
-
 
 
 }

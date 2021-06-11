@@ -21,26 +21,6 @@
                 <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
             </nav>
             <hr>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link {{ (show|default("problem") == "problem") ? "active bg-dark" : "" }}"
-                       href="{{ path('problem', {id: id, letter: problem.letter}) }}">
-                        Problem
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}"
-                       href="{{ path("solution", {id: id, letter: problem.letter}) }}">
-                        Solution
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ show|default("problem") == "submit" ? "active bg-dark" : "" }}"
-                       href="{{ path("submit", {id: id, letter: problem.letter}) }}">
-                        Submit
-                    </a>
-                </li>
-            </ul>
         {% endblock %}
         <div class="row mt-2">
             <main class="{{ submissions is empty ? "col-12" : "col-8" }}">
