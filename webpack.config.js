@@ -32,6 +32,7 @@ Encore
     .addEntry('problems' , './assets/problems.js')
     .addEntry('tutorial' , './assets/tutorial.js')
     .addEntry('sortingjs' , './assets/sorting.js')
+    .addEntry('tools','./assets/tools.js')
     .addEntry('sorting', './assets/styles/sorting.css')
     .copyFiles({
         from: './assets/images'
