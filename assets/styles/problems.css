@@ -65,3 +65,7 @@ tr .tag {
     margin-left: 5px;
     cursor: pointer;
 }
+
+tr:not(tr:first-of-type) {
+    cursor: pointer;
+}

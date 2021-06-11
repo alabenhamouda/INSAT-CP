@@ -47,6 +47,12 @@ class Submission
      */
     private $token;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="submissions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +114,18 @@ class Submission
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

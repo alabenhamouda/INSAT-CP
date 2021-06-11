@@ -30,4 +30,18 @@ class Judge
 
         return json_decode($response->getContent())->token;
     }
+
+    public function getSubmission($token)
+    {
+        $response = $this->client->request('GET', 'http://localhost/submissions/' . $token, [
+            'headers' => [
+                'X-Auth-Token' => 'bonjour'
+            ],
+            'query' => [
+                'base64_encoded' => 'true'
+            ]
+        ]);
+//        return $response;
+        return json_decode($response->getContent());
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Contest;
 use App\Entity\Problem;
+use App\Entity\Status;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Service\Judge;
@@ -25,10 +26,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ContestsController extends AbstractController
 {
     private $em;
+    private $j;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Judge $j)
     {
         $this->em = $entityManager;
+        $this->j = $j;
     }
 
     /**
@@ -74,16 +77,47 @@ class ContestsController extends AbstractController
 
     }
 
+    private function getSubmissions($problem)
+    {
+        $submissions = null;
+        if ($this->getUser()) {
+            $repo = $this->em->getRepository(Submission::class);
+            $submissions = $repo->findBy([
+                'user' => $this->getUser()->getId(),
+                'problem' => $problem->getId()
+            ]);
+            $changed = false;
+            foreach ($submissions as $submission) {
+                $status = $submission->getStatus();
+                if ($status->getId() == 1 || $status->getId() == 2) {
+                    $response = $this->j->getSubmission($submission->getToken());
+                    $statusId = $response->status->id;
+                    if ($status->getId() != $statusId) {
+                        $submission->setStatus($this->em->find(Status::class, $statusId));
+                        $this->em->persist($submission);
+                        $changed = true;
+                    }
+                }
+            }
+            if ($changed) {
+                $this->em->flush();
+            }
+        }
+        return $submissions;
+    }
+
     /**
      * @Route("/{id}/problem/{letter}",name="problem", methods={"GET"})
      */
     public function problem(Contest $contest, $letter)
     {
+        $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/index.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' => $contest->getId()
+            'id' => $contest->getId(),
+            'submissions' => $submissions
         ]);
 
 
@@ -94,11 +128,13 @@ class ContestsController extends AbstractController
      */
     public function submit(Contest $contest, $letter)
     {
+        $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/submit.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' => $contest->getId()
+            'id' => $contest->getId(),
+            'submissions' => $submissions
         ]);
 
     }
@@ -110,12 +146,14 @@ class ContestsController extends AbstractController
     {
         $user = $this->getUser();
         if ($user) {
+            $statusRepo = $entity->getRepository(Status::class);
             $data = $request->request->all();
             $submission = new Submission();
             $submission->setUser($user);
             $submission->setCode($data['source_code']);
             $submission->setLanguage($data['language_id']);
             $submission->setProblem($contest->getProblem($letter));
+            $submission->setStatus($statusRepo->find(1));
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
@@ -132,10 +170,12 @@ class ContestsController extends AbstractController
      */
     public function solution(Contest $contest, $letter)
     {
+        $submissions = $this->getSubmissions($contest->getProblem($letter));
         $letter = strtoupper($letter);
         return $this->render('problem/solution.html.twig', [
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
-            'id' => $contest->getId()
+            'id' => $contest->getId(),
+            'submissions' => $submissions
         ]);
 
     }
