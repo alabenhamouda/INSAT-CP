@@ -167,7 +167,7 @@ class ContestsController extends AbstractController
             $submission->setCode($data['source_code']);
             $submission->setLanguage($data['language_id']);
             $submission->setProblem($contest->getProblem($letter));
-            $submission->setStatus($statusRepo->find(1));
+            $submission->setStatus($statusRepo->findOneBy(['code'=>1]));
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
