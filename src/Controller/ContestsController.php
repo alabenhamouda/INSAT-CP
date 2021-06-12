@@ -106,16 +106,19 @@ class ContestsController extends AbstractController
         }
         return $submissions;
     }
+
 //get all submissions of the current user in the current contest
-    function get_all_submissions(Contest $contest){
-        $problems=$contest->getProblems();
-        $ans=array();
-        foreach($problems as $problem){
+    function get_all_submissions(Contest $contest)
+    {
+        $problems = $contest->getProblems();
+        $ans = array();
+        foreach ($problems as $problem) {
 //            dd($this->getSubmissions($problem));
-            $ans=array_merge($ans,$this->getSubmissions($problem));
+            $ans = array_merge($ans, $this->getSubmissions($problem));
         }
         return $ans;
     }
+
     /**
      * @Route("/{id}/problem/{letter}",name="problem", methods={"GET"})
      */
@@ -193,7 +196,7 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
      */
-    public function scoreboard(Contest $contest )//,Request $request,PaginatorInterface $paginator ,Scoreboard_service $sc_s)
+    public function scoreboard(Contest $contest)//,Request $request,PaginatorInterface $paginator ,Scoreboard_service $sc_s)
     {
         //mazelt ma7btch t5dem
         //$scoreboard=$sc_s->get_scoreboard($contest->getid());
@@ -206,7 +209,7 @@ class ContestsController extends AbstractController
         */
 
 
-        return $this->render('problem/scoreboard.html.twig', [
+        return $this->render('contests/scoreboard.html.twig', [
             "problems" => $contest->getProblems(),
             "problem" => $contest->getProblems()[0],
             'id' => $contest->getId(),
@@ -220,11 +223,11 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/my_submissions",name="my_submissions", methods={"GET"})
      */
-    public function my_submissions(Contest $contest )
+    public function my_submissions(Contest $contest)
     {
-        $submissions=$this->get_all_submissions($contest);
+        $submissions = $this->get_all_submissions($contest);
 //        dd($submissions);
-        return $this->render('problem/my_submissions.html.twig', [
+        return $this->render('contests/my_submissions.html.twig', [
             'id' => $contest->getId(),
             "submissions" => $submissions,
             "contest" => $contest,
