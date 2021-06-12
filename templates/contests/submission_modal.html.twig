@@ -14,10 +14,22 @@
                     </button>
                 </div>
                 <div class="modal-body" style="text-align: left;">
-                    <pre><code id="code">{{ submission.code }}</code></pre>
+                    <pre><code id="code{{ submission.id }}">{{ submission.code }}</code></pre>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary tocopy" data-clipboard-target="#code">Copy</button>
+                    <div class="mr-auto">
+                        <h4 class="d-inline-block ">Verdict :</h4>
+                        <h4 class="d-inline-block font-weight-light
+                                                        {% if   submission.status.code < 3 %} text-warning
+                                                        {% elseif submission.status.code == 3 %} text-success
+                                                        {% else %} text-danger {% endif %}">
+                            {{ submission.status.description }}
+                        </h4>
+
+                    </div>
+                    <button type="button" class="btn btn-primary tocopy"
+                            data-clipboard-target="#code{{ submission.id }}"> Copy <i
+                                class="pl-2 far fa-copy"></i></button>
                 </div>
             </div>
         </div>

@@ -5,15 +5,19 @@
         <form action="{{ path('create_contest') }}" method="post">
             <div class="form-group">
                 <label for="">Title</label>
-                <input type="text" class="form-control" id="" name="title" aria-describedby="" placeholder="Enter Title">
+                <input type="text" class="form-control" id="" name="title" aria-describedby="" placeholder="Enter Title" required>
+            </div>
+            <div class="form-group">
+                <label for="">start date</label>
+                <input type="date" class="form-control" name="date" id="" placeholder="enter start date" min="{{ 'now'|date('Y-m-d') }}" required>
             </div>
             <div class="form-group">
                 <label for="">start time</label>
-                <input type="date" class="form-control" name="date" id="" placeholder="enter start time">
+                <input type="time" class="form-control" name="time" id="" placeholder="enter start time" required>
             </div>
             <div class="form-group">
                 <label for="">duration</label>
-                <input type="number" class="form-control" name="duration" id="" placeholder="enter contest duration">
+                <input type="number" class="form-control" name="duration" id="" placeholder="enter contest duration" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

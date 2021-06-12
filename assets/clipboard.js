@@ -14,7 +14,7 @@ $(function () {
         .on("click", function () {
             $(this).popover("show");
             setTimeout(() => {
-                console.log(this);
+                // console.log(this);
                 $(this).popover("hide");
             }, 1000)
         });

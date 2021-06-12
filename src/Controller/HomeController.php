@@ -60,7 +60,6 @@ class HomeController extends AbstractController
             $user->setpassword($encoder->encodepassword($user, $user->getpassword()));
             $entity->persist($user);
             $entity->flush();
-            $this->addFlash('success', 'The registration is successfull');
             return $guard->authenticateUserAndHandleSuccess($user,$request,$login,'main');
         }
         return $this->render('home/login.html.twig', [

@@ -71,9 +71,9 @@
                     {% for submission in submissions|sort()|reverse %}
                         <tr>
                             <td>
-                                {% if submission.status.id <= 2 %}
+                                {% if submission.status.code <= 2 %}
                                     <i class="fas fa-spinner"></i>
-                                {% elseif submission.status.id == 3 %}
+                                {% elseif submission.status.code == 3 %}
                                     <i class="fas fa-check" style="color: #1fc61f;"></i>
                                 {% else %}
                                     <i class="fas fa-exclamation" style="color: #b21313;"></i>
@@ -83,7 +83,10 @@
                                 {{ submission.createdAt|date("D/m/Y G:i:s") }}
                             </td>
                             <td>
-                                {{ submission.status.description }}
+                                <a href="#" data-toggle="modal" data-toggle="modal"
+                                   data-target="#sub{{ submission.id }}">
+                                    {{ submission.status.description }} </a>
+                                {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
                             </td>
                         </tr>
                     {% endfor %}

@@ -6,7 +6,9 @@
             <nav class="nav nav-pills nav-justified">
                 <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
                 <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
-                <a class="nav-item nav-link bg-dark text-white" href="{{ path('my_submissions', {id: id}) }}">Submissions</a>
+                {% if app.user %}
+                    <a class="nav-item nav-link bg-dark text-white" href="{{ path('my_submissions', {id: id}) }}">Submissions</a>
+                {% endif %}
             </nav>
             <hr>
         {% endblock %}
