@@ -106,7 +106,16 @@ class ContestsController extends AbstractController
         }
         return $submissions;
     }
-
+//get all submissions of the current user in the current contest
+    function get_all_submissions(Contest $contest){
+        $problems=$contest->getProblems();
+        $ans=array();
+        foreach($problems as $problem){
+//            dd($this->getSubmissions($problem));
+            $ans=array_merge($ans,$this->getSubmissions($problem));
+        }
+        return $ans;
+    }
     /**
      * @Route("/{id}/problem/{letter}",name="problem", methods={"GET"})
      */
@@ -203,6 +212,22 @@ class ContestsController extends AbstractController
             'id' => $contest->getId(),
             "contest" => $contest,
             'submissions' => null
+        ]);
+
+    }
+
+
+    /**
+     * @Route("/{id}/my_submissions",name="my_submissions", methods={"GET"})
+     */
+    public function my_submissions(Contest $contest )
+    {
+        $submissions=$this->get_all_submissions($contest);
+//        dd($submissions);
+        return $this->render('problem/my_submissions.html.twig', [
+            'id' => $contest->getId(),
+            "submissions" => $submissions,
+            "contest" => $contest,
         ]);
 
     }

@@ -1,5 +1,7 @@
 {% extends 'problem/layout.html.twig' %}
 
+{% block title %}{{ problem.letter }} {{ problem.title }}{% endblock %}
+
 {% block published %}
     {{ parent() }}
     <ul class="nav nav-pills">

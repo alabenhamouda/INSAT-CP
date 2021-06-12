@@ -11,14 +11,13 @@
     {{ encore_entry_script_tags('problem') }}
 {% endblock %}
 
-{% block title %}{{ problem.letter }} {{ problem.title }}{% endblock %}
 {% block body %}
     <div class="container mt-2">
         {% block published %}
             <nav class="nav nav-pills nav-justified">
                 <a class="nav-item nav-link bg-dark text-white" href="{{ path('contest', {id: id}) }}">Problems</a>
                 <a class="nav-item nav-link bg-dark text-white" href="{{ path('scoreboard', {id: id}) }}">Scoreboard</a>
-                <a class="nav-item nav-link bg-dark text-white" href="#">submissions</a>
+                <a class="nav-item nav-link bg-dark text-white" href="{{ path('my_submissions', {id: id}) }}">Submissions</a>
             </nav>
             <hr>
         {% endblock %}
