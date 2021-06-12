@@ -79,6 +79,28 @@ class ContestsController extends AbstractController
 
     }
 
+    private function updateSubmissions($submissions)
+    {
+        $changed = false;
+        foreach ($submissions as $submission) {
+            $status = $submission->getStatus();
+            if ($status->getCode() == 1 || $status->getCode() == 2) {
+                $response = $this->j->getSubmission($submission->getToken());
+                $statusId = $response->status->id;
+                if ($status->getCode() != $statusId) {
+                    $repo=$this->em->getRepository(Status::class);
+                    $submission->setStatus($repo->findOneBy(['code'=>$statusId]));
+                    $this->em->persist($submission);
+                    $changed = true;
+                }
+            }
+        }
+        if ($changed) {
+            $this->em->flush();
+        }
+        return $submissions;
+    }
+
     private function getSubmissions($problem)
     {
         $submissions = null;
@@ -88,22 +110,7 @@ class ContestsController extends AbstractController
                 'user' => $this->getUser()->getId(),
                 'problem' => $problem->getId()
             ]);
-            $changed = false;
-            foreach ($submissions as $submission) {
-                $status = $submission->getStatus();
-                if ($status->getId() == 1 || $status->getId() == 2) {
-                    $response = $this->j->getSubmission($submission->getToken());
-                    $statusId = $response->status->id;
-                    if ($status->getId() != $statusId) {
-                        $submission->setStatus($this->em->find(Status::class, $statusId));
-                        $this->em->persist($submission);
-                        $changed = true;
-                    }
-                }
-            }
-            if ($changed) {
-                $this->em->flush();
-            }
+            $submissions=$this->updateSubmissions($submissions);
         }
         return $submissions;
     }
@@ -123,7 +130,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/problem/{letter}",name="problem", methods={"GET"})
      */
-    public function problem(Contest $contest, $letter)
+    public
+    function problem(Contest $contest, $letter)
     {
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
@@ -140,7 +148,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/problem/{letter}/submit",name="submit", methods={"GET"})
      */
-    public function submit(Contest $contest, $letter)
+    public
+    function submit(Contest $contest, $letter)
     {
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
@@ -156,7 +165,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/problem/{letter}/submit",name="process_submit", methods={"POST"})
      */
-    public function processSubmit(Contest $contest, $letter, Request $request, Judge $j, EntityManagerInterface $entity)
+    public
+    function processSubmit(Contest $contest, $letter, Request $request, Judge $j, EntityManagerInterface $entity)
     {
         $user = $this->getUser();
         if ($user) {
@@ -167,7 +177,7 @@ class ContestsController extends AbstractController
             $submission->setCode($data['source_code']);
             $submission->setLanguage($data['language_id']);
             $submission->setProblem($contest->getProblem($letter));
-            $submission->setStatus($statusRepo->findOneBy(['code'=>1]));
+            $submission->setStatus($statusRepo->findOneBy(['code' => 1]));
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
@@ -184,7 +194,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/problem/{letter}/solution",name="solution", methods={"GET"})
      */
-    public function solution(Contest $contest, $letter)
+    public
+    function solution(Contest $contest, $letter)
     {
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         $letter = strtoupper($letter);
@@ -199,7 +210,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
      */
-    public function scoreboard(Contest $contest, EntityManagerInterface $em)
+    public
+    function scoreboard(Contest $contest, EntityManagerInterface $em)
     {
         $participants = $contest->getParticipants();
         $result = [];
@@ -218,6 +230,7 @@ class ContestsController extends AbstractController
                 $subs = $subRepo->findBy([
                     'user' => $participant->getId(),
                     'problem' => $problem->getId()]);
+                $subs=$this->updateSubmissions($subs);
 
 
                 foreach ($subs as $submission) {
@@ -248,11 +261,11 @@ class ContestsController extends AbstractController
         usort($result, function (Result $a, Result $b) {
             return $b->solved - $a->solved;
         });
-        $i=0;
-        foreach($result as $tmp)
-        {$i++;
+        $i = 0;
+        foreach ($result as $tmp) {
+            $i++;
 
-            $tmp->rank=$i;
+            $tmp->rank = $i;
         }
 
 
@@ -270,7 +283,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/my_submissions",name="my_submissions", methods={"GET"})
      */
-    public function my_submissions(Contest $contest)
+    public
+    function my_submissions(Contest $contest)
     {
         $submissions = $this->get_all_submissions($contest);
 //        dd($submissions);
@@ -285,7 +299,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/create",name="create_contest",methods="GET")
      */
-    public function create()
+    public
+    function create()
     {
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException("you need to sign in before creating a contest");
@@ -302,7 +317,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/create",name="process_create_contest",methods={"POST"})
      */
-    public function processCreate(Request $request, EntityManagerInterface $em, AuthenticationUtils $auth)
+    public
+    function processCreate(Request $request, EntityManagerInterface $em, AuthenticationUtils $auth)
     {
 
         if (!$this->getUser()) {
@@ -327,7 +343,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/my",name="myContests",methods={"GET"})
      */
-    public function myContests(EntityManagerInterface $em)
+    public
+    function myContests(EntityManagerInterface $em)
     {
         $auth = $this->getUser();
         if (empty($auth)) {
@@ -359,7 +376,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/edit/{id<\d+>}",name="editContest",methods={"GET"})
      */
-    public function edit(Contest $contest, EntityManagerInterface $em)
+    public
+    function edit(Contest $contest, EntityManagerInterface $em)
     {
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException("alfred");
@@ -377,7 +395,8 @@ class ContestsController extends AbstractController
     /**
      * @Route ("/edit/{id<\d+>}/addProblem",name="addProblem",methods="POST")
      */
-    public function addProblem(Contest $contest, Request $request, EntityManagerInterface $em)
+    public
+    function addProblem(Contest $contest, Request $request, EntityManagerInterface $em)
     {
         //TODO check user
         if (!$this->getUser()) {
@@ -414,7 +433,8 @@ class ContestsController extends AbstractController
 
     }
 
-    private function checkLetter(string $letter)
+    private
+    function checkLetter(string $letter)
     {
         if (empty($lettter) or strlen($letter) > 1) {
             return false;
@@ -428,7 +448,8 @@ class ContestsController extends AbstractController
     /**
      * @Route ("/edit/{id<\d+>}/{letter}",name="edit_problem",methods={"GET"})
      */
-    public function editProblem(Contest $contest, $letter)
+    public
+    function editProblem(Contest $contest, $letter)
     {
 
         if (!$this->getUser()) {
@@ -456,7 +477,8 @@ class ContestsController extends AbstractController
     /**
      * @Route ("/edit/{id<\d+>}/{letter}/process" ,name="process_edit_problem" ,methods={"POST"})
      */
-    public function processEditProblem(Contest $contest, Request $request, EntityManagerInterface $em, $letter)
+    public
+    function processEditProblem(Contest $contest, Request $request, EntityManagerInterface $em, $letter)
     {
         //TODO check user
         //TODO check letter
@@ -500,7 +522,8 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id<\d+>}/publish", name="publish" ,methods={"POST"})
      */
-    public function publish(Contest $contest, EntityManagerInterface $em)
+    public
+    function publish(Contest $contest, EntityManagerInterface $em)
     {
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException("alfred");
