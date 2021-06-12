@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Users;
 use App\Form\UserType;
+use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
@@ -49,7 +51,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity,LoginFormAuthenticator $login,GuardAuthenticatorHandler $guard)
     {
         $user = new user();
         $form = $this->createform(usertype::class, $user);
@@ -58,7 +60,8 @@ class HomeController extends AbstractController
             $user->setpassword($encoder->encodepassword($user, $user->getpassword()));
             $entity->persist($user);
             $entity->flush();
-            return $this->redirecttoroute("home");
+            $this->addFlash('success', 'The registration is successfull');
+            return $guard->authenticateUserAndHandleSuccess($user,$request,$login,'main');
         }
         return $this->render('home/login.html.twig', [
             'signup' => 'signup',
