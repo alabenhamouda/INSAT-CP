@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Classes\Result;
 use App\Entity\Contest;
 use App\Entity\Problem;
 use App\Entity\SampleInput;
@@ -170,6 +171,8 @@ class ContestsController extends AbstractController
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
+            $contest->addParticipant($user);
+            $entity->persist($contest);
             $entity->flush();
             $this->addFlash("success", "Code was submitted");
         } else {
@@ -196,22 +199,66 @@ class ContestsController extends AbstractController
     /**
      * @Route("/{id}/scoreboard",name="scoreboard", methods={"GET"})
      */
-    public function scoreboard(Contest $contest)//,Request $request,PaginatorInterface $paginator ,Scoreboard_service $sc_s)
+    public function scoreboard(Contest $contest, EntityManagerInterface $em)
     {
-        //mazelt ma7btch t5dem
-        //$scoreboard=$sc_s->get_scoreboard($contest->getid());
+        $participants = $contest->getParticipants();
+        $result = [];
+        foreach ($participants as $participant) {
+            $userResult = new Result();
+            $userResult->username = $participant->getUsername();
+            foreach ($contest->getProblems() as $problem) {
+                //0 for not submitted yet
+                //1 in queue
+                //2 for CE or RE or WA or TLE
+                //3 for AC
+                array_push($userResult->result, 0);
+            }
+            $subRepo = $em->getRepository(Submission::class);
+            foreach ($contest->getProblems() as $problem) {
+                $subs = $subRepo->findBy([
+                    'user' => $participant->getId(),
+                    'problem' => $problem->getId()]);
 
-        /*   =$paginator->paginate(
-            $xxxxxxx,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('jumpBy', 10)
-        );
-        */
+
+                foreach ($subs as $submission) {
+                    $tmp = $submission->getStatus()->getCode();
+                    $letter = $submission->getProblem()->getLetter();
+                    if ($tmp == 3) {
+                        //AC
+                        $userResult->result[ord($letter) - ord("A")] = 3;
+                    } elseif ($tmp == 1 or $tmp == 2) {
+                        // in queue
+                        $userResult->result[ord($letter) - ord("A")] = max($userResult->result[ord($letter) - ord("A")], 1);
+                    } else {
+                        // Wrong
+                        $userResult->result[ord($letter) - ord("A")] = max($userResult->result[ord($letter) - ord("A")], 2);
+                    }
+
+                }
+            }
+            $solved = 0;
+            for ($i = 0; $i < sizeof($userResult->result); $i++) {
+                if ($userResult->result[$i] == "3") {
+                    $solved++;
+                }
+            }
+            $userResult->solved = $solved;
+            array_push($result, $userResult);
+        }
+        usort($result, function (Result $a, Result $b) {
+            return $b->solved - $a->solved;
+        });
+        $i=0;
+        foreach($result as $tmp)
+        {$i++;
+
+            $tmp->rank=$i;
+        }
 
 
         return $this->render('contests/scoreboard.html.twig', [
             "problems" => $contest->getProblems(),
-            "problem" => $contest->getProblems()[0],
+            'results' => $result,
             'id' => $contest->getId(),
             "contest" => $contest,
             'submissions' => null

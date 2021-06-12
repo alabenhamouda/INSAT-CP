@@ -4,38 +4,49 @@
 
 {% block content %}
     <a class="btn btn-light mb-2" href="#"> Show my rank</a>
-
+<style>
+    td , th{
+        text-align: center;
+    }
+</style>
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">Rang</th>
+            <th scope="col" >Rang</th>
             <th scope="col">User</th>
-            <th scope="col" class="text-center">Solved</th>
             {% for problem in problems %}
-                <th scope="col" class="text-center"><a
-                            href="{{ path('problem', {id: id, letter: problem.letter}) }}"> {{ problem.letter }} </a>
+                <th scope="col" class=""><a
+                            href="{{ path('problem', {'id': contest.id, 'letter': problem.letter}) }}"> {{ problem.letter }} </a>
                 </th>
             {% endfor %}
-            <th scope="col">Penalty</th>
+            <th scope="col">score</th>
 
         </tr>
         </thead>
         <tbody>
-        {% for problem in problems %}
+        {% for result in results %}
             <tr>
                 <td>
-                    1
+                    {{ result.rank }}
                 </td>
                 <td>
-                    User1
+                    {{ result.username }}
                 </td>
-                <td class="text-center">
-                    6
-                </td>
-                {% for problem in problems %}
-                    <td scope="col" class="text-center"> + <br> 1:15</td>
+                {% for case in result.result %}
+                    {% if case == "3" %}
+                        {# AC #}
+                        <td style="background-color: #cdedd8">AC</td>
+                    {% elseif case == "2" %}
+                        {# CE TLE RE #}
+                        <td style="background-color:#f4cfce">WA</td>
+                    {% elseif case == "1" %}
+                        {# processing #}
+                        <td style="background-color:#d1be2c70">QUEUE</td>
+                    {% else %}
+                        <td>{{ case }}</td>
+                    {% endif %}
                 {% endfor %}
-                <td> 6969</td>
+                <td>{{ result.solved }}</td>
             </tr>
         {% endfor %}
         </tbody>

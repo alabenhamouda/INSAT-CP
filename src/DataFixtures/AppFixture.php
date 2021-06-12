@@ -6,6 +6,7 @@ use App\Entity\Contest;
 use App\Entity\Problem;
 use App\Entity\SampleInput;
 use App\Entity\Status;
+use App\Entity\Submission;
 use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -42,7 +43,7 @@ class AppFixture extends Fixture
             $manager->persist($user);
         }
 //create contests
-        $samir = new Contest();
+        $problemArr = [];
         for ($i = 0; $i < 40; $i++) {
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
@@ -52,9 +53,6 @@ class AppFixture extends Fixture
                 ->setDuration($fa->numberBetween(1, 300))
                 ->setIsPublished(true)
                 ->setCreator($userArr[$number]);
-            for ($j = 0; $j < $fa->numberBetween(1, 40); $j++) {
-                $contest->addParticipant($fa->unique()->randomElement($userArr));
-            }
             $fa->unique(true);
             //create problems
             $letter = 'A';
@@ -104,8 +102,9 @@ class AppFixture extends Fixture
                         ->setProblem($problem);
                     $manager->persist($sample);
                 }
-                $manager->persist($problem);
 
+                $manager->persist($problem);
+                array_push($problemArr, $problem);
             }
             $manager->persist($contest);
         }
@@ -118,10 +117,52 @@ class AppFixture extends Fixture
             "Runtime Error (NZEC)", "Runtime Error (Other)", "Internal Error",
             "Exec Format Error"
         ];
+        $statusArr=[];
         for ($i = 0; $i < count($descriptions); $i++) {
             $status = new Status();
-            $status->setDescription($descriptions[$i]);
+            $status->setDescription($descriptions[$i])
+                   ->setCode($i+1);
             $manager->persist($status);
+            array_push($statusArr,$status);
+        }
+        //adding 200 mostly wrong submissions
+        for ($i = 0; $i < 100; $i++) {
+            $submission = new Submission();
+            /** @var  $tprob Problem */
+            $tprob=$fa->randomElement($problemArr);
+            $tuser=$fa->randomElement($userArr);
+            $submission->setLanguage("cpp")
+                ->setUser($tuser)
+                ->setCode($fa->text)
+                ->setProblem($tprob)
+                ->setStatus($fa->randomElement($statusArr))
+                ->setToken("aaaaaa");
+            $tcontest=$tprob->getContest();
+            $tcontest->addParticipant($tuser);
+
+            $manager->persist($tprob);
+            $manager->persist($tuser);
+            $manager->persist($tcontest);
+            $manager->persist($submission);
+        }
+        for ($i = 0; $i < 300; $i++) {
+            $submission = new Submission();
+            /** @var  $tprob Problem */
+            $tprob=$fa->randomElement($problemArr);
+            $tuser=$fa->randomElement($userArr);
+            $submission->setLanguage("cpp")
+                ->setUser($tuser)
+                ->setCode($fa->text)
+                ->setProblem($tprob)
+                ->setStatus($statusArr[2])
+                ->setToken("aaaaaa");
+            $tcontest=$tprob->getContest();
+            $tcontest->addParticipant($tuser);
+
+            $manager->persist($tprob);
+            $manager->persist($tuser);
+            $manager->persist($tcontest);
+            $manager->persist($submission);
         }
         $manager->flush();
     }

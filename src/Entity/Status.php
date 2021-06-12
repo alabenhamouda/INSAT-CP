@@ -29,6 +29,11 @@ class Status
      */
     private $submissions;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $code;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -83,6 +88,18 @@ class Status
                 $submission->setStatus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    public function setCode(int $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }
