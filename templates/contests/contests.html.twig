@@ -27,13 +27,21 @@
                         {% for contest in contests %}
                             {% if contest.isPublished %}
                             <tr>
+                                    <td>
+                                        <a href="{{ path("contest", {id: contest.id}) }}">
+                                        {{ contest.title }}
+                                        </a>
+                                </td>
                                 <td>
                                     <a href="{{ path("contest", {id: contest.id}) }}">
-                                        {{ contest.title }}
+                                        {{ contest.startDate|time_diff }}
                                     </a>
                                 </td>
-                                <td>{{ contest.startDate|time_diff }}</td>
-                                <td>{{ contest.duration|duration_helper }}</td>
+                                <td>
+                                    <a href="{{ path("contest", {id: contest.id}) }}">
+                                    {{ contest.duration|duration_helper }}
+                                    </a>
+                                </td>
                             </tr>
                             {% endif %}
                         {% endfor %}
