@@ -25,7 +25,9 @@ class Judge
         $data = [
             'source_code' => $submission->getCode(),
             'language_id' => $submission->getLanguage(),
-            'cpu_time_limit' => 1
+            'cpu_time_limit' => $submission->getProblem()->getTimeLimit(),
+            'stdin' => $submission->getProblem()->getInput()->getInput(),
+            'expected_output' => $submission->getProblem()->getInput()->getOutput()
         ];
         $response = $this->client->request('POST', $this->url . '/submissions', [
             'headers' => [

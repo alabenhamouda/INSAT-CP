@@ -1,4 +1,12 @@
 {% extends 'problem/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('codemirror') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('codemirror') }}
+{% endblock %}
 {% set show = "submit" %}
 {% block main %}
     <div class="container" style="margin-top: 10px">

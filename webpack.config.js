@@ -29,11 +29,13 @@ Encore
     .addEntry('problem', './assets/problem.js')
     .addEntry('contests', './assets/contests.js')
     .addEntry('contest', './assets/contest.js')
-    .addEntry('problems' , './assets/problems.js')
-    .addEntry('tutorial' , './assets/tutorial.js')
-    .addEntry('sortingjs' , './assets/sorting.js')
-    .addEntry('tools','./assets/tools.js')
+    .addEntry('problems', './assets/problems.js')
+    .addEntry('tutorial', './assets/tutorial.js')
+    .addEntry('sortingjs', './assets/sorting.js')
+    .addEntry('tools', './assets/tools.js')
     .addEntry('sorting', './assets/styles/sorting.css')
+    .addEntry('highlight', './assets/highlight.js')
+    .addEntry('codemirror', './assets/codemirror.js')
     .copyFiles({
         from: './assets/images'
     })

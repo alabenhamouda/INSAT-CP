@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Contest;
+use App\Entity\Input;
 use App\Entity\Problem;
 use App\Entity\SampleInput;
 use App\Entity\Status;
@@ -104,8 +105,11 @@ class AppFixture extends Fixture
                         ->setProblem($problem);
                     $manager->persist($sample);
                 }
+                $input = new Input();
+                $input->setInput("1 2");
+                $input->setOutput("3");
+                $problem->setInput($input);
                 $manager->persist($problem);
-
             }
             $manager->persist($contest);
         }

@@ -89,6 +89,16 @@ class Problem
      */
     private $submissions;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $timeLimit;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Input::class, cascade={"persist", "remove"})
+     */
+    private $input;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -301,6 +311,30 @@ class Problem
                 $submission->setProblem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTimeLimit(): ?float
+    {
+        return $this->timeLimit;
+    }
+
+    public function setTimeLimit(?float $timeLimit): self
+    {
+        $this->timeLimit = $timeLimit;
+
+        return $this;
+    }
+
+    public function getInput(): ?Input
+    {
+        return $this->input;
+    }
+
+    public function setInput(?Input $input): self
+    {
+        $this->input = $input;
 
         return $this;
     }
