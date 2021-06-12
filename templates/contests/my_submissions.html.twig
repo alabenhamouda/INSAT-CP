@@ -33,9 +33,8 @@
                                 {% elseif submission.status.id == 3 %} table-success
                                 {% else %} table-danger {% endif %}">
 
-                    <a href="#" data-toggle="modal" data-toggle="modal"
-                       data-target="#sub{{ submission.id }}"> {{ submission.status.description }} </a>
-                    {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
+                    <a href="#" data-toggle="modal" data-toggle="modal" data-target="#sub{{ submission.id }}">
+                        {{ submission.status.description }} </a>                {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
 
                 </td>
             </tr>

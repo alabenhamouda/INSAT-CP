@@ -83,7 +83,9 @@
                                 {{ submission.createdAt|date("D/m/Y G:i:s") }}
                             </td>
                             <td>
-                                {{ submission.status.description }}
+                                <a href="#" data-toggle="modal" data-toggle="modal" data-target="#sub{{ submission.id }}">
+                                    {{ submission.status.description }} </a>
+                                {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
                             </td>
                         </tr>
                     {% endfor %}
