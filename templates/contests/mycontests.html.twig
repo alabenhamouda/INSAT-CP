@@ -6,9 +6,9 @@
     {{ encore_entry_script_tags('mycontests') }}
 {% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container mt-2">
 
-{#        unpublished contests#}
+        {# unpublished contests #}
         <div class="row">
             <div class="col-10">
                 <h1> Unpublished contests</h1>
@@ -40,11 +40,11 @@
                 {% endif %}
             </div>
         </div>
-{#        published contests#}
+        {# published contests #}
         <div class="row">
             <div class="col-10">
                 <h1> published contests</h1>
-                {% if published is not null%}
+                {% if published is not null %}
                     <table class="table table-hover" id="table">
                         <tr class="table bg-dark" style="color: white">
                             <th scope="row">Title</th>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-{#        particiapations#}
+        {# particiapations #}
         <div class="row">
             <div class="col-10">
                 <h1> participations</h1>
