@@ -18,7 +18,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -45,24 +44,72 @@ class ContestsController extends AbstractController
     {
         $repo = $this->em->getRepository(Contest::class);
         $title = $request->query->get('title');
-        $up = $repo->findupcoming();
-        $rec = $repo->findrecent();
+//        $up = $repo->findupcoming();
+//        $rec = $repo->findrecent();
         if ($title) {
             $contests = $repo->findByTitle($title);
         } else $contests = $repo->findAllOrderedbyDate();
-        $visible_contests = $contests;
-        if ($visible_contests) {
-            $visible_contests = $paginator->paginate(
-                $contests,
+        $up = [];
+        $finished = [];
+        foreach ($contests as $contest) {
+            $tmp = $contest->getStatus()['status'];
+            dump($tmp);
+
+            if ($tmp === "not_started" or $tmp === "running") {
+                array_push($up, $contest);
+            } else {
+                array_push($finished, $contest);
+            }
+        }
+
+
+        $finished = array_reverse($finished);
+        if ($finished) {
+            $finished = $paginator->paginate(
+                $finished,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('jumpBy', 10)
             );
         }
         //dd($visible_contests);
         return $this->render('contests/contests.html.twig', [
-            'contests' => $visible_contests,
-            'up' => $up,
-            'rec' => $rec
+            'degla' => "Finished Contests",
+            'finished' => $finished
+        ]);
+    }
+
+    /**
+     * @Route("/upcoming",name="upcoming",methods={"GET"})
+     */
+    public function upcoming(Request $request, PaginatorInterface $paginator)
+    {
+        $repo = $this->em->getRepository(Contest::class);
+        $title = $request->query->get('title');
+        $contests = $repo->findAllOrderedbyDate();
+        $up = [];
+        $finished = [];
+        foreach ($contests as $contest) {
+            $tmp = $contest->getStatus()['status'];
+            dump($tmp);
+
+            if ($tmp === "not_started" or $tmp === "running") {
+                array_push($up, $contest);
+            } else {
+                array_push($finished, $contest);
+            }
+        }
+
+        if ($up) {
+            $up = $paginator->paginate(
+                $up,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('jumpBy', 10)
+            );
+        }
+        //dd($visible_contests);
+        return $this->render('contests/contests.html.twig', [
+            'degla' => 'Upcoming Contests',
+            'finished' => $up
         ]);
     }
 
@@ -77,21 +124,21 @@ class ContestsController extends AbstractController
         {
             $problems = $contest->getProblems();
             return $this->render('contests/contest.html.twig', [
-                'status'=>$status,
+                'status' => $status,
                 'problems' => $problems,
                 'id' => $contest->getId()
             ]);
         }
 
-        if($status['is_published']){
+        if ($status['is_published']) {
             return $this->render('contests/registration_page.html.twig', [
-                'registred'=> ($this->getUser())&&($this->getUser()->getContests()->contains($contest)|null),
-                'status'=>$status,
+                'registred' => ($this->getUser()) && ($this->getUser()->getContests()->contains($contest) | null),
+                'status' => $status,
                 'contest' => $contest,
                 'id' => $contest->getId()
             ]);
-        }else{
-                throw $this->createAccessDeniedException('You cannot access this page!');
+        } else {
+            throw $this->createAccessDeniedException('You cannot access this page!');
         }
 
     }

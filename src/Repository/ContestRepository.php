@@ -77,13 +77,28 @@ class ContestRepository extends ServiceEntityRepository
         $date = date("Y-m-d");
         return $this->createQueryBuilder('c')
             ->andWhere('c.isPublished = true')
+//            ->andWhere('c.start_date <:date')
+//            ->setParameter('date',$date )
+            ->orderBy('c.start_date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Contest[] Returns an array of Contest objects
+     */
+
+    public function findAllDate(): array
+    {
+
+        $date = date("Y-m-d");
+        return $this->createQueryBuilder('c')
             ->andWhere('c.start_date <:date')
             ->setParameter('date',$date )
             ->orderBy('c.start_date', 'DESC')
             ->getQuery()
             ->getResult();
     }
-
     /*
     public function findOneBySomeField($value): ?Contest
     {

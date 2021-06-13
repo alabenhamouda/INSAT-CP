@@ -43,15 +43,7 @@ class Contest
      */
     private $isPublished = false;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $start_time;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $start_date;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdContests")
@@ -63,6 +55,11 @@ class Contest
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contests")
      */
     private $participants;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $start_date;
 
 
     public function __construct()
@@ -153,29 +150,7 @@ class Contest
         return $this;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
-    {
-        return $this->start_time;
-    }
 
-    public function setStartTime(\DateTimeInterface $start_time): self
-    {
-        $this->start_time = $start_time;
-
-        return $this;
-    }
-
-    public function getStartDate(): ?\DateTimeInterface
-    {
-        return $this->start_date;
-    }
-
-    public function setStartDate(\DateTimeInterface $start_date): self
-    {
-        $this->start_date = $start_date;
-
-        return $this;
-    }
 
     public function getCreator(): ?User
     {
@@ -218,7 +193,7 @@ class Contest
      */
     public function getStatus()
     {
-        $contest_start =$this->getStartDate()->getTimestamp()+$this->getStartTime()->getTimestamp();
+        $contest_start =$this->getStartDate()->getTimestamp();
         $contest_end =$contest_start+$this->getDuration()*60;
         $now=time();
         $ans=array(
@@ -247,6 +222,18 @@ class Contest
 //        dump($a,$b,$c);
 //        dd($ans);
         return $ans;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->start_date;
+    }
+
+    public function setStartDate(\DateTimeInterface $start_date): self
+    {
+        $this->start_date = $start_date;
+
+        return $this;
     }
 
     public function allowed_inside_contest(?User $user): bool
