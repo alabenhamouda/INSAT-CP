@@ -26,7 +26,7 @@
                                         {{ contest.title }}
                                     </a>
                                 </td>
-                                <td>{{ contest.startDate|time_diff }}</td>
+                                <td>{{ contest.startDate | time_diff }}</td>
                                 <td>{{ contest.duration|duration_helper }}</td>
                             </tr>
                         {% endfor %}

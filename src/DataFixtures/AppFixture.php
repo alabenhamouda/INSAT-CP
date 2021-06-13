@@ -10,6 +10,7 @@ use App\Entity\Status;
 use App\Entity\Submission;
 use App\Entity\Tag;
 use App\Entity\User;
+use Container9nkxRE3\getDoctrineMigrations_UpToDateCommandService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -48,9 +49,9 @@ class AppFixture extends Fixture
         for ($i = 0; $i < 40; $i++) {
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
-            $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
-                ->setStartDate($fa->dateTimeBetween('-1 years', '+1 years'))
-                ->setStartTime($fa->dateTime())
+            $date=$fa->dateTimeBetween("-1 years","+1 years");
+                $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
+                ->setStartDate($date)
                 ->setDuration($fa->numberBetween(1, 300))
                 ->setIsPublished(true)
                 ->setCreator($userArr[$number]);

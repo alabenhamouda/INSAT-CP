@@ -43,10 +43,6 @@ class Contest
      */
     private $isPublished = false;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $start_time;
 
     /**
      * @ORM\Column(type="date")
@@ -153,17 +149,6 @@ class Contest
         return $this;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
-    {
-        return $this->start_time;
-    }
-
-    public function setStartTime(\DateTimeInterface $start_time): self
-    {
-        $this->start_time = $start_time;
-
-        return $this;
-    }
 
     public function getStartDate(): ?\DateTimeInterface
     {
@@ -214,7 +199,7 @@ class Contest
     }
     public function getStatus() :array
     {
-        $contest_start =$this->getStartDate()->getTimestamp()+$this->getStartTime()->getTimestamp();
+        $contest_start =$this->getStartDate()->getTimestamp();
         $contest_end =$contest_start+$this->getDuration()*60;
         $now=time();
         $ans=array();

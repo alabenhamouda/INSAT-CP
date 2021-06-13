@@ -45,24 +45,72 @@ class ContestsController extends AbstractController
     {
         $repo = $this->em->getRepository(Contest::class);
         $title = $request->query->get('title');
-        $up = $repo->findupcoming();
-        $rec = $repo->findrecent();
+//        $up = $repo->findupcoming();
+//        $rec = $repo->findrecent();
         if ($title) {
             $contests = $repo->findByTitle($title);
         } else $contests = $repo->findAllOrderedbyDate();
-        $visible_contests = $contests;
-        if ($visible_contests) {
-            $visible_contests = $paginator->paginate(
-                $contests,
+        $up = [];
+        $finished = [];
+        foreach ($contests as $contest) {
+            $tmp = $contest->getStatus()['status'];
+            dump($tmp);
+
+            if ($tmp === "not_started" or $tmp === "running") {
+                array_push($up, $contest);
+            } else {
+                array_push($finished, $contest);
+            }
+        }
+
+
+        $finished = array_reverse($finished);
+        if ($finished) {
+            $finished = $paginator->paginate(
+                $finished,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('jumpBy', 10)
             );
         }
         //dd($visible_contests);
         return $this->render('contests/contests.html.twig', [
-            'contests' => $visible_contests,
-            'up' => $up,
-            'rec' => $rec
+            'degla' => "Finished Contests",
+            'finished' => $finished
+        ]);
+    }
+
+    /**
+     * @Route("/upcoming",name="upcoming",methods={"GET"})
+     */
+    public function upcoming(Request $request, PaginatorInterface $paginator)
+    {
+        $repo = $this->em->getRepository(Contest::class);
+        $title = $request->query->get('title');
+        $contests = $repo->findAllOrderedbyDate();
+        $up = [];
+        $finished = [];
+        foreach ($contests as $contest) {
+            $tmp = $contest->getStatus()['status'];
+            dump($tmp);
+
+            if ($tmp === "not_started" or $tmp === "running") {
+                array_push($up, $contest);
+            } else {
+                array_push($finished, $contest);
+            }
+        }
+
+        if ($up) {
+            $up = $paginator->paginate(
+                $up,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('jumpBy', 10)
+            );
+        }
+        //dd($visible_contests);
+        return $this->render('contests/contests.html.twig', [
+            'degla' => 'Upcoming Contests',
+            'finished' => $up
         ]);
     }
 
@@ -71,27 +119,26 @@ class ContestsController extends AbstractController
      */
     public function contest(Contest $contest)
     {
-        $status=$contest->getStatus();
+        $status = $contest->getStatus();
 
-        if(($this->getUser()&&$this->getUser()->getId()==$contest->getCreator()->getId())
-            ||( $status['is_published']&&($status['status']=="running"||$status['status']=="finished") ))
-        {
+        if (($this->getUser() && $this->getUser()->getId() == $contest->getCreator()->getId())
+            || ($status['is_published'] && ($status['status'] == "running" || $status['status'] == "finished"))) {
             $problems = $contest->getProblems();
             return $this->render('contests/contest.html.twig', [
-                'status'=>$status,
+                'status' => $status,
                 'problems' => $problems,
                 'id' => $contest->getId()
             ]);
         }
 
-        if($status['is_published']){
+        if ($status['is_published']) {
             return $this->render('contests/registration_page.html.twig', [
-                'registred'=> ($this->getUser())&&($this->getUser()->getContests()->contains($contest)|null),
-                'status'=>$status,
+                'registred' => ($this->getUser()) && ($this->getUser()->getContests()->contains($contest) | null),
+                'status' => $status,
                 'contest' => $contest,
                 'id' => $contest->getId()
             ]);
-        }else{
+        } else {
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
 
@@ -103,15 +150,15 @@ class ContestsController extends AbstractController
     public function contest_registration(Contest $contest)
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
-        $status=$contest->getStatus();
-        if($status['status']='not_started'&&$status['is_published']){
-            $user=$this->getUser();
+        $status = $contest->getStatus();
+        if ($status['status'] = 'not_started' && $status['is_published']) {
+            $user = $this->getUser();
             $contest->addParticipant($user);
             $user->addContest($contest);
             $this->em->persist($contest);
             $this->em->flush();
         }
-        return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
     }
 
 
@@ -366,9 +413,9 @@ class ContestsController extends AbstractController
         $r = $request->request;
         $contest->setTitle($r->get('title'))
             ->setDuration($r->get('duration'))
-            ->setStartTime(new DateTime("00:00"))
             ->setCreator($user)
-            ->setStartDate(new DateTime($r->get('date')));
+            ->setStartDate(new DateTime($r->get('date') . " " . $r->get('time') . ":00"));
+        
         $em->persist($contest);
         $em->flush();
 
@@ -459,7 +506,7 @@ class ContestsController extends AbstractController
             ->setOutputSpec("")
             ->setInputSpec("")
             ->addSampleIn($sample);
-        $input=new Input();
+        $input = new Input();
         $input->setInput("")->setOutput("");
         $problem->setInput($input);
         $contest->addProblem($problem);
@@ -509,7 +556,7 @@ class ContestsController extends AbstractController
             'id' => $contest->getId(),
             'problem' => $problem,
             'sample' => $problem->getSampleIn()[0],
-            'input'=>$problem->getInput()
+            'input' => $problem->getInput()
         ]);
 
 
@@ -541,7 +588,7 @@ class ContestsController extends AbstractController
         $r = $request->request;
         //TODO check POST input or use symfony form
         $sample = $problem->getSampleIn()[0];
-        $input= new Input();
+        $input = new Input();
         $sample->setInput($r->get("insamp"))
             ->setOutput($r->get('outsamp'))
             ->setProblem($problem);

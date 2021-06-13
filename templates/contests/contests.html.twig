@@ -11,38 +11,49 @@
 {% endblock %}
 {% block body %}
     <div class="container">
+
+
         <div class="row">
             <div class="col-9">
-                <form class="d-flex" id="form" style="margin-top: 15px" method="get">
-                    <input class="form-control" type="text" id="title" placeholder="Search for contest" name="title"  value="{{ app.request.get('title') }}">
-                    <button type="submit" class="btn  bg-dark" id="button" style="color: white">Search</button>
-                </form>
-                {% if contests %}
+                <div style="display: flex;flex-direction: row;justify-content: center">
+                    <ul class="nav nav-pills mt-5">
+                        <li class="nav-item">
+                            <a class="nav-link {% if degla == "Finished Contests" %}active{% endif %}"
+                               href="{{ path('contests') }}">Finished</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if degla == "Upcoming Contests" %}active{% endif %}"
+                               aria-current="page" href="{{ path('upcoming') }}">Upcoming</a>
+                        </li>
+                    </ul>
+                </div>
+                <h1 class="mt-5">{{ degla }}</h1>
+                {% if finished %}
                     <table class="table table-hover" id="table">
                         <tr class="table bg-dark" style="color: white">
                             <th scope="row">Title</th>
                             <th scope="row">Start Time</th>
                             <th scope="row">Duration</th>
                         </tr>
-                        {% for contest in contests %}
+                        {% for contest in finished %}
                             {% if contest.isPublished %}
-                            <tr>
+                                <tr>
                                     <td>
                                         <a href="{{ path("contest", {id: contest.id}) }}">
-                                        {{ contest.title }}
+                                            {{ contest.title }}
                                         </a>
-                                </td>
-                                <td>
-                                    <a href="{{ path("contest", {id: contest.id}) }}">
-                                        {{ contest.startDate|time_diff }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{{ path("contest", {id: contest.id}) }}">
-                                    {{ contest.duration|duration_helper }}
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path("contest", {id: contest.id}) }}">
+                                            {{ contest.startDate|time_diff }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path("contest", {id: contest.id}) }}">
+                                            {{ contest.duration|duration_helper }}
+                                        </a>
+                                    </td>
+                                </tr>
                             {% endif %}
                         {% endfor %}
                     </table>
@@ -53,44 +64,44 @@
                         </tr>
                     </table>
                 {% endif %}
-                {% if contests %}
-                {{ knp_pagination_render(contests,  'pagination_template.html.twig') }}
+                {% if finished %}
+                    {{ knp_pagination_render(finished,  'pagination_template.html.twig') }}
                 {% endif %}
             </div>
             <div class="col-3">
                 <div class="pt-2">
-                    <a href="{{ path('create_contest') }}" >
+                    <a href="{{ path('create_contest') }}">
                         <button class="btn bg-info" style="color: white;width: 100%;">create contest</button>
                     </a>
                 </div>
-                <div class="accordion">
-                    <div class="contentA active">
-                        <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Upcoming Contests</div>
-                        <div class="content">
-                            {% for contest in up %}
-                                {% if contest.isPublished %}
-                                <a class="dropdown-item"
-                                   href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
-
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion">
-                    <div class="contentA">
-                        <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Recent Contests</div>
-                        <div class="content">
-                            {% for contest in rec %}
-                                {% if contest.isPublished %}
-                                <a class="dropdown-item"
-                                   href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
             </div>
+            {# <div class="accordion"> #}
+            {# <div class="contentA active"> #}
+            {# <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Upcoming Contests</div> #}
+            {# <div class="content"> #}
+            {# {% for contest in up %} #}
+            {# {% if contest.isPublished %} #}
+            {# <a class="dropdown-item" #}
+            {# href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a> #}
+
+            {# {% endif %} #}
+            {# {% endfor %} #}
+            {# </div> #}
+            {# </div> #}
+            {# </div> #}
+            {# <div class="accordion"> #}
+            {# <div class="contentA"> #}
+            {# <div class="label navbar bg-dark" style="margin-top:15px ;color: white ">Recent Contests</div> #}
+            {# <div class="content"> #}
+            {# {% for contest in rec %} #}
+            {# {% if contest.isPublished %} #}
+            {# <a class="dropdown-item" #}
+            {# href="{{ path("contest", {id: contest.id}) }}">{{ contest.title }}</a> #}
+            {# {% endif %} #}
+            {# {% endfor %} #}
+            {# </div> #}
+            {# </div> #}
+            {# </div> #}
         </div>
     </div>
 {% endblock %}
