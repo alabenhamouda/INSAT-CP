@@ -1807,13 +1807,6 @@
     "path-type" "^4.0.0"
     "yaml" "^1.10.0"
 
-"countdowntimer@^2.0.1":
-  "integrity" "sha512-chZbPV+16Ls4WM8k8N/cO/EH+XBUiQP2mmLSnU34gHcsqLkOaiukX4rlZaH0LHcaAapsYukOQrcy+A97LE7MJw=="
-  "resolved" "https://registry.npmjs.org/countdowntimer/-/countdowntimer-2.0.1.tgz"
-  "version" "2.0.1"
-  dependencies:
-    "jquery" "^3.2.1"
-
 "cross-spawn@^7.0.3":
   "integrity" "sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w=="
   "resolved" "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
@@ -3053,7 +3046,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
-"jquery@^3.2.1", "jquery@^3.6.0":
+"jquery@^3.6.0":
   "integrity" "sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw=="
   "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   "version" "3.6.0"
