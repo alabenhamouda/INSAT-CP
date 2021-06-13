@@ -48,3 +48,9 @@
 tr:not(tr:first-of-type) {
     cursor: pointer;
 }
+td a{
+    text-decoration: none;
+}
+td a:hover{
+    text-decoration: none;
+}
