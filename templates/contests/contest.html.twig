@@ -17,7 +17,11 @@
                         {{ problem.letter }}
                     </a>
                 </td>
-                <td>{{ problem.title }}</td>
+                    <td>
+                        <a href="{{ path("problem", {id: problem.contest.id, letter: problem.letter}) }}">
+                        {{ problem.title }}
+                        </a>
+                    </td>
             </tr>
         {% endfor %}
     </table>
