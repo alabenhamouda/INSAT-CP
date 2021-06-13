@@ -57,7 +57,7 @@ class Contest
     private $participants;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $start_date;
 

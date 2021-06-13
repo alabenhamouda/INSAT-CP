@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     var interval = 1000;
     function update(){
         duration = moment.duration(duration - interval, 'milliseconds');
-        if(duration<0){
+        if(duration.asSeconds()<=0){
             location.reload();
         }
         if(duration.days()!=0){

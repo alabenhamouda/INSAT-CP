@@ -8,10 +8,10 @@
     <hr>
     <div id="countdown ">
         <ul class="row text-uppercase ">
-            <li class="col d-inline-block "><span id="days" class="d-block">00</span>Days</li>
-            <li class="col d-inline-block "><span id="hours" class="d-block">00</span>Hours</li>
-            <li class="col d-inline-block"><span id="minutes" class="d-block">00</span>Minutes</li>
-            <li class="col d-inline-block"><span id="seconds" class="d-block">00</span>Seconds</li>
+            <li class="col d-inline-block "><span id="days" class="d-block">{{  (remaining/60/60/24) | round(0,'floor') }}</span>Days</li>
+            <li class="col d-inline-block "><span id="hours" class="d-block">{{ remaining/60/60%24 }}</span>Hours</li>
+            <li class="col d-inline-block"><span id="minutes" class="d-block">{{ remaining/60%60 }}</span>Minutes</li>
+            <li class="col d-inline-block"><span id="seconds" class="d-block">{{ remaining%60}}</span>Seconds</li>
         </ul>
     </div>
     <hr>

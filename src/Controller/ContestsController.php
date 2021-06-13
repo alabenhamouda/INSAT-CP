@@ -14,6 +14,7 @@ use App\Entity\Submission;
 use App\Entity\User;
 use App\Service\Judge;
 use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -444,7 +445,6 @@ class ContestsController extends AbstractController
     public
     function processCreate(Request $request, EntityManagerInterface $em, AuthenticationUtils $auth)
     {
-
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException("you need to sign in before creating a contest");
 
@@ -455,7 +455,7 @@ class ContestsController extends AbstractController
         $contest->setTitle($r->get('title'))
             ->setDuration($r->get('duration'))
             ->setCreator($user)
-            ->setStartDate(new DateTime($r->get('date') . " " . $r->get('time') . ":00"));
+            ->setStartDate(new DateTime($r->get('date') . " " . $r->get('time') . ":00" , new DateTimeZone('Africa/Tunis')));
         $em->persist($contest);
         $em->flush();
 
