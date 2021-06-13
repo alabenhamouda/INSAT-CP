@@ -1,4 +1,6 @@
 {
+    "name":"insatcp/insatcp",
+    "description":"website for competitive programming contests",
   "type": "project",
   "license": "proprietary",
   "minimum-stability": "dev",

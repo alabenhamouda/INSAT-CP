@@ -1,7 +1,7 @@
 {
     "devDependencies": {
         "@symfony/stimulus-bridge": "^2.0.0",
-        "@symfony/webpack-encore": "^1.0.0",
+        "@symfony/webpack-encore": "^1.4.0",
         "bootstrap": "^4.6.0",
         "core-js": "^3.0.0",
         "jquery": "^3.6.0",
@@ -27,6 +27,7 @@
         "file-loader": "^6.2.0",
         "highlight.js": "^11.0.1",
         "mathjax": "^3.1.4",
-        "moment": "^2.29.1"
+        "moment": "^2.29.1",
+        "node": "^16.3.0"
     }
 }

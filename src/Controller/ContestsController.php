@@ -70,9 +70,11 @@ class ContestsController extends AbstractController
      */
     public function contest(Contest $contest)
     {
-        //TODO CHECK FOR ID
-        //done
         //TODO check for published
+        if(!$contest->getIsPublished())
+        {
+            throw $this->createNotFoundException('This contest does not exist');
+        }
         $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
         $now=time();
         if($now<$contest_start && $this->getUser()->getId()!=$contest->getCreator()->getId()){
