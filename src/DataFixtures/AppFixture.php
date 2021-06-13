@@ -11,6 +11,7 @@ use App\Entity\Submission;
 use App\Entity\Tag;
 use App\Entity\User;
 use Container9nkxRE3\getDoctrineMigrations_UpToDateCommandService;
+use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -49,7 +50,7 @@ class AppFixture extends Fixture
         for ($i = 0; $i < 40; $i++) {
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
-            $date=$fa->dateTimeBetween("-1 years","+1 years");
+            $date=$fa->dateTimeBetween("-1 years","+1 years", 'Africa/Tunis');
                 $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
                 ->setStartDate($date)
                 ->setDuration($fa->numberBetween(1, 300))
