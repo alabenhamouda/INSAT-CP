@@ -1,7 +1,10 @@
 {% extends 'headerBase.html.twig' %}
 
 {% block title %}My Contests{% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mycontests') }}
+{% endblock %}
 {% block body %}
     <div class="container">
 

@@ -36,6 +36,7 @@ Encore
     .addEntry('sorting', './assets/styles/sorting.css')
     .addEntry('highlight', './assets/highlight.js')
     .addEntry('codemirror', './assets/codemirror.js')
+    .addEntry('mycontests','./assets/mycontests.js')
     .addEntry('Timer', './assets/Timer.js')
     .copyFiles({
         from: './assets/images'

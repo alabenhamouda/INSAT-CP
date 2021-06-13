@@ -42,6 +42,7 @@ class ContestRepository extends ServiceEntityRepository
         $date = date("Y-m-d");
         return $this->createQueryBuilder('c')
             ->andWhere('c.start_date >= :date')
+            ->andWhere('c.isPublished = true')
             ->setParameter('date',$date )
             ->orderBy('c.start_date', 'ASC')
             ->setMaxResults(5)
@@ -57,6 +58,7 @@ class ContestRepository extends ServiceEntityRepository
         $date = date("Y-m-d");
         return $this->createQueryBuilder('c')
             ->andWhere('c.start_date < :date')
+            ->andWhere('c.isPublished = true')
             ->setParameter('date',$date )
             ->orderBy('c.start_date', 'DESC')
             ->setMaxResults(5)
@@ -72,8 +74,7 @@ class ContestRepository extends ServiceEntityRepository
     public function findAllOrderedbyDate(): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.start_date <= :date')
-            ->setParameter('date',date("Y-m-d"))
+            ->andWhere('c.isPublished = true')
             ->orderBy('c.start_date', 'DESC')
             ->getQuery()
             ->getResult();
