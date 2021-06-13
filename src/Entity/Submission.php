@@ -53,6 +53,11 @@ class Submission
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $inContest;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,18 @@ class Submission
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getInContest(): ?bool
+    {
+        return $this->inContest;
+    }
+
+    public function setInContest(bool $inContest): self
+    {
+        $this->inContest = $inContest;
 
         return $this;
     }

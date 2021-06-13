@@ -31,7 +31,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}
-                {{  status.status =='running'? " disabled " :" "}}"
+                {{ (status.status =='running' and (app.user is null or  problem.contest.creator.id != app.user.id)) ? " disabled " :" " }}"
                href="{{ path("solution", {id: id, letter: problem.letter}) }}">
                 Solution
             </a>
@@ -45,47 +45,47 @@
             {% block main %}
             {% endblock %}
         </main>
-        {% if status.status =='running' or submissions is not empty  %}
-        <aside class="col-4">
-            {% if status.status =='running' %}
-                {%  include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
-            {% endif %}
+        {% if status.status =='running' or submissions is not empty %}
+            <aside class="col-4">
+                {% if status.status =='running' %}
+                    {% include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
+                {% endif %}
 
                 {% if submissions is not empty %}
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Submitted at</th>
-                        <th>Verdict</th>
-                    </tr>
-                    </thead>
-                    {% for submission in submissions|sort()|reverse %}
+                    <table class="table table-sm">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>
-                                {% if submission.status.code <= 2 %}
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                {% elseif submission.status.code == 3 %}
-                                    <i class="fas fa-check" style="color: #1fc61f;"></i>
-                                {% else %}
-                                    <i class="fas fa-exclamation" style="color: #b21313;"></i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {{ submission.createdAt|date("D/m/Y G:i:s") }}
-                            </td>
-                            <td>
-                                <a href="#" data-toggle="modal" data-toggle="modal"
-                                   data-target="#sub{{ submission.id }}">
-                                    {{ submission.status.description }} </a>
-                                {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
-                            </td>
+                            <th>#</th>
+                            <th>Submitted at</th>
+                            <th>Verdict</th>
                         </tr>
-                    {% endfor %}
-                </table>
+                        </thead>
+                        {% for submission in submissions|sort()|reverse %}
+                            <tr>
+                                <td>
+                                    {% if submission.status.code <= 2 %}
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    {% elseif submission.status.code == 3 %}
+                                        <i class="fas fa-check" style="color: #1fc61f;"></i>
+                                    {% else %}
+                                        <i class="fas fa-exclamation" style="color: #b21313;"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ submission.createdAt|date("D/m/Y G:i:s") }}
+                                </td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-toggle="modal"
+                                       data-target="#sub{{ submission.id }}">
+                                        {{ submission.status.description }} </a>
+                                    {% include 'contests/submission_modal.html.twig' with {'submission': submission} %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 {% endif %}
 
             </aside>
-        {% endif%}
+        {% endif %}
     </div>
 {% endblock %}
