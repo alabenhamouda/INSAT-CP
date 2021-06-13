@@ -44,10 +44,6 @@ class Contest
     private $isPublished = false;
 
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $start_date;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdContests")
@@ -59,6 +55,11 @@ class Contest
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contests")
      */
     private $participants;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $start_date;
 
 
     public function __construct()
@@ -150,17 +151,6 @@ class Contest
     }
 
 
-    public function getStartDate(): ?\DateTimeInterface
-    {
-        return $this->start_date;
-    }
-
-    public function setStartDate(\DateTimeInterface $start_date): self
-    {
-        $this->start_date = $start_date;
-
-        return $this;
-    }
 
     public function getCreator(): ?User
     {
@@ -231,6 +221,18 @@ class Contest
 //        dump($a,$b,$c);
 //        dd($ans);
         return $ans;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->start_date;
+    }
+
+    public function setStartDate(\DateTimeInterface $start_date): self
+    {
+        $this->start_date = $start_date;
+
+        return $this;
     }
 
 

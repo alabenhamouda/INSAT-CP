@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210613002030 extends AbstractMigration
+final class Version20210613162510 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -28,7 +28,7 @@ final class Version20210613002030 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE submission_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE tag_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE users_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE contest (id INT NOT NULL, creator_id INT NOT NULL, title VARCHAR(255) NOT NULL, duration INT NOT NULL, is_published BOOLEAN NOT NULL, start_time TIME(0) WITHOUT TIME ZONE NOT NULL, start_date DATE NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE contest (id INT NOT NULL, creator_id INT NOT NULL, title VARCHAR(255) NOT NULL, duration INT NOT NULL, is_published BOOLEAN NOT NULL, start_date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_1A95CB561220EA6 ON contest (creator_id)');
         $this->addSql('CREATE TABLE contest_user (contest_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(contest_id, user_id))');
         $this->addSql('CREATE INDEX IDX_46F8C6821CD0F0DE ON contest_user (contest_id)');

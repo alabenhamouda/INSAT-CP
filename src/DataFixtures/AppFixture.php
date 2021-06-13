@@ -49,7 +49,8 @@ class AppFixture extends Fixture
         for ($i = 0; $i < 40; $i++) {
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
-            $date=$fa->dateTimeBetween("-1 years","+1 years");
+//            $date=$fa->dateTimeBetween("-1 years","+1 years");
+            $date=$fa->dateTime($max = 'now', $timezone = null);
                 $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
                 ->setStartDate($date)
                 ->setDuration($fa->numberBetween(1, 300))
