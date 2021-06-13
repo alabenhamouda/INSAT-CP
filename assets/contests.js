@@ -1,5 +1,5 @@
-import $ from 'jquery'
-import './styles/contests.css'
+import $ from 'jquery';
+import './styles/contests.css';
 import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/dropdown';
 const form=document.getElementById('form');

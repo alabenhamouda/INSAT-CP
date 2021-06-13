@@ -24,8 +24,10 @@
         "bootswatch": "^4.6.0",
         "clipboard": "^2.0.8",
         "codemirror": "^5.61.0",
+        "countdowntimer": "^2.0.1",
         "file-loader": "^6.2.0",
         "highlight.js": "^11.0.1",
-        "mathjax": "^3.1.4"
+        "mathjax": "^3.1.4",
+        "moment": "^2.29.1"
     }
 }

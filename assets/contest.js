@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from 'jquery';
 $(document).ready(function() {
     $('#table tr').click(function() {
         var href = $(this).find("a").attr("href");

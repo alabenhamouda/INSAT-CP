@@ -1,6 +1,6 @@
 import ClipboardJS from 'clipboard/dist/clipboard.min';
-import $ from 'jquery'
-import 'bootstrap'
+import $ from 'jquery';
+import 'bootstrap';
 
 let cli = new ClipboardJS('.tocopy');
 

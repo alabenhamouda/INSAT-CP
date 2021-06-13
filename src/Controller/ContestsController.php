@@ -70,6 +70,18 @@ class ContestsController extends AbstractController
     public function contest(Contest $contest)
     {
         //TODO CHECK FOR ID
+        //done
+        $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
+        $now=time();
+        if($now<$contest_start && $this->getUser()->getId()!=$contest->getCreator()->getId()){
+            return $this->render('contests/registration_page.html.twig', [
+                'registred'=> $this->getUser()->getContests()->contains($contest)|null,
+                'wait'=>$contest_start-$now,
+                'contest' => $contest,
+                'id' => $contest->getId()
+            ]);
+        }
+
         $problems = $contest->getProblems();
         return $this->render('contests/contest.html.twig', [
             'problems' => $problems,
@@ -78,6 +90,26 @@ class ContestsController extends AbstractController
 
 
     }
+
+    /**
+     * @Route("/{id<\d+>}/register",name="contest_registration",methods={"GET"})
+     */
+    public function contest_registration(Contest $contest)
+    {
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
+        $now=time();
+        if($now<$contest_start){
+            $user=$this->getUser();
+            $contest->addParticipant($user);
+            $user->addContest($contest);
+            $this->em->persist($contest);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+    }
+
 
     private function updateSubmissions($submissions)
     {
@@ -304,7 +336,6 @@ class ContestsController extends AbstractController
     {
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException("you need to sign in before creating a contest");
-
         }
         $contest = new Contest();
 
