@@ -454,7 +454,6 @@ class ContestsController extends AbstractController
         $r = $request->request;
         $contest->setTitle($r->get('title'))
             ->setDuration($r->get('duration'))
-            ->setStartTime(new DateTime("00:00"))
             ->setCreator($user)
             ->setStartDate(new DateTime($r->get('date')));
         $em->persist($contest);
