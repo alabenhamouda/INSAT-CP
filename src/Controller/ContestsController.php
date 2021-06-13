@@ -16,6 +16,7 @@ use App\Service\Judge;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -150,9 +151,10 @@ class ContestsController extends AbstractController
     public function contest_registration(Contest $contest)
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
-        $status=$contest->getStatus();
-        if($status['status']='not_started'&&$status['is_published']){
-            $user=$this->getUser();
+        $status = $contest->getStatus();
+        if ($status['status'] = 'not_started' && $status['is_published']
+            && $this->getUser()->getId() != $contest->getCreator()->getId()) {
+            $user = $this->getUser();
             $contest->addParticipant($user);
             $user->addContest($contest);
             $this->em->persist($contest);
@@ -274,6 +276,8 @@ class ContestsController extends AbstractController
             $statusRepo = $entity->getRepository(Status::class);
             $data = $request->request->all();
             $submission = new Submission();
+            $submission->setInContest($contest->getStatus()['status'] == "running"
+                && $user->getContests()->contains($contest));
             $submission->setUser($user);
             $submission->setCode($data['source_code']);
             $submission->setLanguage($data['language_id']);
@@ -282,7 +286,6 @@ class ContestsController extends AbstractController
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
-            $contest->addParticipant($user);
             $entity->persist($contest);
             $entity->flush();
             $this->addFlash("success", "Code was submitted");
@@ -437,6 +440,20 @@ class ContestsController extends AbstractController
             'contest' => $contest
         ]);
 
+    }
+
+    private function validateDate($value, $format = "Y-m-d H:i:s")
+    {
+        if (!$value) {
+            return false;
+        }
+
+        try {
+            new DateTime($value);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
