@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Classes\Result;
 use App\Entity\Contest;
+use App\Entity\Input;
 use App\Entity\Problem;
 use App\Entity\SampleInput;
 use App\Entity\Status;
@@ -71,6 +72,7 @@ class ContestsController extends AbstractController
     {
         //TODO CHECK FOR ID
         //done
+        //TODO check for published
         $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
         $now=time();
         if($now<$contest_start && $this->getUser()->getId()!=$contest->getCreator()->getId()){
@@ -165,6 +167,7 @@ class ContestsController extends AbstractController
     public
     function problem(Contest $contest, $letter)
     {
+        //TODO check if contest is published
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
@@ -454,7 +457,11 @@ class ContestsController extends AbstractController
             ->setOutputSpec("")
             ->setInputSpec("")
             ->addSampleIn($sample);
+        $input=new Input();
+        $input->setInput("")->setOutput("");
+        $problem->setInput($input);
         $contest->addProblem($problem);
+        $em->persist($input);
         $em->persist($sample);
         $em->persist($problem);
         $em->persist($contest);
@@ -500,6 +507,7 @@ class ContestsController extends AbstractController
             'id' => $contest->getId(),
             'problem' => $problem,
             'sample' => $problem->getSampleIn()[0],
+            'input'=>$problem->getInput()
         ]);
 
 
@@ -531,6 +539,7 @@ class ContestsController extends AbstractController
         $r = $request->request;
         //TODO check POST input or use symfony form
         $sample = $problem->getSampleIn()[0];
+        $input= new Input();
         $sample->setInput($r->get("insamp"))
             ->setOutput($r->get('outsamp'))
             ->setProblem($problem);
@@ -539,9 +548,13 @@ class ContestsController extends AbstractController
             ->setInputSpec($r->get('input_spec'))
             ->setOutputSpec($r->get('output_spec'))
             ->setProof($r->get('proof'))
-            ->setValidator($r->get('validator'))
             ->setSolution($r->get('solution'))
+            ->setTimeLimit($r->get('timelimit'))
             ->setPoints($r->get('points'));
+        $input->setInput($r->get('intest'))
+            ->setOutput($r->get('outtest'));
+        $problem->setInput($input);
+        $em->persist($input);
         $em->persist($sample);
         $em->persist($problem);
         $em->flush();

@@ -37,12 +37,12 @@
                               rows="4">{{ problem.outputSpec }}</textarea>
                 </label>
             </div>
-            <div class="form-group">
-                <label>validator
-                    <textarea class="form-control" form="contestform" name="validator"
-                              rows="4">{{ problem.validator }}</textarea>
-                </label>
-            </div>
+{#            <div class="form-group">#}
+{#                <label>validator#}
+{#                    <textarea class="form-control" form="contestform" name="validator"#}
+{#                              rows="4">{{ problem.validator }}</textarea>#}
+{#                </label>#}
+{#            </div>#}
             <div class="form-group">
                 <label>solution
                     <textarea class="form-control" form="contestform" name="solution"
@@ -68,9 +68,27 @@
                 </label>
             </div>
             <div class="form-group">
+                <label>input test
+                    <textarea class="form-control" form="contestform" name="intest"
+                              rows="4">{{ input.input }}</textarea>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>output test
+                    <textarea class="form-control" form="contestform" name="outtest"
+                              rows="4">{{ input.output }}</textarea>
+                </label>
+            </div>
+            <div class="form-group">
                 <label>points
                     <input type="number" class="form-control" id="" name="points" aria-describedby=""
                            placeholder="Enter Points" value="{{ problem.points }}">
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Time limit (in seconds)
+                    <input type="number" class="form-control" id="" name="timelimit" aria-describedby=""
+                           placeholder="Enter Points" value="{{ problem.timelimit }}">
                 </label>
             </div>
 
