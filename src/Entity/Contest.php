@@ -212,6 +212,37 @@ class Contest
 
         return $this;
     }
+    public function getStatus() :array
+    {
+        $contest_start =$this->getStartDate()->getTimestamp()+$this->getStartTime()->getTimestamp();
+        $contest_end =$contest_start+$this->getDuration()*60;
+        $now=time();
+        $ans=array();
+        $ans=array(
+            'status'=>null,
+            'is_published'=>null,
+            'contest_start'=>null,
+            'contest_end'=>null,
+        );
+        $ans['is_published']=$this->getIsPublished();
+
+        if($now<$contest_start){
+            $ans['status']="not_started";
+        }else if($now <$contest_end){
+            $ans['status']="running";
+        }else{
+            $ans['status']="finished";
+        }
+        $ans['contest_start']=$contest_start;
+        $ans['contest_end']=$contest_end;
+        $ans['remaining_time_before_end']=$contest_end-$now;
+        $ans['remaining_time_before_start']=$contest_start-$now;
+        $a=new \DateTime();$b=new \DateTime();$c=new \DateTime();
+//        $a->setTimestamp(0);$b->setTimestamp(1);$c->setTimestamp(10);
+//        dump($a,$b,$c);
+//        dd($ans);
+        return $ans;
+    }
 
 
 

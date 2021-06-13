@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -70,26 +71,29 @@ class ContestsController extends AbstractController
      */
     public function contest(Contest $contest)
     {
-        //TODO CHECK FOR ID
-        //done
-        //TODO check for published
-        $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
-        $now=time();
-        if($now<$contest_start && $this->getUser()->getId()!=$contest->getCreator()->getId()){
-            return $this->render('contests/registration_page.html.twig', [
-                'registred'=> $this->getUser()->getContests()->contains($contest)|null,
-                'wait'=>$contest_start-$now,
-                'contest' => $contest,
+        $status=$contest->getStatus();
+
+        if(($this->getUser()&&$this->getUser()->getId()==$contest->getCreator()->getId())
+            ||( $status['is_published']&&($status['status']=="running"||$status['status']=="finished") ))
+        {
+            $problems = $contest->getProblems();
+            return $this->render('contests/contest.html.twig', [
+                'status'=>$status,
+                'problems' => $problems,
                 'id' => $contest->getId()
             ]);
         }
 
-        $problems = $contest->getProblems();
-        return $this->render('contests/contest.html.twig', [
-            'problems' => $problems,
-            'id' => $contest->getId()
-        ]);
-
+        if($status['is_published']){
+            return $this->render('contests/registration_page.html.twig', [
+                'registred'=> ($this->getUser())&&($this->getUser()->getContests()->contains($contest)|null),
+                'status'=>$status,
+                'contest' => $contest,
+                'id' => $contest->getId()
+            ]);
+        }else{
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
 
     }
 
@@ -99,10 +103,8 @@ class ContestsController extends AbstractController
     public function contest_registration(Contest $contest)
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
-
-        $contest_start =$contest->getStartDate()->getTimestamp()+$contest->getStartTime()->getTimestamp();
-        $now=time();
-        if($now<$contest_start){
+        $status=$contest->getStatus();
+        if($status['status']='not_started'&&$status['is_published']){
             $user=$this->getUser();
             $contest->addParticipant($user);
             $user->addContest($contest);

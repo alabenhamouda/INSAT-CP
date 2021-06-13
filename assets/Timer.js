@@ -1,6 +1,7 @@
 import moment from 'moment';
 import './styles/timer.css';
 var diffTime;
+
 document.addEventListener('DOMContentLoaded', ()=> {
     var container = document.querySelector('#countdown');
     diffTime = container.dataset.remainingTime;
@@ -9,17 +10,20 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     var duration = moment.duration(diffTime*1000, 'milliseconds');
     var interval = 1000;
-    setInterval(function(){
+    function update(){
         duration = moment.duration(duration - interval, 'milliseconds');
         if(duration.days()!=0){
             document.getElementById("days").innerHTML = duration.days();
         }else{
-            document.getElementById("days").parentElement.classList.add('hidden');
+            document.getElementById("days").parentElement.classList.replace('d-inline-block','d-none');
         }
         document.getElementById("hours").innerHTML = duration.hours();
         document.getElementById("minutes").innerHTML = duration.minutes();
         document.getElementById("seconds").innerHTML = duration.seconds();
-
+    }
+    update();
+    setInterval(()=>{
+        update()
     }, interval);
 
 });

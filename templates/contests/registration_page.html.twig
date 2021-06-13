@@ -8,16 +8,16 @@
 
 {% block body %}
     <div class="container mt-5 mb-3 text-center align-content-center">
-        <div class=" text-center" id="countdown" data-remaining-time="{{ wait }}">
+        <div class=" text-center" id="countdown" data-remaining-time="{{ status['remaining_time_before_start'] }}">
             <h3> {{ contest.title }}</h3>
             <h2 class="headline">Time remaining before Contest</h2>
             <hr>
             <div id="countdown ">
                 <ul class="row text-uppercase ">
-                    <li class="col d-inline-block "><span id="days" class="d-block">xx</span>Days</li>
-                    <li class="col d-inline-block "><span id="hours" class="d-block">xx</span>Hours</li>
-                    <li class="col d-inline-block"><span id="minutes" class="d-block">xx</span>Minutes</li>
-                    <li class="col d-inline-block"><span id="seconds" class="d-block">xx</span>Seconds</li>
+                    <li class="col d-inline-block "><span id="days" class="d-block">00</span>Days</li>
+                    <li class="col d-inline-block "><span id="hours" class="d-block">00</span>Hours</li>
+                    <li class="col d-inline-block"><span id="minutes" class="d-block">00</span>Minutes</li>
+                    <li class="col d-inline-block"><span id="seconds" class="d-block">00</span>Seconds</li>
                 </ul>
             </div>
             <hr>
