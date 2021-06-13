@@ -119,9 +119,8 @@ class ContestsController extends AbstractController
      */
     public function contest(Contest $contest)
     {
-        $status=$contest->getStatus();
-        if($contest->allowed_inside_contest($this->getUser()))
-        {
+        $status = $contest->getStatus();
+        if ($contest->allowed_inside_contest($this->getUser())) {
             $problems = $contest->getProblems();
             return $this->render('contests/contest.html.twig', [
                 'status' => $status,
@@ -149,15 +148,16 @@ class ContestsController extends AbstractController
     public function contest_registration(Contest $contest)
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
-        $status=$contest->getStatus();
-        if($status['status']='not_started'&&$status['is_published']){
-            $user=$this->getUser();
+        $status = $contest->getStatus();
+        if ($status['status'] = 'not_started' && $status['is_published']
+            && $this->getUser()->getId() != $contest->getCreator()->getId()) {
+            $user = $this->getUser();
             $contest->addParticipant($user);
             $user->addContest($contest);
             $this->em->persist($contest);
             $this->em->flush();
         }
-        return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
     }
 
 
@@ -215,17 +215,16 @@ class ContestsController extends AbstractController
     public
     function problem(Contest $contest, $letter)
     {
-        if(!$contest->allowed_inside_contest($this->getUser()))
-        {
-            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        if (!$contest->allowed_inside_contest($this->getUser())) {
+            return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
         }
-        $status=$contest->getStatus();
+        $status = $contest->getStatus();
 
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/index.html.twig', [
-            'status'=>$status,
+            'status' => $status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -240,16 +239,15 @@ class ContestsController extends AbstractController
     public
     function submit(Contest $contest, $letter)
     {
-        if(!$contest->allowed_inside_contest($this->getUser()))
-        {
-            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        if (!$contest->allowed_inside_contest($this->getUser())) {
+            return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
         }
-        $status=$contest->getStatus();
+        $status = $contest->getStatus();
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/submit.html.twig', [
-            'status'=>$status,
+            'status' => $status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -264,15 +262,16 @@ class ContestsController extends AbstractController
     function processSubmit(Contest $contest, $letter, Request $request, Judge $j, EntityManagerInterface $entity)
     {
         $user = $this->getUser();
-        if(!$contest->allowed_inside_contest($user))
-        {
-            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        if (!$contest->allowed_inside_contest($user)) {
+            return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
         }
 
         if ($user) {
             $statusRepo = $entity->getRepository(Status::class);
             $data = $request->request->all();
             $submission = new Submission();
+            $submission->setInContest($contest->getStatus()['status'] == "running"
+                && $user->getContests()->contains($contest));
             $submission->setUser($user);
             $submission->setCode($data['source_code']);
             $submission->setLanguage($data['language_id']);
@@ -281,7 +280,6 @@ class ContestsController extends AbstractController
             $token = $j->submit($submission);
             $submission->setToken($token);
             $entity->persist($submission);
-            $contest->addParticipant($user);
             $entity->persist($contest);
             $entity->flush();
             $this->addFlash("success", "Code was submitted");
@@ -299,17 +297,16 @@ class ContestsController extends AbstractController
     {
 
         $user = $this->getUser();
-        $status=$contest->getStatus();
-        if( $user==null || !$contest->allowed_inside_contest($user)||
-            ($status['status']!="finished"&&$user->getId()!=$contest->getCreator()->getId()))
-        {
-            return $this->redirectToRoute('problem',['id'=>$contest->getId(),'letter'=>$letter]);
+        $status = $contest->getStatus();
+        if ($user == null || !$contest->allowed_inside_contest($user) ||
+            ($status['status'] != "finished" && $user->getId() != $contest->getCreator()->getId())) {
+            return $this->redirectToRoute('problem', ['id' => $contest->getId(), 'letter' => $letter]);
         }
 
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         $letter = strtoupper($letter);
         return $this->render('problem/solution.html.twig', [
-            'status'=>$status,
+            'status' => $status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -324,10 +321,9 @@ class ContestsController extends AbstractController
     function scoreboard(Contest $contest, EntityManagerInterface $em)
     {
         $user = $this->getUser();
-        $status=$contest->getStatus();
-        if(!$contest->allowed_inside_contest($user))
-        {
-            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        $status = $contest->getStatus();
+        if (!$contest->allowed_inside_contest($user)) {
+            return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
         }
         $participants = $contest->getParticipants();
         $result = [];
@@ -345,7 +341,9 @@ class ContestsController extends AbstractController
             foreach ($contest->getProblems() as $problem) {
                 $subs = $subRepo->findBy([
                     'user' => $participant->getId(),
-                    'problem' => $problem->getId()]);
+                    'problem' => $problem->getId(),
+                    'inContest' => true
+                ]);
                 $subs = $this->updateSubmissions($subs);
 
 
@@ -386,7 +384,7 @@ class ContestsController extends AbstractController
 
 
         return $this->render('contests/scoreboard.html.twig', [
-            'status'=>$status,
+            'status' => $status,
             "problems" => $contest->getProblems(),
             'results' => $result,
             'id' => $contest->getId(),
@@ -405,16 +403,15 @@ class ContestsController extends AbstractController
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
         $user = $this->getUser();
-        $status=$contest->getStatus();
-        if(!$contest->allowed_inside_contest($user))
-        {
-            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        $status = $contest->getStatus();
+        if (!$contest->allowed_inside_contest($user)) {
+            return $this->redirectToRoute('contest', ['id' => $contest->getId()]);
         }
 
         $submissions = $this->get_all_submissions($contest);
 //        dd($submissions);
         return $this->render('contests/my_submissions.html.twig', [
-            'status'=>$status,
+            'status' => $status,
             'id' => $contest->getId(),
             "submissions" => $submissions,
             "contest" => $contest,
@@ -540,7 +537,7 @@ class ContestsController extends AbstractController
             ->setOutputSpec("")
             ->setInputSpec("")
             ->addSampleIn($sample);
-        $input=new Input();
+        $input = new Input();
         $input->setInput("")->setOutput("");
         $problem->setInput($input);
         $contest->addProblem($problem);
@@ -588,7 +585,7 @@ class ContestsController extends AbstractController
             'id' => $contest->getId(),
             'problem' => $problem,
             'sample' => $problem->getSampleIn()[0],
-            'input'=>$problem->getInput()
+            'input' => $problem->getInput()
         ]);
 
 
@@ -618,7 +615,7 @@ class ContestsController extends AbstractController
         $r = $request->request;
         //TODO check POST input or use symfony form
         $sample = $problem->getSampleIn()[0];
-        $input= new Input();
+        $input = new Input();
         $sample->setInput($r->get("insamp"))
             ->setOutput($r->get('outsamp'))
             ->setProblem($problem);
