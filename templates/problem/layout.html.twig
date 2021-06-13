@@ -22,16 +22,18 @@
                 Problem
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}"
-               href="{{ path("solution", {id: id, letter: problem.letter}) }}">
-                Solution
-            </a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link {{ show|default("problem") == "submit" ? "active bg-dark" : "" }}"
                href="{{ path("submit", {id: id, letter: problem.letter}) }}">
                 Submit
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ show|default("problem") == "solution" ? "active bg-dark" : "" }}
+                {{  status.status =='running'? " disabled " :" "}}"
+               href="{{ path("solution", {id: id, letter: problem.letter}) }}">
+                Solution
             </a>
         </li>
     </ul>
@@ -39,27 +41,17 @@
 
 {% block content %}
     <div class="row mt-2">
-        <main class="{{ submissions is empty ? "col-12" : "col-8" }}">
+        <main class="{{ (status.status =='running' or submissions is not empty ) ? "col-8" : "col-12" }}">
             {% block main %}
             {% endblock %}
         </main>
-        {% if submissions is not empty %}
-            <aside class="col-4">
-                {# <ul class="list-group"> #}
-                {# {% for submission in submissions|sort()|reverse %} #}
-                {# <li class="list-group-item"> #}
-                {# {% if submission.status.id <= 2 %} #}
-                {# <i class="fas fa-spinner"></i> #}
-                {# {% elseif submission.status.id == 3 %} #}
-                {# <i class="fas fa-check" style="color: #1fc61f;"></i> #}
-                {# {% else %} #}
-                {# <i class="fas fa-exclamation" style="color: #b21313;"></i> #}
-                {# {% endif %} #}
-                {# {{ submission.createdAt|date("D/m/Y G:i:s") }} #}
-                {# {{ submission.status.description }} #}
-                {# </li> #}
-                {# {% endfor %} #}
-                {# </ul> #}
+        {% if status.status =='running' or submissions is not empty  %}
+        <aside class="col-4">
+            {% if status.status =='running' %}
+                {%  include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
+            {% endif %}
+
+                {% if submissions is not empty %}
                 <table class="table table-sm">
                     <thead class="thead-dark">
                     <tr>
@@ -91,7 +83,9 @@
                         </tr>
                     {% endfor %}
                 </table>
+                {% endif %}
+
             </aside>
-        {% endif %}
+        {% endif%}
     </div>
 {% endblock %}

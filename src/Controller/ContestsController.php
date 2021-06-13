@@ -66,15 +66,14 @@ class ContestsController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id<\d+>}",name="contest",methods={"GET"})
      */
     public function contest(Contest $contest)
     {
         $status=$contest->getStatus();
-
-        if(($this->getUser()&&$this->getUser()->getId()==$contest->getCreator()->getId())
-            ||( $status['is_published']&&($status['status']=="running"||$status['status']=="finished") ))
+        if($contest->allowed_inside_contest($this->getUser()))
         {
             $problems = $contest->getProblems();
             return $this->render('contests/contest.html.twig', [
@@ -92,7 +91,7 @@ class ContestsController extends AbstractController
                 'id' => $contest->getId()
             ]);
         }else{
-            throw $this->createAccessDeniedException('You cannot access this page!');
+                throw $this->createAccessDeniedException('You cannot access this page!');
         }
 
     }
@@ -169,11 +168,17 @@ class ContestsController extends AbstractController
     public
     function problem(Contest $contest, $letter)
     {
-        //TODO check if contest is published
+        if(!$contest->allowed_inside_contest($this->getUser()))
+        {
+            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        }
+        $status=$contest->getStatus();
+
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/index.html.twig', [
+            'status'=>$status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -188,10 +193,16 @@ class ContestsController extends AbstractController
     public
     function submit(Contest $contest, $letter)
     {
+        if(!$contest->allowed_inside_contest($this->getUser()))
+        {
+            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        }
+        $status=$contest->getStatus();
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         //TODO check on letter
         $letter = strtoupper($letter);
         return $this->render('problem/submit.html.twig', [
+            'status'=>$status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -206,6 +217,11 @@ class ContestsController extends AbstractController
     function processSubmit(Contest $contest, $letter, Request $request, Judge $j, EntityManagerInterface $entity)
     {
         $user = $this->getUser();
+        if(!$contest->allowed_inside_contest($user))
+        {
+            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        }
+
         if ($user) {
             $statusRepo = $entity->getRepository(Status::class);
             $data = $request->request->all();
@@ -234,9 +250,19 @@ class ContestsController extends AbstractController
     public
     function solution(Contest $contest, $letter)
     {
+
+        $user = $this->getUser();
+        $status=$contest->getStatus();
+        if( $user==null || !$contest->allowed_inside_contest($user)||
+            ($status['status']!="finished"&&$user->getId()!=$contest->getCreator()->getId()))
+        {
+            return $this->redirectToRoute('problem',['id'=>$contest->getId(),'letter'=>$letter]);
+        }
+
         $submissions = $this->getSubmissions($contest->getProblem($letter));
         $letter = strtoupper($letter);
         return $this->render('problem/solution.html.twig', [
+            'status'=>$status,
             "problem" => $contest->getProblems()[ord($letter) - ord('A')],
             'id' => $contest->getId(),
             'submissions' => $submissions
@@ -250,6 +276,12 @@ class ContestsController extends AbstractController
     public
     function scoreboard(Contest $contest, EntityManagerInterface $em)
     {
+        $user = $this->getUser();
+        $status=$contest->getStatus();
+        if(!$contest->allowed_inside_contest($user))
+        {
+            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        }
         $participants = $contest->getParticipants();
         $result = [];
         foreach ($participants as $participant) {
@@ -307,6 +339,7 @@ class ContestsController extends AbstractController
 
 
         return $this->render('contests/scoreboard.html.twig', [
+            'status'=>$status,
             "problems" => $contest->getProblems(),
             'results' => $result,
             'id' => $contest->getId(),
@@ -324,9 +357,17 @@ class ContestsController extends AbstractController
     function my_submissions(Contest $contest)
     {
         $this->denyAccessUnlessGranted("ROLE_USER");
+        $user = $this->getUser();
+        $status=$contest->getStatus();
+        if(!$contest->allowed_inside_contest($user))
+        {
+            return $this->redirectToRoute('contest',['id'=>$contest->getId()]);
+        }
+
         $submissions = $this->get_all_submissions($contest);
 //        dd($submissions);
         return $this->render('contests/my_submissions.html.twig', [
+            'status'=>$status,
             'id' => $contest->getId(),
             "submissions" => $submissions,
             "contest" => $contest,
@@ -382,13 +423,9 @@ class ContestsController extends AbstractController
     public
     function myContests(EntityManagerInterface $em)
     {
-        $auth = $this->getUser();
-        if (empty($auth)) {
-            throw $this->createAccessDeniedException("alfred");
+        $this->denyAccessUnlessGranted("ROLE_USER");
 
-        }
-
-        $user = $em->getRepository(User::class)->findOneBy(['username' => $auth->getUsername()]);
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
         $allContests = $user->getCreatedContests();
         $published = [];
         $unpublished = [];
@@ -415,9 +452,8 @@ class ContestsController extends AbstractController
     public
     function edit(Contest $contest, EntityManagerInterface $em)
     {
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException("alfred");
-        }
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
         if ($contest->getCreator()->getId() != $this->getUser()->getId()) {
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
@@ -434,10 +470,9 @@ class ContestsController extends AbstractController
     public
     function addProblem(Contest $contest, Request $request, EntityManagerInterface $em)
     {
-        //TODO check user
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException("alfred");
-        }
+
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
         if ($contest->getCreator()->getId() != $this->getUser()->getId()) {
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
@@ -473,8 +508,7 @@ class ContestsController extends AbstractController
 
     }
 
-    private
-    function checkLetter(string $letter)
+    private function checkLetter(string $letter)
     {
         if (empty($lettter) or strlen($letter) > 1) {
             return false;
@@ -492,9 +526,8 @@ class ContestsController extends AbstractController
     function editProblem(Contest $contest, $letter)
     {
 
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException("alfred");
-        }
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
         if ($contest->getCreator()->getId() != $this->getUser()->getId()) {
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
@@ -521,13 +554,11 @@ class ContestsController extends AbstractController
     public
     function processEditProblem(Contest $contest, Request $request, EntityManagerInterface $em, $letter)
     {
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
         //TODO check user
         //TODO check letter
 
-
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException("alfred");
-        }
         if ($contest->getCreator()->getId() != $this->getUser()->getId()) {
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
@@ -571,9 +602,8 @@ class ContestsController extends AbstractController
     public
     function publish(Contest $contest, EntityManagerInterface $em)
     {
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException("alfred");
-        }
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
         if ($contest->getCreator()->getId() != $this->getUser()->getId()) {
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');

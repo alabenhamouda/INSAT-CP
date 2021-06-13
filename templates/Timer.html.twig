@@ -1,0 +1,18 @@
+{{ encore_entry_script_tags('Timer') }}
+
+<div class=" text-center text-center align-content-cente" id="countdown" data-remaining-time="{{ remaining }}">
+    {% block countdown_headline %}
+    <h3> {{ headline1 }} </h3>
+    <h2 class="headline">Time remaining {{ headline2 }}</h2>
+    {% endblock %}
+    <hr>
+    <div id="countdown ">
+        <ul class="row text-uppercase ">
+            <li class="col d-inline-block "><span id="days" class="d-block">00</span>Days</li>
+            <li class="col d-inline-block "><span id="hours" class="d-block">00</span>Hours</li>
+            <li class="col d-inline-block"><span id="minutes" class="d-block">00</span>Minutes</li>
+            <li class="col d-inline-block"><span id="seconds" class="d-block">00</span>Seconds</li>
+        </ul>
+    </div>
+    <hr>
+</div>

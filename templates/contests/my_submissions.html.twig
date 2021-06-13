@@ -11,6 +11,9 @@
     {{ encore_entry_script_tags('highlight') }}
 {% endblock %}
 {% block content %}
+    {% if status.status =='running' %}
+        {%  include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
+    {% endif %}
     <h2> my Submissions </h2>
     <table class="table table-hover text-center">
         <thead class="thead-dark text-white">

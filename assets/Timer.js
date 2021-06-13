@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
     var interval = 1000;
     function update(){
         duration = moment.duration(duration - interval, 'milliseconds');
+        if(duration<0){
+            location.reload();
+        }
         if(duration.days()!=0){
             document.getElementById("days").innerHTML = duration.days();
         }else{

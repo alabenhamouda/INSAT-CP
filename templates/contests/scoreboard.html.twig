@@ -3,6 +3,9 @@
 {% block title %}Scoreboard{% endblock %}
 
 {% block content %}
+    {% if status.status =='running' %}
+        {%  include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
+    {% endif %}
     <a class="btn btn-light mb-2" href="#"> Show my rank</a>
 <style>
     td , th{

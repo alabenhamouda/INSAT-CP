@@ -1,27 +1,9 @@
 {% extends 'headerBase.html.twig' %}
 {% block title %}  Register {{ id }}{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('Timer') }}
-{% endblock%}
-
 {% block body %}
     <div class="container mt-5 mb-3 text-center align-content-center">
-        <div class=" text-center" id="countdown" data-remaining-time="{{ status['remaining_time_before_start'] }}">
-            <h3> {{ contest.title }}</h3>
-            <h2 class="headline">Time remaining before Contest</h2>
-            <hr>
-            <div id="countdown ">
-                <ul class="row text-uppercase ">
-                    <li class="col d-inline-block "><span id="days" class="d-block">00</span>Days</li>
-                    <li class="col d-inline-block "><span id="hours" class="d-block">00</span>Hours</li>
-                    <li class="col d-inline-block"><span id="minutes" class="d-block">00</span>Minutes</li>
-                    <li class="col d-inline-block"><span id="seconds" class="d-block">00</span>Seconds</li>
-                </ul>
-            </div>
-            <hr>
-        </div>
+        {%  include 'Timer.html.twig' with {'headline1': contest.title, 'headline2': "Before Contest",'remaining': status['remaining_time_before_start'] } %}
         <span>The contest will start exactly on {{  contest.startDate|date("m/d/Y") }} at {{ contest.startTime|format_datetime('none','full',"hh:mm:ss") }} UTC +1  </span>
 
         {%  if registred   %}

@@ -221,12 +221,13 @@ class Contest
         $contest_start =$this->getStartDate()->getTimestamp()+$this->getStartTime()->getTimestamp();
         $contest_end =$contest_start+$this->getDuration()*60;
         $now=time();
-        $ans=array();
         $ans=array(
             'status'=>null,
             'is_published'=>null,
             'contest_start'=>null,
             'contest_end'=>null,
+            'remaining_time_before_end'=>null,
+            'remaining_time_before_start'=>null,
         );
         $ans['is_published']=$this->getIsPublished();
 
@@ -248,6 +249,16 @@ class Contest
         return $ans;
     }
 
+    public function allowed_inside_contest(?User $user): bool
+    {
+        $status=$this->getStatus();
+        if(($user&&$user->getId()==$this->getCreator()->getId())
+            ||( $status['is_published']&&($status['status']=="running"||$status['status']=="finished") ))
+        {
+            return true;
+        }
+        return false;
+    }
 
 
 }

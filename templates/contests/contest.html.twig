@@ -5,6 +5,9 @@
     {{ encore_entry_script_tags('contest') }}
 {% endblock %}
 {% block content %}
+    {% if status.status =='running' %}
+        {%  include 'Timer.html.twig' with {'headline1': '', 'headline2': '','remaining': status['remaining_time_before_end'] } %}
+    {% endif %}
     <table class="table table-hover" id="table">
         <tr class="table bg-dark" style="color: white">
             <th scope="row">#</th>
