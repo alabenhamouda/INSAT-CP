@@ -197,7 +197,11 @@ class Contest
 
         return $this;
     }
-    public function getStatus() :array
+
+    /**
+     * @return array
+     */
+    public function getStatus()
     {
         $contest_start =$this->getStartDate()->getTimestamp();
         $contest_end =$contest_start+$this->getDuration()*60;
