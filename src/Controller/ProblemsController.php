@@ -44,16 +44,25 @@ class ProblemsController extends AbstractController
             $problems = $repo->findByTags($prob_tags);
             dump($problems);
         } else $problems = $repo->findAll();
+        $visible=[];
+
+        foreach($problems as $problem){
+            $contest = $problem->getContest();
+            $status = $contest->getStatus();
+            if($contest->getIsPublished() === true&&($status['status']=="running"||$status['status']=="finished") ){
+                array_push($visible, $problem);
+            }
+        }
         /**@var \App\Entity\Problem $problems */
-        if ($problems) {
-            $problems = $paginator->paginate(
-                $problems,
+        if ($visible) {
+            $visible = $paginator->paginate(
+                $visible,
                 $request->query->getInt('page', 1),
                 $request->query->getInt('jumpBy', 10)
             );;
         }
         return $this->render('problems/index.html.twig', [
-            'problems' => $problems,
+            'problems' => $visible,
             'tags' => $tags,
             'up' => $up
         ]);
