@@ -283,6 +283,7 @@ p {
 .course-col:hover{
     box-shadow: 0 0 20px 0 rgb(96,96,96);
 }
+
 .problems{
     width: 100%;
     margin: auto;
@@ -317,4 +318,7 @@ p {
 }
 .btn-primary {
     border-color: #343a40;
+}
+.logo:hover , .logo:focus{
+    color: white;
 }

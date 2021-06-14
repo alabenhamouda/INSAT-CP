@@ -92,7 +92,7 @@ class ContestsController extends AbstractController
         $finished = [];
         foreach ($contests as $contest) {
             $tmp = $contest->getStatus()['status'];
-            dump($tmp);
+//            dump($tmp);
 
             if ($tmp === "not_started" or $tmp === "running") {
                 array_push($up, $contest);
