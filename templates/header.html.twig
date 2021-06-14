@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md pt-0 pb-md-0">
         <div class="container-fluid"><a class="navbar-brand logo" href="/"> <img src="{{ asset('build/logo.png') }}" style="width:100px ;height:100px " alt="">
             </a>
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span
@@ -8,13 +8,14 @@
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ml-auto">
                     <!-- <li class="nav-item"><a class="nav-link active" href="/">Home</a></li> -->
-                    <li class="nav-item"></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('problems') }}">ProblemSet</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('contests') }}">Contests</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('courses') }}">Tutorial</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('tools') }}">Tools</a></li>
                     {% if app.user %}
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <li class="nav-item d-none d-md-flex">
+
+                        <div class="btn-group " role="group" aria-label="Button group with nested dropdown">
                             <button type="button" class="btn btn-primary" style="text-transform: none">{{ app.user.username }}</button>
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class=" btn btn-primary dropdown-toggle" style="box-shadow: none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -24,13 +25,25 @@
                                 </div>
                             </div>
                         </div>
-                    {% else %}
-                        <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
-                        <li><a class="btn btn-primary mr-2" href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
+                        </li>
+                        <text class=" d-sm-block d-md-none">
+                                <hr >
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('myContests') }}">My Contests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class=" nav-link" href="{{ path('app_logout') }}">Log Out</a>
+                        </li>
+                        </text>
+            {% else %}
+                <li class="nav-item mr-2 mb-md-0 mb-2"><a class="btn btn-primary " href="{{ path('auth', {action: 'login'}) }}"> Log in </a></li>
+                <li class="nav-item mr-0"><a class="btn btn-primary " href="{{ path('auth', {action: 'signup'}) }}"> Sign Up </a></li>
+
                     {% endif %}
+
+
                 </ul>
                 {# <a class="btn btn-primary mr-2" type="button" href="{{ path('auth', {action: "login"}) }}">SiGN IN</a> #}
             </div>
         </div>
     </nav>
-</header>
