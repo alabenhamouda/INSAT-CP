@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use const http\Client\Curl\PROXY_HTTP;
 
 /**
  * Class ContestsController
@@ -516,9 +517,11 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
+        $repo=$em->getRepository(Problem::class);
+        $list=$repo->findBy(['contest'=>$contest->getId()],['Letter'=>'ASC']);
         return $this->render('contests/edit.html.twig', [
             'contest' => $contest,
-            'problems' => $contest->getProblems()
+            'problems' => $list
         ]);
     }
 

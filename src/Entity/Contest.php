@@ -6,6 +6,7 @@ use App\Repository\ContestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -35,6 +36,7 @@ class Contest
 
     /**
      * @ORM\OneToMany(targetEntity=Problem::class, mappedBy="contest")
+     *  @OrderBy({"Letter" = "ASC"})
      */
     private $problems;
 
