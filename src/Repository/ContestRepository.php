@@ -91,7 +91,7 @@ class ContestRepository extends ServiceEntityRepository
     public function findAllDate(): array
     {
 
-        $date = date("Y-m-d");
+        $date = date("Y-m-d H:i:sO");
         return $this->createQueryBuilder('c')
             ->andWhere('c.start_date <:date')
             ->setParameter('date',$date )

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Status;
 use App\Entity\User;
-use App\Entity\Users;
 use App\Form\UserType;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +17,29 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
+    /**
+     * @Route("/add_status",name="add_status")
+     */
+    public function added(EntityManagerInterface $manager)
+    {
+
+        $descriptions = [
+            "In Queue", "Processing", "Accepted", "Wrong Answer",
+            "Time Limit Exceeded", "Compilation Error", "Runtime Error (SIGSEGV)",
+            "Runtime Error (SIGXFSZ)", "Runtime Error (SIGFPE)", "Runtime Error (SIGABRT)",
+            "Runtime Error (NZEC)", "Runtime Error (Other)", "Internal Error",
+            "Exec Format Error"
+        ];
+        for ($i = 0; $i < count($descriptions); $i++) {
+            $status = new Status();
+            $status->setDescription($descriptions[$i])
+                ->setCode($i + 1);
+            $manager->persist($status);
+        }
+        $manager->flush();
+        return $this->render('home/index.html.twig');
+
+    }
     /**
      * @Route("/", name="home")
      */
