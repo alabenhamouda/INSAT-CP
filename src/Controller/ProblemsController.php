@@ -29,7 +29,19 @@ class ProblemsController extends AbstractController
         $repo = $this->em->getRepository(Problem::class);
         $tags = $this->em->getRepository(Tag::class)->findBy(array(), ['name' => 'ASC']);
         $title = $request->query->get('title');
-        $up = $this->em->getRepository(Contest::class)->findupcoming();
+
+        $contests =$this->em->getRepository(Contest::class)->findAllOrderedbyDate();
+        $up = [];
+        foreach ($contests as $contest) {
+            $tmp = $contest->getStatus()['status'];
+            if ($tmp === "not_started" or $tmp === "running") {
+                array_push($up, $contest);
+                if(count($up)==5){
+                    break;
+                }
+            }
+        }
+
         $prob_tags = $request->query->get('tag');
         $prob_tags = $this->em->getRepository(Tag::class)->findBy([
             'name' => $prob_tags
