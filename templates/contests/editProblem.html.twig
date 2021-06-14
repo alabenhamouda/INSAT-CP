@@ -64,21 +64,23 @@
                 </label>
             </div>
             <div class="input-group mb-3">
-                <label class="input-group-text">Select tag</label>
-                <select class="selectpicker" multiple name="tags[]" data-selected-text-format="count > 3" id="select">
+                <label class="input-group-text" for="select" style="width: auto;">Select tag</label>
+                <select class="selectpicker form-select" multiple name="tags[]"
+                        data-selected-text-format="count > 3" id="select"
+                        style="width: 100%;"
+                >
                     {% for tag in tags %}
                         <option
                                 {% if tag in problem.tags %}
                                     selected
                                 {% endif %}
-                        value="{{ tag.name }}" >
+                                value="{{ tag.name }}">
                             {{ tag.name }}
                         </option> {% endfor %}
                 </select>
                 <div class="selectedTags"></div>
-
-
             </div>
+
             {# <script src="https://htmeditor.com/js/htmeditor.min.js" htmeditor_textarea="output_spec" #}
             {# editor_height="480" run_local="no"></script> #}
             {# <div class="form-group"> #}
