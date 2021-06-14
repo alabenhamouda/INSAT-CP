@@ -4,15 +4,21 @@
         <h1>{{ problem.letter }}.{{ problem.title }}</h1>
         <section>
             <h3>statement:</h3>
-            {{ problem.statement }}
+            <div class="purify">
+                {{ problem.statement|raw }}
+            </div>
         </section>
         <section>
             <h3>input:</h3>
-            {{ problem.inputSpec }}
+            <div class="purify">
+                {{ problem.inputSpec|raw }}
+            </div>
         </section>
         <section>
             <h3>output:</h3>
-            {{ problem.outputSpec }}
+            <div class="purify">
+                {{ problem.outputSpec|raw }}
+            </div>
         </section>
         {# <div class="container"> #}
         {% for sample in problem.sampleIn %}

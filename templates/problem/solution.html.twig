@@ -5,20 +5,20 @@
         <h1>{{ problem.letter }}.{{ problem.title }}</h1>
         <h3>Solution:</h3>
         {% if problem.proof is not null %}
-            <p>
-                {{ problem.proof }}
-            </p>
+            <div class="purify">
+                {{ problem.proof|raw }}
+            </div>
         {% else %}
-            <p>
+            <div>
                 Unfortunately there's no explanation for this problem yet
-            </p>
+            </div>
         {% endif %}
 
         <h3>Code:</h3>
         {% if problem.solution is not null %}
-            <p>
-                {{ problem.solution }}
-            </p>
+            <div class="purify">
+                {{ problem.solution|raw }}
+            </div>
         {% else %}
             <p>
                 Unfortunately there's no code solution for this problem yet
