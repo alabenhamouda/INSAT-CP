@@ -23,7 +23,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use const http\Client\Curl\PROXY_HTTP;
 
 /**
  * Class ContestsController
@@ -518,8 +517,8 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
-        $repo=$em->getRepository(Problem::class);
-        $list=$repo->findBy(['contest'=>$contest->getId()],['Letter'=>'ASC']);
+        $repo = $em->getRepository(Problem::class);
+        $list = $repo->findBy(['contest' => $contest->getId()], ['Letter' => 'ASC']);
         return $this->render('contests/edit.html.twig', [
             'contest' => $contest,
             'problems' => $list
@@ -539,7 +538,7 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
-        $tags=$em->getRepository(Tag::class)->findAll();
+        $tags = $em->getRepository(Tag::class)->findAll();
         $problem = new Problem();
         $sample = new SampleInput();
         $sample->setProblem($problem)
@@ -569,7 +568,7 @@ class ContestsController extends AbstractController
         return $this->redirectToRoute('edit_problem', [
             'id' => $contest->getId(),
             'letter' => $problem->getLetter()
-            ]);
+        ]);
 
 
     }
@@ -589,7 +588,7 @@ class ContestsController extends AbstractController
      * @Route ("/edit/{id<\d+>}/{letter}",name="edit_problem",methods={"GET"})
      */
     public
-    function editProblem(Contest $contest, $letter,EntityManagerInterface $em)
+    function editProblem(Contest $contest, $letter, EntityManagerInterface $em)
     {
 
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -603,14 +602,14 @@ class ContestsController extends AbstractController
         if ($this->checkLetter($letter) or ord($letter) - ord("A") >= $size) {
             throw $this->createNotFoundException('This problem does not exist');
         }
-        $tags=$em->getRepository(Tag::class)->findAll();
+        $tags = $em->getRepository(Tag::class)->findAll();
         $problem = $problems[ord($letter) - ord('A')];
         return $this->render('contests/editProblem.html.twig', [
             'id' => $contest->getId(),
             'problem' => $problem,
             'sample' => $problem->getSampleIn()[0],
             'input' => $problem->getInput(),
-            'tags'=>$tags
+            'tags' => $tags
         ]);
 
 
@@ -638,9 +637,11 @@ class ContestsController extends AbstractController
         }
         $problem = $problems[ord($letter) - ord('A')];
         $r = $request->request;
-        foreach($r->get('tags') as $tag ) {
-            $problem->AddTag($em->getRepository(Tag::class)->findOneBy(['name' =>$tag ]));
+        if (!empty($tags)) {
+            foreach ($r->get('tags') as $tag) {
+                $problem->AddTag($em->getRepository(Tag::class)->findOneBy(['name' => $tag]));
             }
+        }
         //TODO check POST input or use symfony form
         $sample = $problem->getSampleIn()[0];
         $input = new Input();
