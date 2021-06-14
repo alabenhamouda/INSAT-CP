@@ -11,7 +11,6 @@ use App\Entity\Submission;
 use App\Entity\Tag;
 use App\Entity\User;
 use Container9nkxRE3\getDoctrineMigrations_UpToDateCommandService;
-use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -50,8 +49,8 @@ class AppFixture extends Fixture
         for ($i = 0; $i < 40; $i++) {
             $contest = new Contest();
             $number = $fa->numberBetween(0, 39);
-            $date=$fa->dateTimeBetween("-1 years","+1 years", 'Africa/Tunis');
-                $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
+            $date = $fa->dateTimeBetween("-1 years", "+1 years", 'Africa/Tunis');
+            $contest->setTitle($fa->sentence($fa->numberBetween(1, 4)))
                 ->setStartDate($date)
                 ->setDuration($fa->numberBetween(1, 300))
                 ->setIsPublished(true)
@@ -123,27 +122,28 @@ class AppFixture extends Fixture
             "Runtime Error (NZEC)", "Runtime Error (Other)", "Internal Error",
             "Exec Format Error"
         ];
-        $statusArr=[];
+        $statusArr = [];
         for ($i = 0; $i < count($descriptions); $i++) {
             $status = new Status();
             $status->setDescription($descriptions[$i])
-                   ->setCode($i+1);
+                ->setCode($i + 1);
             $manager->persist($status);
-            array_push($statusArr,$status);
+            array_push($statusArr, $status);
         }
         //adding 200 mostly wrong submissions
         for ($i = 0; $i < 100; $i++) {
             $submission = new Submission();
             /** @var  $tprob Problem */
-            $tprob=$fa->randomElement($problemArr);
-            $tuser=$fa->randomElement($userArr);
+            $tprob = $fa->randomElement($problemArr);
+            $tuser = $fa->randomElement($userArr);
             $submission->setLanguage("cpp")
                 ->setUser($tuser)
                 ->setCode($fa->text)
                 ->setProblem($tprob)
                 ->setStatus($fa->randomElement($statusArr))
                 ->setToken("aaaaaa");
-            $tcontest=$tprob->getContest();
+            $tcontest = $tprob->getContest();
+            $submission->setInContest($tcontest->getStatus()['status'] == "running");
             $tcontest->addParticipant($tuser);
 
             $manager->persist($tprob);
@@ -154,15 +154,16 @@ class AppFixture extends Fixture
         for ($i = 0; $i < 300; $i++) {
             $submission = new Submission();
             /** @var  $tprob Problem */
-            $tprob=$fa->randomElement($problemArr);
-            $tuser=$fa->randomElement($userArr);
+            $tprob = $fa->randomElement($problemArr);
+            $tuser = $fa->randomElement($userArr);
             $submission->setLanguage("cpp")
                 ->setUser($tuser)
                 ->setCode($fa->text)
                 ->setProblem($tprob)
                 ->setStatus($statusArr[2])
                 ->setToken("aaaaaa");
-            $tcontest=$tprob->getContest();
+            $tcontest = $tprob->getContest();
+            $submission->setInContest($tcontest->getStatus()['status'] == "running");
             $tcontest->addParticipant($tuser);
 
             $manager->persist($tprob);
