@@ -11,6 +11,7 @@ use App\Entity\Problem;
 use App\Entity\SampleInput;
 use App\Entity\Status;
 use App\Entity\Submission;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Service\Judge;
 use DateTime;
@@ -538,6 +539,7 @@ class ContestsController extends AbstractController
             //TODO output message "you should be the owner of the contest"
             return $this->redirectToRoute('myContests');
         }
+        $tags=$em->getRepository(Tag::class)->findAll();
         $problem = new Problem();
         $sample = new SampleInput();
         $sample->setProblem($problem)
@@ -564,7 +566,10 @@ class ContestsController extends AbstractController
         $em->persist($problem);
         $em->persist($contest);
         $em->flush();
-        return $this->redirectToRoute('edit_problem', ['id' => $contest->getId(), 'letter' => $problem->getLetter()]);
+        return $this->redirectToRoute('edit_problem', [
+            'id' => $contest->getId(),
+            'letter' => $problem->getLetter()
+            ]);
 
 
     }
@@ -584,7 +589,7 @@ class ContestsController extends AbstractController
      * @Route ("/edit/{id<\d+>}/{letter}",name="edit_problem",methods={"GET"})
      */
     public
-    function editProblem(Contest $contest, $letter)
+    function editProblem(Contest $contest, $letter,EntityManagerInterface $em)
     {
 
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -598,12 +603,14 @@ class ContestsController extends AbstractController
         if ($this->checkLetter($letter) or ord($letter) - ord("A") >= $size) {
             throw $this->createNotFoundException('This problem does not exist');
         }
+        $tags=$em->getRepository(Tag::class)->findAll();
         $problem = $problems[ord($letter) - ord('A')];
         return $this->render('contests/editProblem.html.twig', [
             'id' => $contest->getId(),
             'problem' => $problem,
             'sample' => $problem->getSampleIn()[0],
-            'input' => $problem->getInput()
+            'input' => $problem->getInput(),
+            'tags'=>$tags
         ]);
 
 
@@ -631,6 +638,9 @@ class ContestsController extends AbstractController
         }
         $problem = $problems[ord($letter) - ord('A')];
         $r = $request->request;
+        foreach($r->get('tags') as $tag ) {
+            $problem->AddTag($em->getRepository(Tag::class)->findOneBy(['name' =>$tag ]));
+            }
         //TODO check POST input or use symfony form
         $sample = $problem->getSampleIn()[0];
         $input = new Input();

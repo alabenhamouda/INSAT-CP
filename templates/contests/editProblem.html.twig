@@ -1,16 +1,18 @@
 {% extends 'headerBase.html.twig' %}
 
 {% block published %}{% endblock %}
-{% block title %}editing {{ parent() }}{% endblock %}
+{% block title %}editing problem{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('codemirror') }}
     {{ encore_entry_link_tags('problem') }}
+    {{ encore_entry_link_tags('problems') }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('codemirror') }}
     {{ encore_entry_script_tags('problem') }}
+    {{ encore_entry_script_tags('problems') }}
 {% endblock %}
 {% block body %}
     <script src="https://cdn.tiny.cloud/1/pt0bx6jtfngnh3xja0w35y48eqapsusjydynb3hlydd8jytd/tinymce/5/tinymce.min.js"
@@ -54,11 +56,28 @@
                               rows="15" id="input_spec">{{ problem.inputSpec }}</textarea>
                 </label>
             </div>
+
             <div class="form-group">
                 <label>output specifications
                     <textarea class="form-control editable" form="contestform" name="output_spec"
                               rows="15" id="output_spec">{{ problem.outputSpec }}</textarea>
                 </label>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text">Select tag</label>
+                <select class="selectpicker" multiple name="tags[]" data-selected-text-format="count > 3" id="select">
+                    {% for tag in tags %}
+                        <option
+                                {% if tag in problem.tags %}
+                                    selected
+                                {% endif %}
+                        value="{{ tag.name }}" >
+                            {{ tag.name }}
+                        </option> {% endfor %}
+                </select>
+                <div class="selectedTags"></div>
+
+
             </div>
             {# <script src="https://htmeditor.com/js/htmeditor.min.js" htmeditor_textarea="output_spec" #}
             {# editor_height="480" run_local="no"></script> #}
