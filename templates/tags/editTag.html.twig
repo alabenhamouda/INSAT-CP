@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TagsController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+        <a href="{{ path("tags") }}">Back</a>
+        <form action="{{ path("edit_tag", {id: tag.id}) }}" method="post">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="name"
+                       value="{{ tag.name }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

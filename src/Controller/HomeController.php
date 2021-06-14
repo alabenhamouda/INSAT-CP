@@ -22,7 +22,7 @@ class HomeController extends AbstractController
      */
     public function added(EntityManagerInterface $manager)
     {
-
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
         $descriptions = [
             "In Queue", "Processing", "Accepted", "Wrong Answer",
             "Time Limit Exceeded", "Compilation Error", "Runtime Error (SIGSEGV)",
@@ -31,15 +31,21 @@ class HomeController extends AbstractController
             "Exec Format Error"
         ];
         for ($i = 0; $i < count($descriptions); $i++) {
-            $status = new Status();
-            $status->setDescription($descriptions[$i])
-                ->setCode($i + 1);
-            $manager->persist($status);
+            $search = $manager->getRepository(Status::class)->findBy([
+                'code' => $i + 1
+            ]);
+            if (empty($search)) {
+                $status = new Status();
+                $status->setDescription($descriptions[$i])
+                    ->setCode($i + 1);
+                $manager->persist($status);
+            }
         }
         $manager->flush();
         return $this->render('home/index.html.twig');
 
     }
+
     /**
      * @Route("/", name="home")
      */
@@ -74,7 +80,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity,LoginFormAuthenticator $login,GuardAuthenticatorHandler $guard)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entity, LoginFormAuthenticator $login, GuardAuthenticatorHandler $guard)
     {
         $user = new user();
         $form = $this->createform(usertype::class, $user);
@@ -83,7 +89,7 @@ class HomeController extends AbstractController
             $user->setpassword($encoder->encodepassword($user, $user->getpassword()));
             $entity->persist($user);
             $entity->flush();
-            return $guard->authenticateUserAndHandleSuccess($user,$request,$login,'main');
+            return $guard->authenticateUserAndHandleSuccess($user, $request, $login, 'main');
         }
         return $this->render('home/login.html.twig', [
             'signup' => 'signup',

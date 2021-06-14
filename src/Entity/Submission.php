@@ -21,7 +21,7 @@ class Submission
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=problem::class, inversedBy="submissions")
+     * @ORM\ManyToOne(targetEntity=Problem::class, inversedBy="submissions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $problem;
