@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TagsController!{% endblock %}
+
+{% block body %}
+    <style>
+        button {
+            display: inline;
+            background: none;
+            border: none;
+            float: right;
+        }
+    </style>
+    <div class="mt-2 container">
+        <h1>Tags
+            <a href="{{ path("add_tag") }}" class="float-right">
+                +
+            </a>
+        </h1>
+        <ul class="list-group">
+            {% for tag in tags %}
+                <li class="list-group-item">
+                    <a href="{{ path('edit_tag', {id: tag.id}) }}">
+                        <form action="{{ path("remove_tag", {id: tag.id}) }}" method="post">
+                            {{ tag.name }}
+                            <button>
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
