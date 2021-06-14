@@ -8,6 +8,7 @@ import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/keymap/vim'
+import './styles/codemirror.css'
 import $ from 'jquery'
 
 function mime(str) {

@@ -17,7 +17,7 @@
         <h3>Code:</h3>
         {% if problem.solution is not null %}
             <div class="purify">
-                {{ problem.solution|raw }}
+                <pre><code> {{ problem.solution|raw }} </code></pre>
             </div>
         {% else %}
             <p>

@@ -14,7 +14,7 @@
 }
 
 pre {
-    white-space: pre-line;
+    /*white-space: pre-line;*/
     /*font-family: "Hack Nerd Font";*/
     font-family: "Lato", arial, sans-serif;
     font-size: 1.1em;
@@ -35,9 +35,6 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 20px !important;
 }
 
-.CodeMirror {
-    height: 490px;
-}
 
 #vim:focus {
     box-shadow: none;
@@ -45,4 +42,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .vimMode {
     background-color: #ececec;
+}
+
+strong {
+    font-weight: bold;
 }

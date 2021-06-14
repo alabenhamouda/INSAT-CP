@@ -2,7 +2,29 @@
 
 {% block published %}{% endblock %}
 {% block title %}editing {{ parent() }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('codemirror') }}
+    {{ encore_entry_link_tags('problem') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('codemirror') }}
+    {{ encore_entry_script_tags('problem') }}
+{% endblock %}
 {% block body %}
+    <script src="https://cdn.tiny.cloud/1/pt0bx6jtfngnh3xja0w35y48eqapsusjydynb3hlydd8jytd/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '.editable',
+        });
+    </script>
+    {# <h1>Multiple editors on a page: Section 1</h1> #}
+    {# <div class="myeditablediv" id="section001">Click here to edit the first section of content!</div> #}
+
+    {# <h1>Multiple editors on a page: Section 2</h1> #}
+    {# <div class="myeditablediv" id="section002">Click here to edit the second section of content!</div> #}
     <style>
         label {
             width: 100%;
@@ -11,7 +33,6 @@
     <div class="container mt-2">
         <form action="{{ path("process_edit_problem",{'id':id,'letter':problem.letter}) }}" method="post"
               id="contestform">
-
             <div class="form-group">
                 <label for="">Title
                     <input type="text" class="form-control" id="" name="title" aria-describedby=""
@@ -21,38 +42,42 @@
             </div>
             <div class="form-group">
                 <label>Statement
-                    <textarea class="form-control" form="contestform" name="statement"
-                              rows="6">{{ problem.statement }}</textarea>
+                    <textarea class="form-control editable" form="contestform" name="statement"
+                              rows="20" id="statement">
+                        {{ problem.statement }}
+                    </textarea>
                 </label>
             </div>
             <div class="form-group">
                 <label>input specifications
-                    <textarea class="form-control" form="contestform" name="input_spec"
-                              rows="4">{{ problem.inputSpec }}</textarea>
+                    <textarea class="form-control editable" form="contestform" name="input_spec"
+                              rows="15" id="input_spec">{{ problem.inputSpec }}</textarea>
                 </label>
             </div>
             <div class="form-group">
                 <label>output specifications
-                    <textarea class="form-control" form="contestform" name="output_spec"
-                              rows="4">{{ problem.outputSpec }}</textarea>
+                    <textarea class="form-control editable" form="contestform" name="output_spec"
+                              rows="15" id="output_spec">{{ problem.outputSpec }}</textarea>
                 </label>
             </div>
-{#            <div class="form-group">#}
-{#                <label>validator#}
-{#                    <textarea class="form-control" form="contestform" name="validator"#}
-{#                              rows="4">{{ problem.validator }}</textarea>#}
-{#                </label>#}
-{#            </div>#}
+            {# <script src="https://htmeditor.com/js/htmeditor.min.js" htmeditor_textarea="output_spec" #}
+            {# editor_height="480" run_local="no"></script> #}
+            {# <div class="form-group"> #}
+            {# <label>validator #}
+            {# <textarea class="form-control" form="contestform" name="validator" #}
+            {# rows="4">{{ problem.validator }}</textarea> #}
+            {# </label> #}
+            {# </div> #}
             <div class="form-group">
                 <label>solution
                     <textarea class="form-control" form="contestform" name="solution"
-                              rows="4">{{ problem.solution }}</textarea>
+                              rows="4" id="editor">{{ problem.solution }}</textarea>
                 </label>
             </div>
             <div class="form-group">
                 <label>proof
-                    <textarea class="form-control" form="contestform" name="proof"
-                              rows="4">{{ problem.proof }}</textarea>
+                    <textarea class="form-control editable" form="contestform" name="proof"
+                              rows="20" id="proof">{{ problem.proof }}</textarea>
                 </label>
             </div>
             <div class="form-group">
@@ -82,13 +107,14 @@
             <div class="form-group">
                 <label>points
                     <input type="number" class="form-control" id="" name="points" aria-describedby=""
-                           placeholder="Enter Points" value="{{ problem.points }}">
+                           placeholder="Enter Points" value="{{ problem.points|default(1) }}">
                 </label>
             </div>
             <div class="form-group">
                 <label>Time limit (in seconds)
                     <input type="number" class="form-control" id="" name="timelimit" aria-describedby=""
-                           placeholder="Enter Points" value="{{ problem.timelimit }}">
+                           placeholder="Enter Points" value="{{ problem.timelimit|default(1) }}" min="0.5" max="20"
+                           step="0.5">
                 </label>
             </div>
 
